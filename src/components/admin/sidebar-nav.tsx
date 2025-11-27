@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { IconRenderer } from '@/components/icon-renderer';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
-import { ChevronDown, ChevronRight } from 'lucide-react';
+import { ChevronDown, ChevronRight, Settings } from 'lucide-react';
 import { useSidebarStore } from '@/store/sidebar-store';
 
 // Define types locally matching the Prisma return type structure
@@ -53,6 +53,22 @@ export function SidebarNav({ items, locale }: { items: MenuItem[], locale: strin
                     {items.map((item) => (
                         <SidebarItem key={item.id} item={item} locale={locale} pathname={pathname} closeSidebar={close} />
                     ))}
+
+                    <div className="pt-4 mt-4 border-t border-gray-200 dark:border-gray-700">
+                        <Link
+                            href={`/${locale}/admin/settings/menu`}
+                            className={cn(
+                                "flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors",
+                                pathname.includes('/admin/settings')
+                                    ? "bg-primary/10 text-primary"
+                                    : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                            )}
+                            onClick={() => window.innerWidth < 768 && close()}
+                        >
+                            <Settings className="mr-3 h-5 w-5" />
+                            Settings
+                        </Link>
+                    </div>
                 </nav>
             </div>
         </>

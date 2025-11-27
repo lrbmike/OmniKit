@@ -203,19 +203,19 @@ async function main() {
     console.log('🗑️  Clearing existing data...');
     await prisma.menuItem.deleteMany();
     await prisma.tool.deleteMany();
-    await prisma.user.deleteMany();
-    await prisma.systemConfig.deleteMany();
+    // await prisma.user.deleteMany();
+    // await prisma.systemConfig.deleteMany();
 
     // Create system config
-    console.log('⚙️  Creating system config...');
-    await prisma.systemConfig.create({
-        data: {
-            isInitialized: false,
-            defaultLocale: 'zh',
-            dbType: 'sqlite',
-            sessionTimeout: 604800, // 7 days
-        },
-    });
+    // console.log('⚙️  Creating system config...');
+    // await prisma.systemConfig.create({
+    //     data: {
+    //         isInitialized: false,
+    //         defaultLocale: 'zh',
+    //         dbType: 'sqlite',
+    //         sessionTimeout: 604800, // 7 days
+    //     },
+    // });
 
     // Create tools
     console.log('🛠️  Creating 18 preset tools...');
