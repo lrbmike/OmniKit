@@ -57,5 +57,49 @@
     "completeSetup": "完成设置",
     "connectionSuccess": "连接成功",
     "connectionFailed": "连接失败"
+  },
+  "Tools": {
+    "PasswordGenerator": {
+      "title": "密码生成器",
+      "description": "生成安全且随机的密码",
+      "length": "密码长度",
+      "quantity": "生成数量",
+      "uppercase": "大写字母 (A-Z)",
+      "lowercase": "小写字母 (a-z)",
+      "numbers": "数字 (0-9)",
+      "symbols": "符号 (!@#$)",
+      "generate": "生成",
+      "copy": "复制",
+      "copied": "已复制到剪贴板",
+      "errorSelection": "请至少选择一种字符类型"
+    },
+    "JsonFormatter": {
+      "title": "JSON 格式化",
+      "description": "格式化、压缩和验证 JSON 数据",
+      "inputLabel": "输入 JSON",
+      "outputLabel": "输出结果",
+      "format": "格式化",
+      "minify": "压缩",
+      "copy": "复制",
+      "clear": "清空",
+      "successFormat": "JSON 格式化成功",
+      "successMinify": "JSON 压缩成功",
+      "invalidJson": "无效的 JSON",
+      "copied": "已复制到剪贴板"
+    },
+    "QrCodeGenerator": {
+      "title": "二维码生成器",
+      "description": "生成自定义二维码",
+      "contentLabel": "内容",
+      "contentPlaceholder": "输入文本或 URL",
+      "size": "尺寸",
+      "margin": "边距",
+      "errorCorrection": "容错率",
+      "foreground": "前景色",
+      "background": "背景色",
+      "download": "下载 PNG",
+      "downloadSuccess": "二维码已下载",
+      "enterText": "输入文本以生成"
+    }
   }
 }

@@ -2,21 +2,24 @@
 
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { toast } from 'sonner';
-import { Copy, RefreshCw } from 'lucide-react';
+import { RefreshCw, Settings2 } from 'lucide-react';
+import { useTranslations } from 'next-intl';
+import { CopyButton } from '@/components/ui/copy-button';
 
 export function PasswordGenerator() {
+    const t = useTranslations('Tools.PasswordGenerator');
     const [length, setLength] = useState(16);
+    const [quantity, setQuantity] = useState(1);
     const [includeUppercase, setIncludeUppercase] = useState(true);
     const [includeLowercase, setIncludeLowercase] = useState(true);
     const [includeNumbers, setIncludeNumbers] = useState(true);
     const [includeSymbols, setIncludeSymbols] = useState(true);
-    const [password, setPassword] = useState('');
+    const [passwords, setPasswords] = useState<string[]>([]);
 
     const generatePassword = () => {
         const uppercase = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -31,84 +34,92 @@ export function PasswordGenerator() {
         if (includeSymbols) chars += symbols;
 
         if (chars === '') {
-            toast.error('Please select at least one character type');
+            toast.error(t('errorSelection'));
             return;
         }
 
-        let generated = '';
-        for (let i = 0; i < length; i++) {
-            const randomIndex = Math.floor(Math.random() * chars.length);
-            generated += chars[randomIndex];
+        const newPasswords = [];
+        for (let j = 0; j < quantity; j++) {
+            let generated = '';
+            for (let i = 0; i < length; i++) {
+                const randomIndex = Math.floor(Math.random() * chars.length);
+                generated += chars[randomIndex];
+            }
+            newPasswords.push(generated);
         }
-        setPassword(generated);
-    };
-
-    const copyToClipboard = () => {
-        if (!password) return;
-        navigator.clipboard.writeText(password);
-        toast.success('Password copied to clipboard');
+        setPasswords(newPasswords);
     };
 
     return (
-        <div className="space-y-6 max-w-2xl">
-            <Card>
-                <CardContent className="pt-6">
-                    <div className="flex gap-2 mb-6">
-                        <Input
-                            value={password}
-                            readOnly
-                            className="font-mono text-lg"
-                            placeholder="Generated password will appear here"
+        <div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-200px)] min-h-[500px]">
+            {/* Left Panel: Configuration */}
+            <Card className="flex-1 overflow-y-auto">
+                <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                        <Settings2 className="h-5 w-5" />
+                        Configuration
+                    </CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-8">
+                    <div className="space-y-4">
+                        <div className="flex justify-between items-center">
+                            <Label className="text-base font-medium">{t('length')}</Label>
+                            <span className="text-xl font-bold text-primary">{length}</span>
+                        </div>
+                        <Slider
+                            value={[length]}
+                            onValueChange={(vals) => setLength(vals[0])}
+                            min={6}
+                            max={64}
+                            step={1}
+                            className="py-4"
                         />
-                        <Button onClick={copyToClipboard} variant="outline" size="icon" title="Copy">
-                            <Copy className="h-4 w-4" />
-                        </Button>
-                        <Button onClick={generatePassword} size="icon" title="Generate">
-                            <RefreshCw className="h-4 w-4" />
-                        </Button>
                     </div>
 
-                    <div className="space-y-6">
-                        <div className="space-y-2">
-                            <div className="flex justify-between">
-                                <Label>Password Length: {length}</Label>
-                            </div>
-                            <Slider
-                                value={[length]}
-                                onValueChange={(vals) => setLength(vals[0])}
-                                min={6}
-                                max={64}
-                                step={1}
-                            />
+                    <div className="space-y-4">
+                        <div className="flex justify-between items-center">
+                            <Label className="text-base font-medium">{t('quantity')}</Label>
+                            <span className="text-xl font-bold text-primary">{quantity}</span>
                         </div>
+                        <Slider
+                            value={[quantity]}
+                            onValueChange={(vals) => setQuantity(vals[0])}
+                            min={1}
+                            max={50}
+                            step={1}
+                            className="py-4"
+                        />
+                    </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div className="flex items-center justify-between space-x-2">
-                                <Label htmlFor="uppercase">Uppercase (A-Z)</Label>
+                    <div className="space-y-4">
+                        <Label className="text-base font-medium">Character Types</Label>
+                        <div className="grid gap-4">
+                            <div className="flex items-center justify-between p-3 border rounded-lg bg-muted/50">
+                                <Label htmlFor="uppercase" className="cursor-pointer flex-1">{t('uppercase')}</Label>
                                 <Switch
                                     id="uppercase"
                                     checked={includeUppercase}
                                     onCheckedChange={setIncludeUppercase}
                                 />
                             </div>
-                            <div className="flex items-center justify-between space-x-2">
-                                <Label htmlFor="lowercase">Lowercase (a-z)</Label>
+                            <div className="flex items-center justify-between p-3 border rounded-lg bg-muted/50">
+                                <Label htmlFor="lowercase" className="cursor-pointer flex-1">{t('lowercase')}</Label>
                                 <Switch
                                     id="lowercase"
                                     checked={includeLowercase}
                                     onCheckedChange={setIncludeLowercase}
                                 />
                             </div>
-                            <div className="flex items-center justify-between space-x-2">
-                                <Label htmlFor="numbers">Numbers (0-9)</Label>
+                            <div className="flex items-center justify-between p-3 border rounded-lg bg-muted/50">
+                                <Label htmlFor="numbers" className="cursor-pointer flex-1">{t('numbers')}</Label>
                                 <Switch
                                     id="numbers"
                                     checked={includeNumbers}
                                     onCheckedChange={setIncludeNumbers}
                                 />
                             </div>
-                            <div className="flex items-center justify-between space-x-2">
-                                <Label htmlFor="symbols">Symbols (!@#$)</Label>
+                            <div className="flex items-center justify-between p-3 border rounded-lg bg-muted/50">
+                                <Label htmlFor="symbols" className="cursor-pointer flex-1">{t('symbols')}</Label>
                                 <Switch
                                     id="symbols"
                                     checked={includeSymbols}
@@ -117,7 +128,36 @@ export function PasswordGenerator() {
                             </div>
                         </div>
                     </div>
+
+                    <Button onClick={generatePassword} size="lg" className="w-full mt-4">
+                        <RefreshCw className="mr-2 h-4 w-4" />
+                        {t('generate')}
+                    </Button>
                 </CardContent>
+            </Card>
+
+            {/* Right Panel: Result */}
+            <Card className="flex-1 bg-muted/30 flex flex-col p-6 border-dashed">
+                <div className="flex-1 flex flex-col space-y-4 h-full overflow-hidden">
+                    <div className="flex items-center justify-between">
+                        <h3 className="text-lg font-medium text-muted-foreground">Generated Passwords</h3>
+                        {passwords.length > 0 && (
+                            <CopyButton
+                                value={passwords.join('\n')}
+                                onCopy={() => toast.success(t('copied'))}
+                            />
+                        )}
+                    </div>
+
+                    <div className="flex-1 relative border rounded-md bg-background shadow-sm overflow-hidden">
+                        <textarea
+                            className="w-full h-full p-4 font-mono text-lg resize-none focus:outline-none bg-transparent"
+                            readOnly
+                            value={passwords.join('\n')}
+                            placeholder="Generated passwords will appear here..."
+                        />
+                    </div>
+                </div>
             </Card>
         </div>
     );

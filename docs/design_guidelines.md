@@ -1,0 +1,85 @@
+# OmniKit Design Guidelines
+
+This document outlines the standard design patterns and UI specifications for the OmniKit application. All new tools and features should adhere to these guidelines to ensure consistency and a premium user experience.
+
+## 1. Tool Layout Structure
+
+### Split-Pane Layout (Standard)
+For most tools that involve an "Input -> Output" workflow, use the **Split-Pane Layout**.
+
+*   **Container Width**: `max-w-[1600px]` to allow sufficient space for side-by-side panels.
+*   **Desktop (lg+)**: 
+    *   **Left Panel (Configuration)**: Contains all input fields, sliders, switches, and action buttons.
+    *   **Right Panel (Preview/Result)**: Displays the generated output (text, image, code, etc.).
+    *   **Ratio**: Typically 50/50 or 40/60 depending on content density.
+*   **Mobile (<lg)**:
+    *   Automatically stacks vertically.
+    *   Configuration panel on top, Result panel on bottom.
+
+### Component Structure
+```tsx
+<div className="flex flex-col lg:flex-row gap-6 h-[calc(100vh-200px)] min-h-[500px]">
+  {/* Left Panel: Configuration */}
+  <Card className="flex-1 overflow-y-auto">
+    <CardHeader>
+      <CardTitle>Configuration</CardTitle>
+    </CardHeader>
+    <CardContent>
+      {/* Inputs go here */}
+    </CardContent>
+  </Card>
+
+  {/* Right Panel: Result */}
+  <Card className="flex-1 bg-muted/30 flex flex-col p-6 border-dashed">
+    {/* Output goes here */}
+  </Card>
+</div>
+```
+
+## 2. Interactive Elements
+
+### Copy Button
+Use the standard `CopyButton` component for all copy-to-clipboard actions.
+
+*   **Behavior**: 
+    *   On click, copies the provided `value` to the clipboard.
+    *   Shows a toast notification ("Copied to clipboard").
+    *   **Visual Feedback**: The copy icon transitions to a green checkmark for 2 seconds.
+*   **Usage**:
+    ```tsx
+    import { CopyButton } from '@/components/ui/copy-button';
+    
+    <CopyButton value={textToCopy} />
+    ```
+
+### Cards
+*   Use `Card` components from `shadcn/ui` to group related content.
+*   **Result Panels**: Use `bg-muted/30` and `border-dashed` to visually distinguish the output area from the input area.
+
+## 3. Theming
+
+*   **Modes**: Support Light, Dark, and System modes.
+*   **Contrast**: Ensure text and interactive elements remain visible in both modes.
+*   **Backgrounds**: Use `bg-background` for main content and `bg-muted` for secondary/background areas to create depth.
+
+## 4. Internationalization (i18n)
+
+*   **All Text**: Every visible string must be translatable.
+*   **Keys**: Store translations in `src/messages/{locale}.json`.
+*   **Structure**: Group tool-specific translations under `Tools.{ComponentName}`.
+    ```json
+    "Tools": {
+      "MyNewTool": {
+        "title": "My Tool Name",
+        "description": "What this tool does",
+        "label1": "Label Text"
+      }
+    }
+    ```
+*   **Hook**: Use `useTranslations('Tools.MyNewTool')` in components.
+
+## 5. Responsive Design
+
+*   **Mobile First**: Design for mobile screens first, then enhance for desktop.
+*   **Touch Targets**: Ensure buttons and inputs are large enough for touch interaction (min 44px height recommended).
+*   **Scroll**: Use `overflow-y-auto` for panels that might exceed the viewport height, preventing the entire page from scrolling unnecessarily.

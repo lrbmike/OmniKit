@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { logout } from '@/actions/auth';
 import { LogOut, Menu } from 'lucide-react';
 import { useSidebarStore } from '@/store/sidebar-store';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 export function Header() {
     const toggleSidebar = useSidebarStore((state) => state.toggle);
@@ -18,7 +19,8 @@ export function Header() {
                 {/* Breadcrumbs or Page Title could go here */}
             </div>
 
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2">
+                <ThemeToggle />
                 <LanguageSwitcher />
                 <Button variant="ghost" size="icon" onClick={() => logout()} title="Logout">
                     <LogOut className="h-5 w-5" />

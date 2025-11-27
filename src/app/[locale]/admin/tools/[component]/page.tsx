@@ -3,12 +3,14 @@ import { db } from '@/lib/db';
 import { getTranslations } from 'next-intl/server';
 import { PasswordGenerator } from '@/components/tools/password-generator';
 import { JsonFormatter } from '@/components/tools/json-formatter';
+import { QrCodeGenerator } from '@/components/tools/qr-code-generator';
 
 // Map component names to actual components
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const TOOL_COMPONENTS: Record<string, React.ComponentType<any>> = {
     'password-generator': PasswordGenerator,
     'json-formatter': JsonFormatter,
+    'qr-code-generator': QrCodeGenerator,
     // Add other tools here as they are implemented
 };
 
@@ -44,7 +46,7 @@ export default async function ToolPage({
     }
 
     return (
-        <div className="space-y-6 max-w-4xl mx-auto">
+        <div className="space-y-6 max-w-[1600px] mx-auto">
             <div>
                 <h1 className="text-3xl font-bold tracking-tight">
                     {locale === 'zh' ? tool.name : tool.nameEn}

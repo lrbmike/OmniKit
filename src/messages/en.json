@@ -57,5 +57,49 @@
     "completeSetup": "Complete Setup",
     "connectionSuccess": "Connection successful",
     "connectionFailed": "Connection failed"
+  },
+  "Tools": {
+    "PasswordGenerator": {
+      "title": "Password Generator",
+      "description": "Generate secure and random passwords",
+      "length": "Password Length",
+      "quantity": "Quantity",
+      "uppercase": "Uppercase (A-Z)",
+      "lowercase": "Lowercase (a-z)",
+      "numbers": "Numbers (0-9)",
+      "symbols": "Symbols (!@#$)",
+      "generate": "Generate",
+      "copy": "Copy",
+      "copied": "Copied to clipboard",
+      "errorSelection": "Please select at least one character type"
+    },
+    "JsonFormatter": {
+      "title": "JSON Formatter",
+      "description": "Format, minify, and validate JSON data",
+      "inputLabel": "Input JSON",
+      "outputLabel": "Output",
+      "format": "Format",
+      "minify": "Minify",
+      "copy": "Copy",
+      "clear": "Clear",
+      "successFormat": "JSON formatted successfully",
+      "successMinify": "JSON minified successfully",
+      "invalidJson": "Invalid JSON",
+      "copied": "Copied to clipboard"
+    },
+    "QrCodeGenerator": {
+      "title": "QR Code Generator",
+      "description": "Generate custom QR codes",
+      "contentLabel": "Content",
+      "contentPlaceholder": "Enter text or URL",
+      "size": "Size",
+      "margin": "Margin",
+      "errorCorrection": "Error Correction",
+      "foreground": "Foreground Color",
+      "background": "Background Color",
+      "download": "Download PNG",
+      "downloadSuccess": "QR Code downloaded",
+      "enterText": "Enter text to generate"
+    }
   }
 }
