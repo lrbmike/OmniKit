@@ -1,0 +1,61 @@
+{
+  "Index": {
+    "title": "Welcome to Fast Next.js CLI",
+    "description": "Get started by editing src/app/[locale]/page.tsx",
+    "button": "Click me",
+    "secondary": "Secondary",
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
+  },
+  "NotFoundPage": {
+    "title": "Page Not Found",
+    "description": "Sorry, we couldn't find the page you're looking for.",
+    "backToHome": "Go back home"
+  },
+  "Auth": {
+    "loginTitle": "Login",
+    "loginDesc": "Enter your email below to login to your account.",
+    "registerTitle": "Register",
+    "registerDesc": "Create a new account to get started.",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "demoCredentials": "Demo credentials: admin@example.com / password"
+  },
+  "Dashboard": {
+    "title": "Dashboard",
+    "description": "This is a protected page. You can only see this if you are logged in.",
+    "welcome": "Welcome back!",
+    "logout": "Logout"
+  },
+  "Init": {
+    "welcome": "Welcome to OmniKit",
+    "languageSelection": "Select your preferred language",
+    "language": "Language",
+    "next": "Next",
+    "back": "Back",
+    "dbConfig": "Database Configuration",
+    "dbConfigDesc": "Choose your database type and configure connection",
+    "dbType": "Database Type",
+    "sqlite": "SQLite (Default)",
+    "mysql": "MySQL",
+    "postgresql": "PostgreSQL",
+    "host": "Host",
+    "port": "Port",
+    "dbName": "Database Name",
+    "username": "Username",
+    "password": "Password",
+    "testConnection": "Test Connection",
+    "adminAccount": "Create Admin Account",
+    "adminAccountDesc": "Set up your administrator account",
+    "email": "Email",
+    "confirmPassword": "Confirm Password",
+    "completeSetup": "Complete Setup",
+    "connectionSuccess": "Connection successful",
+    "connectionFailed": "Connection failed"
+  }
+}

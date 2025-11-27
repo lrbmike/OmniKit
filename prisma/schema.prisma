@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model SystemConfig {
+  id              String   @id @default(cuid())
+  isInitialized   Boolean  @default(false)
+  defaultLocale   String   @default("zh")
+  dbType          String   @default("sqlite") // sqlite, mysql, postgresql
+  dbHost          String?
+  dbPort          Int?
+  dbName          String?
+  dbUser          String?
+  dbPassword      String?
+  sessionTimeout  Int      @default(604800) // 7 days in seconds
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String   // bcrypt hashed
+  name      String?
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Tool {
+  id            String     @id @default(cuid())
+  name          String     // Chinese name
+  nameEn        String     // English name
+  description   String?    // Chinese description
+  descriptionEn String?    // English description
+  icon          String     // Lucide icon name
+  category      String     // developer, security, color, image, text
+  component     String     // Component path, e.g., "password-generator"
+  isPreset      Boolean    @default(true) // System preset or user custom
+  isActive      Boolean    @default(true) // Is tool enabled
+  order         Int        @default(0) // Order within category
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  
+  menuItems     MenuItem[]
+  
+  @@index([category, order])
+}
+
+model MenuItem {
+  id          String      @id @default(cuid())
+  userId      String      @default("default-admin") // Reserved for multi-user support
+  parentId    String?     // Parent menu ID (null = top level)
+  toolId      String?     // Associated tool ID (only for leaf nodes)
+  label       String?     // Custom label (null = use tool name)
+  labelEn     String?     // Custom English label
+  icon        String?     // Custom icon (null = use tool icon)
+  order       Int         @default(0) // Sort order
+  isFolder    Boolean     @default(false) // Is this a folder/group
+  
+  tool        Tool?       @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  parent      MenuItem?   @relation("MenuHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children    MenuItem[]  @relation("MenuHierarchy")
+  
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  
+  @@index([userId, parentId, order])
+}
