@@ -9,7 +9,7 @@ export default async function InitLayout({ children }: { children: ReactNode }) 
     const locale = await getLocale();
 
     if (initialized) {
-        redirect(`/${locale}/dashboard`);
+        redirect(`/${locale}/admin/dashboard`);
     }
 
     return (

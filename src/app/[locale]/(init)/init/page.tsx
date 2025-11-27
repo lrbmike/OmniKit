@@ -70,7 +70,7 @@ export default function InitPage() {
 
         if (result.success) {
             toast.success('Initialization completed successfully!');
-            router.push(`/${selectedLocale}/dashboard`);
+            router.push(`/${selectedLocale}/admin/dashboard`);
         } else {
             toast.error(result.error || 'Initialization failed');
         }
@@ -84,8 +84,8 @@ export default function InitPage() {
                     <div key={step} className="flex items-center">
                         <div
                             className={`flex items-center justify-center w-10 h-10 rounded-full border-2 ${currentStep >= step
-                                    ? 'bg-primary border-primary text-primary-foreground'
-                                    : 'border-gray-300 text-gray-400'
+                                ? 'bg-primary border-primary text-primary-foreground'
+                                : 'border-gray-300 text-gray-400'
                                 }`}
                         >
                             {currentStep > step ? (
