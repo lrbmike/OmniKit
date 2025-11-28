@@ -168,7 +168,11 @@
       "noMatch": "未找到匹配项",
       "matchFound": "找到匹配项",
       "matchesFound": "找到 {count} 个匹配项",
-      "errorRegex": "无效的正则表达式"
+      "errorRegex": "无效的正则表达式",
+      "flagGlobal": "全局匹配 (g)",
+      "flagCaseInsensitive": "忽略大小写 (i)",
+      "flagMultiline": "多行模式 (m)",
+      "flagDotAll": "单行模式/点号匹配所有 (s)"
     },
     "TimestampConverter": {
       "title": "时间戳转换",

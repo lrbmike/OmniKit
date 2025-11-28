@@ -168,7 +168,11 @@
       "noMatch": "No matches found",
       "matchFound": "Match found",
       "matchesFound": "{count} matches found",
-      "errorRegex": "Invalid regular expression"
+      "errorRegex": "Invalid regular expression",
+      "flagGlobal": "Global (g)",
+      "flagCaseInsensitive": "Case Insensitive (i)",
+      "flagMultiline": "Multiline (m)",
+      "flagDotAll": "Dot All (s)"
     },
     "TimestampConverter": {
       "title": "Timestamp Converter",

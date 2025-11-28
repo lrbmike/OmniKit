@@ -247,7 +247,7 @@ async function main() {
         },
     });
 
-    const devTools = getToolsByCategory('developer').slice(0, 5); // First 5 dev tools
+    const devTools = getToolsByCategory('developer'); // All dev tools
     for (let i = 0; i < devTools.length; i++) {
         await prisma.menuItem.create({
             data: {
@@ -360,31 +360,6 @@ async function main() {
         });
     }
 
-    // Add top-level tools (Regex Tester and UUID Generator)
-    const regexTool = createdTools.find((t) => t.component === 'regex-tester');
-    const uuidTool = createdTools.find((t) => t.component === 'uuid-generator');
-
-    if (regexTool) {
-        await prisma.menuItem.create({
-            data: {
-                userId: 'default-admin',
-                toolId: regexTool.id,
-                order: 6,
-                isFolder: false,
-            },
-        });
-    }
-
-    if (uuidTool) {
-        await prisma.menuItem.create({
-            data: {
-                userId: 'default-admin',
-                toolId: uuidTool.id,
-                order: 7,
-                isFolder: false,
-            },
-        });
-    }
 
     console.log('✅ Default menu structure created');
 

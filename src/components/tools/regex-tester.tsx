@@ -17,10 +17,10 @@ export function RegexTester() {
     const [error, setError] = useState<string | null>(null);
 
     const allFlags = [
-        { value: 'g', label: 'Global (g)' },
-        { value: 'i', label: 'Case Insensitive (i)' },
-        { value: 'm', label: 'Multiline (m)' },
-        { value: 's', label: 'Dot All (s)' },
+        { value: 'g', label: t('flagGlobal') },
+        { value: 'i', label: t('flagCaseInsensitive') },
+        { value: 'm', label: t('flagMultiline') },
+        { value: 's', label: t('flagDotAll') },
     ];
 
     const handleFlagChange = (flag: string, checked: boolean) => {
