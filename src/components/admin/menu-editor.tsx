@@ -140,8 +140,8 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-[calc(100vh-200px)] min-h-[600px]">
             {/* Left Panel: Tool Library */}
-            <div className="lg:col-span-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 flex flex-col">
-                <div className="p-4 border-b border-gray-200 dark:border-gray-700">
+            <div className="lg:col-span-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 flex flex-col h-full overflow-hidden">
+                <div className="p-4 border-b border-gray-200 dark:border-gray-700 shrink-0">
                     <div className="flex justify-between items-start mb-2">
                         <h3 className="font-semibold">{t('toolLibrary')}</h3>
                     </div>
@@ -155,7 +155,7 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
                         />
                     </div>
                 </div>
-                <div className="flex-1 overflow-y-auto p-2 space-y-1 pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full">
+                <div className="flex-1 overflow-y-auto min-h-0 p-2 space-y-1 pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full">
                     {filteredTools.length === 0 && (
                         <div className="p-4 text-center text-sm text-gray-500">
                             {t('emptyLibrary')}
@@ -187,8 +187,8 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
             </div>
 
             {/* Right Panel: Menu Structure */}
-            <div className="lg:col-span-8 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 flex flex-col">
-                <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
+            <div className="lg:col-span-8 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 flex flex-col h-full overflow-hidden">
+                <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center shrink-0">
                     <div>
                         <h3 className="font-semibold">{t('menuStructure')}</h3>
                         <p className="text-xs text-gray-500">
@@ -233,7 +233,7 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
                         </Dialog>
                     </div>
                 </div>
-                <div className="flex-1 overflow-y-auto p-2 space-y-1 pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full">
+                <div className="flex-1 overflow-y-auto min-h-0 p-2 space-y-1 pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full">
                     {initialItems.length === 0 && (
                         <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-2">
                             <FolderOpen className="h-8 w-8 opacity-20" />

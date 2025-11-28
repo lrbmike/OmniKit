@@ -43,7 +43,7 @@
           "emptyMenu": "菜单为空",
           "emptyLibrary": "暂无可用工具",
           "deleteConfirm": "确定要删除此项吗？",
-          "successCreated": "文件夹已创建",
+          "successCreated": "文件夹创建成功",
           "successDeleted": "项目已删除",
           "successUpdated": "项目已更新",
           "successAdded": "工具已添加",
