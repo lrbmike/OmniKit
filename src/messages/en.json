@@ -100,6 +100,42 @@
       "download": "Download PNG",
       "downloadSuccess": "QR Code downloaded",
       "enterText": "Enter text to generate"
+    },
+    "ColorPicker": {
+      "title": "Color Picker",
+      "description": "Select, convert, and copy color formats",
+      "selectedColor": "Selected Color",
+      "formats": "Color Formats",
+      "hex": "HEX",
+      "rgb": "RGB",
+      "hsl": "HSL",
+      "copy": "Copy",
+      "copied": "Color copied to clipboard"
+    },
+    "Base64Encoder": {
+      "title": "Base64 Encoder/Decoder",
+      "description": "Encode and decode Base64 text",
+      "inputLabel": "Input Text",
+      "outputLabel": "Output Result",
+      "mode": "Mode",
+      "encode": "Encode",
+      "decode": "Decode",
+      "clear": "Clear",
+      "copy": "Copy",
+      "copied": "Copied to clipboard",
+      "errorDecode": "Invalid Base64 string"
+    },
+    "HashCalculator": {
+      "title": "Hash Calculator",
+      "description": "Calculate cryptographic hashes (MD5, SHA)",
+      "inputLabel": "Input Text",
+      "outputLabel": "Hash Output",
+      "algorithm": "Algorithm",
+      "uppercase": "Uppercase Output",
+      "autoUpdate": "Auto Update",
+      "calculate": "Calculate",
+      "copy": "Copy",
+      "copied": "Hash copied to clipboard"
     }
   }
 }

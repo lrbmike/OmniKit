@@ -4,6 +4,9 @@ import { getTranslations } from 'next-intl/server';
 import { PasswordGenerator } from '@/components/tools/password-generator';
 import { JsonFormatter } from '@/components/tools/json-formatter';
 import { QrCodeGenerator } from '@/components/tools/qr-code-generator';
+import { ColorPicker } from '@/components/tools/color-picker';
+import { Base64Encoder } from '@/components/tools/base64-encoder';
+import { HashCalculator } from '@/components/tools/hash-calculator';
 
 // Map component names to actual components
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -11,7 +14,9 @@ const TOOL_COMPONENTS: Record<string, React.ComponentType<any>> = {
     'password-generator': PasswordGenerator,
     'json-formatter': JsonFormatter,
     'qr-code-generator': QrCodeGenerator,
-    // Add other tools here as they are implemented
+    'color-picker': ColorPicker,
+    'base64-encoder': Base64Encoder,
+    'hash-calculator': HashCalculator,
 };
 
 export default async function ToolPage({

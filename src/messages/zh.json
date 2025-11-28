@@ -100,6 +100,42 @@
       "download": "下载 PNG",
       "downloadSuccess": "二维码已下载",
       "enterText": "输入文本以生成"
+    },
+    "ColorPicker": {
+      "title": "颜色选择器",
+      "description": "选择、转换和复制颜色格式",
+      "selectedColor": "选中的颜色",
+      "formats": "颜色格式",
+      "hex": "HEX",
+      "rgb": "RGB",
+      "hsl": "HSL",
+      "copy": "复制",
+      "copied": "颜色已复制到剪贴板"
+    },
+    "Base64Encoder": {
+      "title": "Base64 编解码",
+      "description": "Base64 文本编码和解码",
+      "inputLabel": "输入文本",
+      "outputLabel": "输出结果",
+      "mode": "模式",
+      "encode": "编码",
+      "decode": "解码",
+      "clear": "清空",
+      "copy": "复制",
+      "copied": "已复制到剪贴板",
+      "errorDecode": "无效的 Base64 字符串"
+    },
+    "HashCalculator": {
+      "title": "Hash 计算",
+      "description": "计算加密哈希值 (MD5, SHA)",
+      "inputLabel": "输入文本",
+      "outputLabel": "Hash 输出",
+      "algorithm": "算法",
+      "uppercase": "大写输出",
+      "autoUpdate": "自动更新",
+      "calculate": "计算",
+      "copy": "复制",
+      "copied": "Hash 已复制到剪贴板"
     }
   }
 }
