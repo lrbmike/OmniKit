@@ -12,6 +12,13 @@ import { MarkdownPreview } from '@/components/tools/markdown-preview';
 import { RegexTester } from '@/components/tools/regex-tester';
 import { TimestampConverter } from '@/components/tools/timestamp-converter';
 import { UuidGenerator } from '@/components/tools/uuid-generator';
+import { JwtDecoder } from '@/components/tools/jwt-decoder';
+import { GradientGenerator } from '@/components/tools/gradient-generator';
+import { ContrastChecker } from '@/components/tools/contrast-checker';
+import { ImageCompressor } from '@/components/tools/image-compressor';
+import { ImageToBase64 } from '@/components/tools/image-to-base64';
+import { TextDiff } from '@/components/tools/text-diff';
+import { WordCounter } from '@/components/tools/word-counter';
 
 // Map component names to actual components
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -27,6 +34,13 @@ const TOOL_COMPONENTS: Record<string, React.ComponentType<any>> = {
     'regex-tester': RegexTester,
     'timestamp-converter': TimestampConverter,
     'uuid-generator': UuidGenerator,
+    'jwt-decoder': JwtDecoder,
+    'gradient-generator': GradientGenerator,
+    'contrast-checker': ContrastChecker,
+    'image-compressor': ImageCompressor,
+    'image-to-base64': ImageToBase64,
+    'text-diff': TextDiff,
+    'word-counter': WordCounter,
 };
 
 export default async function ToolPage({

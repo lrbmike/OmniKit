@@ -195,6 +195,93 @@
       "generate": "Generate",
       "copy": "Copy",
       "copied": "Copied to clipboard"
+    },
+    "JwtDecoder": {
+      "title": "JWT Decoder",
+      "description": "Decode JSON Web Tokens",
+      "tokenLabel": "JWT Token",
+      "headerLabel": "Header",
+      "payloadLabel": "Payload",
+      "errorInvalid": "Invalid JWT token"
+    },
+    "GradientGenerator": {
+      "title": "Gradient Generator",
+      "description": "Create CSS gradients",
+      "type": "Type",
+      "linear": "Linear",
+      "radial": "Radial",
+      "direction": "Direction (deg)",
+      "colors": "Colors",
+      "cssLabel": "CSS Output",
+      "copy": "Copy CSS",
+      "copied": "CSS copied to clipboard"
+    },
+    "ContrastChecker": {
+      "title": "Contrast Checker",
+      "description": "Check color contrast accessibility",
+      "foregroundLabel": "Foreground Color",
+      "backgroundLabel": "Background Color",
+      "ratioLabel": "Contrast Ratio",
+      "preview": "Preview",
+      "pass": "Pass",
+      "fail": "Fail",
+      "normalText": "Normal Text",
+      "largeText": "Large Text",
+      "sampleText": "The quick brown fox jumps over the lazy dog."
+    },
+    "ImageCompressor": {
+      "title": "Image Compressor",
+      "description": "Compress and optimize images",
+      "uploadLabel": "Upload Image",
+      "dragDrop": "Drag & drop or click to upload",
+      "settingsLabel": "Settings",
+      "qualityLabel": "Quality",
+      "maxWidthLabel": "Max Width",
+      "compress": "Compress",
+      "download": "Download",
+      "originalSize": "Original Size",
+      "compressedSize": "Compressed Size",
+      "compressionRatio": "Saved",
+      "errorUpload": "Please upload an image first",
+      "errorCompression": "Compression failed"
+    },
+    "ImageToBase64": {
+      "title": "Image Base64 Converter",
+      "description": "Convert between Image and Base64 string",
+      "mode": "Mode",
+      "imageToBase64": "Image to Base64",
+      "base64ToImage": "Base64 to Image",
+      "uploadLabel": "Upload Image",
+      "dragDrop": "Drag & drop or click to upload",
+      "inputLabel": "Base64 String",
+      "outputLabel": "Base64 Output",
+      "previewLabel": "Image Preview",
+      "copy": "Copy Base64",
+      "download": "Download Text File",
+      "downloadImage": "Download Image",
+      "copied": "Base64 copied to clipboard",
+      "errorUpload": "Please upload an image first",
+      "errorInvalid": "Invalid Base64 image string"
+    },
+    "TextDiff": {
+      "title": "Text Diff",
+      "description": "Compare two texts and highlight differences",
+      "originalLabel": "Original Text",
+      "modifiedLabel": "Modified Text",
+      "diffLabel": "Differences",
+      "noDiff": "No differences found",
+      "diffFound": "Differences found"
+    },
+    "WordCounter": {
+      "title": "Word Counter",
+      "description": "Count characters, words, and lines",
+      "inputLabel": "Input Text",
+      "statsLabel": "Statistics",
+      "characters": "Characters",
+      "words": "Words",
+      "lines": "Lines",
+      "paragraphs": "Paragraphs",
+      "noText": "Start typing to see statistics..."
     }
   }
 }
