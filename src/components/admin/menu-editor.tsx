@@ -17,13 +17,39 @@ import {
 } from "@/components/ui/dialog";
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
+import { useTranslations } from 'next-intl';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type MenuItem = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Tool = any;
 
+const getAllUsedToolIds = (items: MenuItem[]): string[] => {
+    let ids: string[] = [];
+    for (const item of items) {
+        if (item.toolId) {
+            ids.push(item.toolId);
+        }
+        if (item.children && item.children.length > 0) {
+            ids = [...ids, ...getAllUsedToolIds(item.children)];
+        }
+    }
+    return ids;
+};
+
+const findFolderName = (items: MenuItem[], id: string): string | null => {
+    for (const item of items) {
+        if (item.id === id) return item.label || item.tool?.name || 'Unknown';
+        if (item.children) {
+            const found = findFolderName(item.children, id);
+            if (found) return found;
+        }
+    }
+    return null;
+};
+
 export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], tools: Tool[] }) {
+    const t = useTranslations('Settings.pages.menu.editor');
     const router = useRouter();
     const [isCreatingFolder, setIsCreatingFolder] = useState(false);
     const [newFolderName, setNewFolderName] = useState('');
@@ -41,7 +67,7 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
         setNewFolderName('');
 
         if (result.success) {
-            toast.success('Folder created');
+            toast.success(t('successCreated'));
             router.refresh();
         } else {
             toast.error(result.error);
@@ -49,11 +75,11 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
     };
 
     const handleDelete = async (id: string) => {
-        if (!confirm('Are you sure you want to delete this item?')) return;
+        if (!confirm(t('deleteConfirm'))) return;
 
         const result = await deleteMenuItem(id);
         if (result.success) {
-            toast.success('Item deleted');
+            toast.success(t('successDeleted'));
             if (selectedFolderId === id) setSelectedFolderId(null);
             router.refresh();
         } else {
@@ -73,7 +99,7 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
     const handleAddTool = async (toolId: string) => {
         const result = await addToolToMenu(toolId, selectedFolderId);
         if (result.success) {
-            toast.success('Tool added to menu');
+            toast.success(t('successAdded'));
             router.refresh();
         } else {
             toast.error(result.error);
@@ -93,7 +119,7 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
     const saveEdit = async (id: string) => {
         const result = await updateMenuItem(id, { label: editLabel });
         if (result.success) {
-            toast.success('Item updated');
+            toast.success(t('successUpdated'));
             setEditingId(null);
             router.refresh();
         } else {
@@ -101,21 +127,28 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
         }
     };
 
-    const filteredTools = tools.filter(t => 
+    const usedToolIds = getAllUsedToolIds(initialItems);
+    const availableTools = tools.filter(t => !usedToolIds.includes(t.id));
+
+    const filteredTools = availableTools.filter(t => 
         t.name.toLowerCase().includes(toolSearch.toLowerCase()) || 
         t.nameEn?.toLowerCase().includes(toolSearch.toLowerCase())
     );
+
+    const targetFolderName = selectedFolderId ? (findFolderName(initialItems, selectedFolderId) || 'Unknown') : 'Root Directory';
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 h-[calc(100vh-200px)] min-h-[600px]">
             {/* Left Panel: Tool Library */}
             <div className="lg:col-span-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 flex flex-col">
                 <div className="p-4 border-b border-gray-200 dark:border-gray-700">
-                    <h3 className="font-semibold mb-2">Tool Library</h3>
+                    <div className="flex justify-between items-start mb-2">
+                        <h3 className="font-semibold">{t('toolLibrary')}</h3>
+                    </div>
                     <div className="relative">
                         <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
                         <Input
-                            placeholder="Search tools..."
+                            placeholder={t('searchPlaceholder')}
                             className="pl-9"
                             value={toolSearch}
                             onChange={(e) => setToolSearch(e.target.value)}
@@ -123,6 +156,11 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
                     </div>
                 </div>
                 <div className="flex-1 overflow-y-auto p-2 space-y-1">
+                    {filteredTools.length === 0 && (
+                        <div className="p-4 text-center text-sm text-gray-500">
+                            {t('emptyLibrary')}
+                        </div>
+                    )}
                     {filteredTools.map(tool => (
                         <div key={tool.id} className="flex items-center justify-between p-3 rounded-md border border-transparent hover:bg-gray-50 dark:hover:bg-gray-750 hover:border-gray-200 dark:hover:border-gray-700 group transition-all">
                             <div className="flex items-center gap-3">
@@ -134,7 +172,13 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
                                     <div className="text-xs text-gray-500">{tool.nameEn}</div>
                                 </div>
                             </div>
-                            <Button size="sm" variant="ghost" className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100" onClick={() => handleAddTool(tool.id)}>
+                            <Button 
+                                size="sm" 
+                                variant="ghost" 
+                                className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100 hover:bg-primary/10 hover:text-primary" 
+                                onClick={() => handleAddTool(tool.id)}
+                                title={selectedFolderId ? t('addToFolder', { folder: targetFolderName }) : t('addToRoot')}
+                            >
                                 <Plus className="h-4 w-4" />
                             </Button>
                         </div>
@@ -146,45 +190,43 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
             <div className="lg:col-span-8 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 flex flex-col">
                 <div className="p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center">
                     <div>
-                        <h3 className="font-semibold">Menu Structure</h3>
+                        <h3 className="font-semibold">{t('menuStructure')}</h3>
                         <p className="text-xs text-gray-500">
-                            {selectedFolderId 
-                                ? "Adding to selected folder" 
-                                : "Adding to root directory"}
+                            {t('selectFolderHint')}
                         </p>
                     </div>
                     <div className="flex gap-2">
                          {selectedFolderId && (
                             <Button variant="ghost" size="sm" onClick={() => setSelectedFolderId(null)}>
-                                Clear Selection
+                                {t('clearSelection')}
                             </Button>
                         )}
                         <Dialog>
                             <DialogTrigger asChild>
                                 <Button size="sm">
                                     <FolderPlus className="mr-2 h-4 w-4" />
-                                    New Folder
+                                    {t('newFolder')}
                                 </Button>
                             </DialogTrigger>
                             <DialogContent>
                                 <DialogHeader>
-                                    <DialogTitle>Create New Folder</DialogTitle>
+                                    <DialogTitle>{t('newFolder')}</DialogTitle>
                                 </DialogHeader>
                                 <div className="space-y-4 py-4">
                                     <div className="space-y-2">
-                                        <Label htmlFor="name">Folder Name</Label>
+                                        <Label htmlFor="name">{t('folderName')}</Label>
                                         <Input
                                             id="name"
                                             value={newFolderName}
                                             onChange={(e) => setNewFolderName(e.target.value)}
-                                            placeholder="e.g., Development Tools"
+                                            placeholder={t('folderNamePlaceholder')}
                                         />
                                         <p className="text-xs text-muted-foreground">
-                                            {selectedFolderId ? "Will be created inside selected folder." : "Will be created at root level."}
+                                            {selectedFolderId ? t('folderLocationHintSelected') : t('folderLocationHintRoot')}
                                         </p>
                                     </div>
                                     <Button onClick={handleCreateFolder} disabled={isCreatingFolder} className="w-full">
-                                        Create Folder
+                                        {t('createFolder')}
                                     </Button>
                                 </div>
                             </DialogContent>
@@ -195,7 +237,7 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
                     {initialItems.length === 0 && (
                         <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-2">
                             <FolderOpen className="h-8 w-8 opacity-20" />
-                            <p>Menu is empty</p>
+                            <p>{t('emptyMenu')}</p>
                         </div>
                     )}
 

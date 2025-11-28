@@ -25,7 +25,30 @@
     "pages": {
       "menu": {
         "title": "Menu Management",
-        "description": "Customize the sidebar menu structure. Create folders and organize your tools."
+        "description": "Customize the sidebar menu structure. Create folders and organize your tools.",
+        "editor": {
+          "toolLibrary": "Tool Library",
+          "searchPlaceholder": "Search tools...",
+          "menuStructure": "Menu Structure",
+          "selectFolderHint": "Click a folder to select as destination.",
+          "addToRoot": "Add to Root Directory",
+          "addToFolder": "Add to: {folder}",
+          "newFolder": "New Folder",
+          "createFolder": "Create Folder",
+          "folderName": "Folder Name",
+          "folderNamePlaceholder": "e.g., Development Tools",
+          "folderLocationHintRoot": "Will be created at root level.",
+          "folderLocationHintSelected": "Will be created inside selected folder.",
+          "clearSelection": "Clear Selection",
+          "emptyMenu": "Menu is empty",
+          "emptyLibrary": "No available tools found",
+          "deleteConfirm": "Are you sure you want to delete this item?",
+          "successCreated": "Folder created",
+          "successDeleted": "Item deleted",
+          "successUpdated": "Item updated",
+          "successAdded": "Tool added to menu",
+          "folderBadge": "Folder"
+        }
       },
       "system": {
         "title": "System Settings",
