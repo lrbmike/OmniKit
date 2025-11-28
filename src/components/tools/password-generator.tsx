@@ -137,7 +137,7 @@ export function PasswordGenerator() {
             </Card>
 
             {/* Right Panel: Result */}
-            <Card className="flex-1 bg-muted/30 flex flex-col p-6 border-dashed">
+            <Card className="flex-1 flex flex-col p-6 border-dashed">
                 <div className="flex-1 flex flex-col space-y-4 h-full overflow-hidden">
                     <div className="flex items-center justify-between">
                         <h3 className="text-lg font-medium text-muted-foreground">Generated Passwords</h3>

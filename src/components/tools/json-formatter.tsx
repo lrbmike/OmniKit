@@ -84,7 +84,7 @@ export function JsonFormatter() {
             </div>
 
             {/* Right Panel: Output */}
-            <Card className="flex-1 flex flex-col bg-muted/30">
+            <Card className="flex-1 flex flex-col">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
                         {t('outputLabel')}

@@ -170,7 +170,7 @@ export function QrCodeGenerator() {
             </Card>
 
             {/* Right Panel: Preview */}
-            <Card className="flex-1 bg-muted/30 flex flex-col justify-center items-center p-8 border-dashed">
+            <Card className="flex-1 flex flex-col justify-center items-center p-8 border-dashed">
                 <div className="flex flex-col items-center gap-8">
                     <div className="bg-white p-4 rounded-lg shadow-sm">
                         {dataUrl ? (

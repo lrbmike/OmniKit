@@ -109,7 +109,7 @@ export function ColorPicker() {
             </Card>
 
             {/* Right Panel: Result */}
-            <Card className="flex-1 bg-muted/30 flex flex-col p-6 border-dashed">
+            <Card className="flex-1 flex flex-col p-6 border-dashed">
                  <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         {t('formats')}

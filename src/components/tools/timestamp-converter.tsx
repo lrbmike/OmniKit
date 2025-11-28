@@ -125,7 +125,7 @@ export function TimestampConverter() {
             </Card>
 
             {/* Right Panel: Result */}
-            <Card className="flex-1 bg-muted/30 flex flex-col border-dashed overflow-hidden">
+            <Card className="flex-1 flex flex-col border-dashed overflow-hidden">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
                         Result
