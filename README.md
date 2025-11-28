@@ -12,6 +12,36 @@ A robust, extensible admin system built with Next.js 15, designed to manage mult
 - **Internationalization**: Full i18n support (English & Chinese) via `next-intl`
 - **State Management**: Zustand
 
+## 🧰 Available Tools (18)
+
+### Developer Tools
+- **JSON Formatter**: Format, minify, and validate JSON.
+- **Base64 Encoder**: Encode and decode Base64 text.
+- **URL Encoder**: Encode and decode URL parameters.
+- **Markdown Preview**: Real-time Markdown editor and preview.
+- **Regex Tester**: Test regular expressions against text.
+- **Timestamp Converter**: Convert between Unix timestamp and date.
+- **UUID Generator**: Generate random UUIDs (v4).
+
+### Security Tools
+- **Password Generator**: Generate secure random passwords.
+- **Hash Calculator**: Calculate MD5, SHA1, SHA256 hashes.
+- **JWT Decoder**: Decode and inspect JSON Web Tokens.
+
+### Color Tools
+- **Color Picker**: Select and convert colors (HEX, RGB, HSL).
+- **Gradient Generator**: Create CSS linear and radial gradients.
+- **Contrast Checker**: Check WCAG color contrast accessibility.
+
+### Image Tools
+- **QR Code Generator**: Generate and download QR codes.
+- **Image Compressor**: Compress and optimize images.
+- **Image to Base64**: Convert images to Base64 strings (and vice-versa).
+
+### Text Tools
+- **Text Diff**: Compare two texts and highlight differences.
+- **Word Counter**: Count characters, words, lines, and paragraphs.
+
 ## 🛠️ Getting Started
 
 ### Prerequisites
@@ -77,4 +107,3 @@ Support for multiple languages is built-in.
 
 - [Requirements Specification](docs/requirements.md)
 - [Dependencies](docs/dependencies.md)
-
