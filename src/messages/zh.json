@@ -12,6 +12,38 @@
     "description": "抱歉，我们无法找到您正在寻找的页面。",
     "backToHome": "返回首页"
   },
+  "Settings": {
+    "title": "设置",
+    "description": "管理您的账户设置和系统偏好。",
+    "backToDashboard": "返回仪表盘",
+    "nav": {
+      "menu": "菜单管理",
+      "system": "系统设置",
+      "database": "数据库",
+      "apiKeys": "API 密钥"
+    },
+    "pages": {
+      "menu": {
+        "title": "菜单管理",
+        "description": "自定义侧边栏菜单结构。创建文件夹并整理您的工具。"
+      },
+      "system": {
+        "title": "系统设置",
+        "description": "配置全局系统偏好。",
+        "comingSoon": "系统设置功能（默认语言、主题、会话超时）即将推出。"
+      },
+      "database": {
+        "title": "数据库设置",
+        "description": "配置数据库连接和迁移设置。",
+        "comingSoon": "数据库配置功能（切换数据库、连接测试）即将推出。"
+      },
+      "apiKeys": {
+        "title": "API 密钥",
+        "description": "管理外部集成 API 密钥。",
+        "comingSoon": "API 密钥管理功能即将推出。"
+      }
+    }
+  },
   "Auth": {
     "loginTitle": "登录",
     "loginDesc": "输入您的邮箱以登录您的账户。",

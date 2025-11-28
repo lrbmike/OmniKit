@@ -3,12 +3,15 @@
 import { LanguageSwitcher } from '@/components/language-switcher';
 import { Button } from '@/components/ui/button';
 import { logout } from '@/actions/auth';
-import { LogOut, Menu } from 'lucide-react';
+import { LogOut, Menu, Settings } from 'lucide-react';
 import { useSidebarStore } from '@/store/sidebar-store';
 import { ThemeToggle } from '@/components/theme-toggle';
+import Link from 'next/link';
+import { useLocale } from 'next-intl';
 
 export function Header() {
     const toggleSidebar = useSidebarStore((state) => state.toggle);
+    const locale = useLocale();
 
     return (
         <header className="flex items-center justify-between px-6 py-4 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
@@ -22,6 +25,11 @@ export function Header() {
             <div className="flex items-center space-x-2">
                 <ThemeToggle />
                 <LanguageSwitcher />
+                <Link href={`/${locale}/admin/settings/menu`}>
+                    <Button variant="ghost" size="icon" title="Settings">
+                        <Settings className="h-5 w-5" />
+                    </Button>
+                </Link>
                 <Button variant="ghost" size="icon" onClick={() => logout()} title="Logout">
                     <LogOut className="h-5 w-5" />
                 </Button>

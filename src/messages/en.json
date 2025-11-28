@@ -12,6 +12,38 @@
     "description": "Sorry, we couldn't find the page you're looking for.",
     "backToHome": "Go back home"
   },
+  "Settings": {
+    "title": "Settings",
+    "description": "Manage your account settings and system preferences.",
+    "backToDashboard": "Back to Dashboard",
+    "nav": {
+      "menu": "Menu Management",
+      "system": "System Settings",
+      "database": "Database",
+      "apiKeys": "API Keys"
+    },
+    "pages": {
+      "menu": {
+        "title": "Menu Management",
+        "description": "Customize the sidebar menu structure. Create folders and organize your tools."
+      },
+      "system": {
+        "title": "System Settings",
+        "description": "Configure global system preferences.",
+        "comingSoon": "System settings features (Language default, Theme default, Session timeout) are coming soon."
+      },
+      "database": {
+        "title": "Database Settings",
+        "description": "Configure database connection and migration settings.",
+        "comingSoon": "Database configuration features (Switch to MySQL/PostgreSQL, Connection Test) are coming soon."
+      },
+      "apiKeys": {
+        "title": "API Keys",
+        "description": "Manage API keys for external integrations.",
+        "comingSoon": "API Key management features are coming soon."
+      }
+    }
+  },
   "Auth": {
     "loginTitle": "Login",
     "loginDesc": "Enter your email below to login to your account.",
