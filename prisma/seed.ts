@@ -231,10 +231,6 @@ async function main() {
     // Create default menu structure
     console.log('📁 Creating default menu structure...');
 
-    // Helper function to get tools by category
-    const getToolsByCategory = (category: string) =>
-        createdTools.filter((t) => t.category === category);
-
     // Developer Tools Folder
     const devFolder = await prisma.menuItem.create({
         data: {
@@ -247,7 +243,11 @@ async function main() {
         },
     });
 
-    const devTools = getToolsByCategory('developer'); // All dev tools
+    // Filter specific developer tools: json-formatter, url-encoder
+    const devTools = createdTools.filter(t => 
+        t.category === 'developer' && ['json-formatter', 'url-encoder'].includes(t.component)
+    );
+    
     for (let i = 0; i < devTools.length; i++) {
         await prisma.menuItem.create({
             data: {
@@ -272,88 +272,17 @@ async function main() {
         },
     });
 
-    const securityTools = getToolsByCategory('security');
+    // Filter specific security tools: password-generator
+    const securityTools = createdTools.filter(t => 
+        t.category === 'security' && ['password-generator'].includes(t.component)
+    );
+
     for (let i = 0; i < securityTools.length; i++) {
         await prisma.menuItem.create({
             data: {
                 userId: 'default-admin',
                 parentId: securityFolder.id,
                 toolId: securityTools[i].id,
-                order: i + 1,
-                isFolder: false,
-            },
-        });
-    }
-
-    // Color Tools Folder
-    const colorFolder = await prisma.menuItem.create({
-        data: {
-            userId: 'default-admin',
-            label: '颜色工具',
-            labelEn: 'Color Tools',
-            icon: 'Palette',
-            isFolder: true,
-            order: 3,
-        },
-    });
-
-    const colorTools = getToolsByCategory('color');
-    for (let i = 0; i < colorTools.length; i++) {
-        await prisma.menuItem.create({
-            data: {
-                userId: 'default-admin',
-                parentId: colorFolder.id,
-                toolId: colorTools[i].id,
-                order: i + 1,
-                isFolder: false,
-            },
-        });
-    }
-
-    // Image Tools Folder
-    const imageFolder = await prisma.menuItem.create({
-        data: {
-            userId: 'default-admin',
-            label: '图像工具',
-            labelEn: 'Image Tools',
-            icon: 'Image',
-            isFolder: true,
-            order: 4,
-        },
-    });
-
-    const imageTools = getToolsByCategory('image');
-    for (let i = 0; i < imageTools.length; i++) {
-        await prisma.menuItem.create({
-            data: {
-                userId: 'default-admin',
-                parentId: imageFolder.id,
-                toolId: imageTools[i].id,
-                order: i + 1,
-                isFolder: false,
-            },
-        });
-    }
-
-    // Text Tools Folder
-    const textFolder = await prisma.menuItem.create({
-        data: {
-            userId: 'default-admin',
-            label: '文本工具',
-            labelEn: 'Text Tools',
-            icon: 'FileText',
-            isFolder: true,
-            order: 5,
-        },
-    });
-
-    const textTools = getToolsByCategory('text');
-    for (let i = 0; i < textTools.length; i++) {
-        await prisma.menuItem.create({
-            data: {
-                userId: 'default-admin',
-                parentId: textFolder.id,
-                toolId: textTools[i].id,
                 order: i + 1,
                 isFolder: false,
             },

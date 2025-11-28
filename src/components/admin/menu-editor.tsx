@@ -155,7 +155,7 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
                         />
                     </div>
                 </div>
-                <div className="flex-1 overflow-y-auto p-2 space-y-1">
+                <div className="flex-1 overflow-y-auto p-2 space-y-1 pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full">
                     {filteredTools.length === 0 && (
                         <div className="p-4 text-center text-sm text-gray-500">
                             {t('emptyLibrary')}
@@ -233,7 +233,7 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
                         </Dialog>
                     </div>
                 </div>
-                <div className="flex-1 overflow-y-auto p-2 space-y-1">
+                <div className="flex-1 overflow-y-auto p-2 space-y-1 pr-2 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-thumb]:bg-gray-600 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-thumb]:rounded-full">
                     {initialItems.length === 0 && (
                         <div className="h-full flex flex-col items-center justify-center text-gray-500 gap-2">
                             <FolderOpen className="h-8 w-8 opacity-20" />
