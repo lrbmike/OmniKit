@@ -136,6 +136,61 @@
       "calculate": "计算",
       "copy": "复制",
       "copied": "Hash 已复制到剪贴板"
+    },
+    "UrlEncoder": {
+      "title": "URL 编解码",
+      "description": "编码和解码 URL 参数",
+      "inputLabel": "输入文本",
+      "outputLabel": "输出结果",
+      "mode": "模式",
+      "encode": "编码",
+      "decode": "解码",
+      "clear": "清空",
+      "copy": "复制",
+      "copied": "已复制到剪贴板",
+      "errorDecode": "无效的 URL 编码"
+    },
+    "MarkdownPreview": {
+      "title": "Markdown 预览",
+      "description": "实时 Markdown 编辑和预览",
+      "inputLabel": "Markdown 输入",
+      "previewLabel": "预览",
+      "clear": "清空",
+      "sample": "# 你好世界\n\n这是一段 **粗体** 文本，这是一段 *斜体*。\n\n- 列表项 1\n- 列表项 2\n\n[链接](https://example.com)"
+    },
+    "RegexTester": {
+      "title": "正则表达式测试",
+      "description": "测试正则表达式匹配",
+      "regexLabel": "正则表达式",
+      "textLabel": "测试文本",
+      "resultLabel": "匹配结果",
+      "flags": "修饰符",
+      "noMatch": "未找到匹配项",
+      "matchFound": "找到匹配项",
+      "matchesFound": "找到 {count} 个匹配项",
+      "errorRegex": "无效的正则表达式"
+    },
+    "TimestampConverter": {
+      "title": "时间戳转换",
+      "description": "Unix 时间戳与日期互转",
+      "timestampLabel": "Unix 时间戳",
+      "dateLabel": "日期时间",
+      "now": "当前时间",
+      "convert": "转换",
+      "copy": "复制",
+      "localTime": "本地时间",
+      "utcTime": "UTC 时间",
+      "inputPlaceholder": "输入时间戳或日期字符串"
+    },
+    "UuidGenerator": {
+      "title": "UUID 生成器",
+      "description": "生成随机 UUID (v4)",
+      "quantity": "生成数量",
+      "hyphens": "连字符",
+      "uppercase": "大写",
+      "generate": "生成",
+      "copy": "复制",
+      "copied": "已复制到剪贴板"
     }
   }
 }

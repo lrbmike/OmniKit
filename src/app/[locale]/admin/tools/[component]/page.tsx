@@ -7,6 +7,11 @@ import { QrCodeGenerator } from '@/components/tools/qr-code-generator';
 import { ColorPicker } from '@/components/tools/color-picker';
 import { Base64Encoder } from '@/components/tools/base64-encoder';
 import { HashCalculator } from '@/components/tools/hash-calculator';
+import { UrlEncoder } from '@/components/tools/url-encoder';
+import { MarkdownPreview } from '@/components/tools/markdown-preview';
+import { RegexTester } from '@/components/tools/regex-tester';
+import { TimestampConverter } from '@/components/tools/timestamp-converter';
+import { UuidGenerator } from '@/components/tools/uuid-generator';
 
 // Map component names to actual components
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -17,6 +22,11 @@ const TOOL_COMPONENTS: Record<string, React.ComponentType<any>> = {
     'color-picker': ColorPicker,
     'base64-encoder': Base64Encoder,
     'hash-calculator': HashCalculator,
+    'url-encoder': UrlEncoder,
+    'markdown-preview': MarkdownPreview,
+    'regex-tester': RegexTester,
+    'timestamp-converter': TimestampConverter,
+    'uuid-generator': UuidGenerator,
 };
 
 export default async function ToolPage({

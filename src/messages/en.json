@@ -136,6 +136,61 @@
       "calculate": "Calculate",
       "copy": "Copy",
       "copied": "Hash copied to clipboard"
+    },
+    "UrlEncoder": {
+      "title": "URL Encoder/Decoder",
+      "description": "Encode and decode URL parameters",
+      "inputLabel": "Input Text",
+      "outputLabel": "Output Result",
+      "mode": "Mode",
+      "encode": "Encode",
+      "decode": "Decode",
+      "clear": "Clear",
+      "copy": "Copy",
+      "copied": "Copied to clipboard",
+      "errorDecode": "Invalid URL encoding"
+    },
+    "MarkdownPreview": {
+      "title": "Markdown Preview",
+      "description": "Real-time Markdown editor and preview",
+      "inputLabel": "Markdown Input",
+      "previewLabel": "Preview",
+      "clear": "Clear",
+      "sample": "# Hello World\n\nThis is a **bold** text and this is *italic*.\n\n- List item 1\n- List item 2\n\n[Link](https://example.com)"
+    },
+    "RegexTester": {
+      "title": "Regex Tester",
+      "description": "Test regular expressions against text",
+      "regexLabel": "Regular Expression",
+      "textLabel": "Test String",
+      "resultLabel": "Matches",
+      "flags": "Flags",
+      "noMatch": "No matches found",
+      "matchFound": "Match found",
+      "matchesFound": "{count} matches found",
+      "errorRegex": "Invalid regular expression"
+    },
+    "TimestampConverter": {
+      "title": "Timestamp Converter",
+      "description": "Convert between Unix timestamp and date",
+      "timestampLabel": "Unix Timestamp",
+      "dateLabel": "Date Time",
+      "now": "Now",
+      "convert": "Convert",
+      "copy": "Copy",
+      "localTime": "Local Time",
+      "utcTime": "UTC Time",
+      "inputPlaceholder": "Enter timestamp or date string"
+    },
+    "UuidGenerator": {
+      "title": "UUID Generator",
+      "description": "Generate UUIDs (v4)",
+      "quantity": "Quantity",
+      "hyphens": "Hyphens",
+      "uppercase": "Uppercase",
+      "generate": "Generate",
+      "copy": "Copy",
+      "copied": "Copied to clipboard"
     }
   }
 }
