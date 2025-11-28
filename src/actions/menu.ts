@@ -20,6 +20,46 @@ export async function getMenuItems() {
     });
 }
 
+export async function getTools() {
+    return await db.tool.findMany({
+        orderBy: { category: 'asc' },
+    });
+}
+
+export async function addToolToMenu(toolId: string, parentId: string | null = null) {
+    try {
+        const tool = await db.tool.findUnique({ where: { id: toolId } });
+        if (!tool) return { success: false, error: 'Tool not found' };
+
+        // Get max order
+        const maxOrder = await db.menuItem.findFirst({
+            where: {
+                userId: 'default-admin',
+                parentId
+            },
+            orderBy: { order: 'desc' },
+        });
+
+        const newOrder = (maxOrder?.order ?? -1) + 1;
+
+        await db.menuItem.create({
+            data: {
+                userId: 'default-admin',
+                toolId,
+                parentId,
+                order: newOrder,
+            },
+        });
+
+        revalidatePath('/[locale]/admin/settings/menu', 'page');
+        revalidatePath('/', 'layout');
+        return { success: true };
+    } catch (error) {
+        console.error('Add tool to menu error:', error);
+        return { success: false, error: 'Failed to add tool to menu' };
+    }
+}
+
 export async function createFolder(name: string, parentId: string | null = null) {
     try {
         // Get max order
