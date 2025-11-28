@@ -47,7 +47,7 @@ export function GradientGenerator() {
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Droplet className="h-5 w-5" />
-                        Configuration
+                        {t('configuration')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col space-y-6">
@@ -120,7 +120,7 @@ export function GradientGenerator() {
             <Card className="flex-1 flex flex-col border-dashed overflow-hidden">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                        Preview
+                        {t('preview')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 p-6 flex flex-col space-y-6">

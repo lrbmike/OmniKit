@@ -19,7 +19,7 @@ export function MarkdownPreview() {
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <FileText className="h-5 w-5" />
-                        Editor
+                        {t('editor')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col space-y-2">
@@ -40,7 +40,7 @@ export function MarkdownPreview() {
                         className="flex-1 w-full p-4 font-mono text-sm bg-muted/20 border rounded-md resize-none focus:ring-2 focus:ring-primary focus:outline-none"
                         value={input}
                         onChange={(e) => setInput(e.target.value)}
-                        placeholder="# Markdown here..."
+                        placeholder={t('inputPlaceholder')}
                     />
                 </CardContent>
             </Card>

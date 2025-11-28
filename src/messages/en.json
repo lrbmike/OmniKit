@@ -156,7 +156,9 @@
       "inputLabel": "Markdown Input",
       "previewLabel": "Preview",
       "clear": "Clear",
-      "sample": "# Hello World\n\nThis is a **bold** text and this is *italic*.\n\n- List item 1\n- List item 2\n\n[Link](https://example.com)"
+      "sample": "# Hello World\n\nThis is a **bold** text and this is *italic*.\n\n- List item 1\n- List item 2\n\n[Link](https://example.com)",
+      "editor": "Editor",
+      "inputPlaceholder": "Markdown here..."
     },
     "RegexTester": {
       "title": "Regex Tester",
@@ -172,7 +174,9 @@
       "flagGlobal": "Global (g)",
       "flagCaseInsensitive": "Case Insensitive (i)",
       "flagMultiline": "Multiline (m)",
-      "flagDotAll": "Dot All (s)"
+      "flagDotAll": "Dot All (s)",
+      "configuration": "Configuration",
+      "inputPlaceholder": "Enter text to test..."
     },
     "TimestampConverter": {
       "title": "Timestamp Converter",
@@ -184,7 +188,10 @@
       "copy": "Copy",
       "localTime": "Local Time",
       "utcTime": "UTC Time",
-      "inputPlaceholder": "Enter timestamp or date string"
+      "inputPlaceholder": "Enter timestamp or date string",
+      "configuration": "Configuration",
+      "result": "Result",
+      "timestampPlaceholder": "e.g. 1672531200"
     },
     "UuidGenerator": {
       "title": "UUID Generator",
@@ -194,7 +201,10 @@
       "uppercase": "Uppercase",
       "generate": "Generate",
       "copy": "Copy",
-      "copied": "Copied to clipboard"
+      "copied": "Copied to clipboard",
+      "configuration": "Configuration",
+      "generatedUuids": "Generated UUIDs",
+      "outputPlaceholder": "Generated UUIDs will appear here..."
     },
     "JwtDecoder": {
       "title": "JWT Decoder",
@@ -202,7 +212,10 @@
       "tokenLabel": "JWT Token",
       "headerLabel": "Header",
       "payloadLabel": "Payload",
-      "errorInvalid": "Invalid JWT token"
+      "errorInvalid": "Invalid JWT token",
+      "input": "Input",
+      "clear": "Clear",
+      "decoded": "Decoded"
     },
     "GradientGenerator": {
       "title": "Gradient Generator",
@@ -214,7 +227,9 @@
       "colors": "Colors",
       "cssLabel": "CSS Output",
       "copy": "Copy CSS",
-      "copied": "CSS copied to clipboard"
+      "copied": "CSS copied to clipboard",
+      "configuration": "Configuration",
+      "preview": "Preview"
     },
     "ContrastChecker": {
       "title": "Contrast Checker",
@@ -227,7 +242,8 @@
       "fail": "Fail",
       "normalText": "Normal Text",
       "largeText": "Large Text",
-      "sampleText": "The quick brown fox jumps over the lazy dog."
+      "sampleText": "The quick brown fox jumps over the lazy dog.",
+      "configuration": "Configuration"
     },
     "ImageCompressor": {
       "title": "Image Compressor",
@@ -243,7 +259,12 @@
       "compressedSize": "Compressed Size",
       "compressionRatio": "Saved",
       "errorUpload": "Please upload an image first",
-      "errorCompression": "Compression failed"
+      "errorCompression": "Compression failed",
+      "configuration": "Configuration",
+      "result": "Result",
+      "compressing": "Compressing...",
+      "readyToCompress": "Ready to compress",
+      "uploadPrompt": "Upload an image to start"
     },
     "ImageToBase64": {
       "title": "Image Base64 Converter",
@@ -261,7 +282,12 @@
       "downloadImage": "Download Image",
       "copied": "Base64 copied to clipboard",
       "errorUpload": "Please upload an image first",
-      "errorInvalid": "Invalid Base64 image string"
+      "errorInvalid": "Invalid Base64 image string",
+      "input": "Input",
+      "clear": "Clear",
+      "placeholderBase64": "Paste Base64 string here...",
+      "placeholderOutput": "Base64 string will appear here...",
+      "previewPrompt": "Image preview will appear here"
     },
     "TextDiff": {
       "title": "Text Diff",
@@ -270,7 +296,15 @@
       "modifiedLabel": "Modified Text",
       "diffLabel": "Differences",
       "noDiff": "No differences found",
-      "diffFound": "Differences found"
+      "diffFound": "Differences found",
+      "input": "Input",
+      "diffType": "Diff Type",
+      "chars": "Chars",
+      "words": "Words",
+      "lines": "Lines",
+      "placeholderOriginal": "Original text...",
+      "placeholderModified": "Modified text...",
+      "enterText": "Enter text to compare"
     },
     "WordCounter": {
       "title": "Word Counter",
@@ -281,7 +315,9 @@
       "words": "Words",
       "lines": "Lines",
       "paragraphs": "Paragraphs",
-      "noText": "Start typing to see statistics..."
+      "noText": "Start typing to see statistics...",
+      "input": "Input",
+      "clear": "Clear"
     }
   }
 }

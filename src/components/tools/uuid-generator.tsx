@@ -41,7 +41,7 @@ export function UuidGenerator() {
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Hash className="h-5 w-5" />
-                        Configuration
+                        {t('configuration')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col space-y-8">
@@ -84,7 +84,7 @@ export function UuidGenerator() {
             {/* Right Panel: Result */}
             <Card className="flex-1 flex flex-col border-dashed overflow-hidden">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <h3 className="text-lg font-medium text-muted-foreground">Generated UUIDs</h3>
+                    <h3 className="text-lg font-medium text-muted-foreground">{t('generatedUuids')}</h3>
                     {uuids.length > 0 && (
                         <CopyButton
                             value={uuids.join('\n')}
@@ -93,12 +93,12 @@ export function UuidGenerator() {
                     )}
                 </CardHeader>
                 <CardContent className="flex-1 p-0 relative">
-                    <textarea
-                        className="w-full h-full p-6 font-mono text-lg resize-none focus:outline-none bg-transparent"
-                        readOnly
-                        value={uuids.join('\n')}
-                        placeholder="Generated UUIDs will appear here..."
-                    />
+                        <textarea
+                            className="w-full h-full p-6 font-mono text-lg resize-none focus:outline-none bg-transparent"
+                            readOnly
+                            value={uuids.join('\n')}
+                            placeholder={t('outputPlaceholder')}
+                        />
                 </CardContent>
             </Card>
         </div>

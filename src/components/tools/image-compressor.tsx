@@ -76,7 +76,7 @@ export function ImageCompressor() {
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <ImageIcon className="h-5 w-5" />
-                        Configuration
+                        {t('configuration')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col space-y-8">
@@ -142,7 +142,7 @@ export function ImageCompressor() {
                         disabled={!originalFile || isCompressing} 
                         className="w-full"
                     >
-                        {isCompressing ? 'Compressing...' : t('compress')}
+                        {isCompressing ? t('compressing') : t('compress')}
                     </Button>
                 </CardContent>
             </Card>
@@ -151,7 +151,7 @@ export function ImageCompressor() {
             <Card className="flex-1 flex flex-col border-dashed overflow-hidden">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                        Result
+                        {t('result')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 p-6 flex flex-col items-center justify-center gap-8">
@@ -189,7 +189,7 @@ export function ImageCompressor() {
                     ) : (
                         <div className="text-center text-muted-foreground">
                             <FileImage className="h-12 w-12 mx-auto mb-4 opacity-20" />
-                            <p>{originalFile ? 'Ready to compress' : 'Upload an image to start'}</p>
+                            <p>{originalFile ? t('readyToCompress') : t('uploadPrompt')}</p>
                         </div>
                     )}
                 </CardContent>

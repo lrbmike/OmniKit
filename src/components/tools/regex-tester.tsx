@@ -74,7 +74,7 @@ export function RegexTester() {
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Search className="h-5 w-5" />
-                        Configuration
+                        {t('configuration')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col space-y-6">
@@ -113,7 +113,7 @@ export function RegexTester() {
                             className="flex-1 w-full p-4 font-mono text-sm bg-muted/20 border rounded-md resize-none focus:ring-2 focus:ring-primary focus:outline-none"
                             value={text}
                             onChange={(e) => setText(e.target.value)}
-                            placeholder="Enter text to test..."
+                            placeholder={t('inputPlaceholder')}
                         />
                     </div>
                 </CardContent>

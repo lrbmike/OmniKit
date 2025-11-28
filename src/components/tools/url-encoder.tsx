@@ -53,7 +53,7 @@ export function UrlEncoder() {
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Link className="h-5 w-5" />
-                        Configuration
+                        {t('configuration')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col space-y-4">

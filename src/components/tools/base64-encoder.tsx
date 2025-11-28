@@ -59,7 +59,7 @@ export function Base64Encoder() {
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Binary className="h-5 w-5" />
-                        Configuration
+                        {t('configuration')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col space-y-4">
@@ -92,7 +92,7 @@ export function Base64Encoder() {
                         </div>
                         <textarea
                             className="flex-1 w-full p-4 font-mono text-sm bg-muted/20 border rounded-md resize-none focus:ring-2 focus:ring-primary focus:outline-none"
-                            placeholder={mode === 'encode' ? "Hello World" : "SGVsbG8gV29ybGQ="}
+                            placeholder={mode === 'encode' ? t('placeholderEncode') : t('placeholderDecode')}
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                         />

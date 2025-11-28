@@ -71,7 +71,10 @@
       "generate": "生成",
       "copy": "复制",
       "copied": "已复制到剪贴板",
-      "errorSelection": "请至少选择一种字符类型"
+      "errorSelection": "请至少选择一种字符类型",
+      "configuration": "配置",
+      "generatedPasswords": "生成的密码",
+      "outputPlaceholder": "生成的密码将显示在这里..."
     },
     "JsonFormatter": {
       "title": "JSON 格式化",
@@ -99,7 +102,8 @@
       "background": "背景色",
       "download": "下载 PNG",
       "downloadSuccess": "二维码已下载",
-      "enterText": "输入文本以生成"
+      "enterText": "输入文本以生成",
+      "configuration": "配置"
     },
     "ColorPicker": {
       "title": "颜色选择器",
@@ -110,7 +114,8 @@
       "rgb": "RGB",
       "hsl": "HSL",
       "copy": "复制",
-      "copied": "颜色已复制到剪贴板"
+      "copied": "颜色已复制到剪贴板",
+      "configuration": "配置"
     },
     "Base64Encoder": {
       "title": "Base64 编解码",
@@ -123,7 +128,10 @@
       "clear": "清空",
       "copy": "复制",
       "copied": "已复制到剪贴板",
-      "errorDecode": "无效的 Base64 字符串"
+      "errorDecode": "无效的 Base64 字符串",
+      "configuration": "配置",
+      "placeholderEncode": "Hello World",
+      "placeholderDecode": "SGVsbG8gV29ybGQ="
     },
     "HashCalculator": {
       "title": "Hash 计算",
@@ -135,7 +143,9 @@
       "autoUpdate": "自动更新",
       "calculate": "计算",
       "copy": "复制",
-      "copied": "Hash 已复制到剪贴板"
+      "copied": "Hash 已复制到剪贴板",
+      "configuration": "配置",
+      "inputPlaceholder": "输入要计算 Hash 的文本..."
     },
     "UrlEncoder": {
       "title": "URL 编解码",
@@ -148,7 +158,8 @@
       "clear": "清空",
       "copy": "复制",
       "copied": "已复制到剪贴板",
-      "errorDecode": "无效的 URL 编码"
+      "errorDecode": "无效的 URL 编码",
+      "configuration": "配置"
     },
     "MarkdownPreview": {
       "title": "Markdown 预览",
@@ -156,7 +167,9 @@
       "inputLabel": "Markdown 输入",
       "previewLabel": "预览",
       "clear": "清空",
-      "sample": "# 你好世界\n\n这是一段 **粗体** 文本，这是一段 *斜体*。\n\n- 列表项 1\n- 列表项 2\n\n[链接](https://example.com)"
+      "sample": "# 你好世界\n\n这是一段 **粗体** 文本，这是一段 *斜体*。\n\n- 列表项 1\n- 列表项 2\n\n[链接](https://example.com)",
+      "editor": "编辑器",
+      "inputPlaceholder": "在此输入 Markdown..."
     },
     "RegexTester": {
       "title": "正则表达式测试",
@@ -172,7 +185,9 @@
       "flagGlobal": "全局匹配 (g)",
       "flagCaseInsensitive": "忽略大小写 (i)",
       "flagMultiline": "多行模式 (m)",
-      "flagDotAll": "单行模式/点号匹配所有 (s)"
+      "flagDotAll": "单行模式/点号匹配所有 (s)",
+      "configuration": "配置",
+      "inputPlaceholder": "输入要测试的文本..."
     },
     "TimestampConverter": {
       "title": "时间戳转换",
@@ -184,7 +199,10 @@
       "copy": "复制",
       "localTime": "本地时间",
       "utcTime": "UTC 时间",
-      "inputPlaceholder": "输入时间戳或日期字符串"
+      "inputPlaceholder": "输入时间戳或日期字符串",
+      "configuration": "配置",
+      "result": "结果",
+      "timestampPlaceholder": "例如：1672531200"
     },
     "UuidGenerator": {
       "title": "UUID 生成器",
@@ -194,7 +212,10 @@
       "uppercase": "大写",
       "generate": "生成",
       "copy": "复制",
-      "copied": "已复制到剪贴板"
+      "copied": "已复制到剪贴板",
+      "configuration": "配置",
+      "generatedUuids": "生成的 UUID",
+      "outputPlaceholder": "生成的 UUID 将显示在这里..."
     },
     "JwtDecoder": {
       "title": "JWT 解析",
@@ -202,7 +223,10 @@
       "tokenLabel": "JWT Token",
       "headerLabel": "Header (头部)",
       "payloadLabel": "Payload (载荷)",
-      "errorInvalid": "无效的 JWT Token"
+      "errorInvalid": "无效的 JWT Token",
+      "input": "输入",
+      "clear": "清空",
+      "decoded": "解码结果"
     },
     "GradientGenerator": {
       "title": "渐变生成器",
@@ -214,7 +238,9 @@
       "colors": "颜色",
       "cssLabel": "CSS 代码",
       "copy": "复制 CSS",
-      "copied": "CSS 已复制到剪贴板"
+      "copied": "CSS 已复制到剪贴板",
+      "configuration": "配置",
+      "preview": "预览"
     },
     "ContrastChecker": {
       "title": "颜色对比检测",
@@ -227,7 +253,8 @@
       "fail": "不通过",
       "normalText": "普通文本",
       "largeText": "大号文本",
-      "sampleText": "敏捷的棕色狐狸跳过了懒狗。"
+      "sampleText": "敏捷的棕色狐狸跳过了懒狗。",
+      "configuration": "配置"
     },
     "ImageCompressor": {
       "title": "图片压缩",
@@ -243,7 +270,12 @@
       "compressedSize": "压缩后大小",
       "compressionRatio": "节省",
       "errorUpload": "请先上传图片",
-      "errorCompression": "压缩失败"
+      "errorCompression": "压缩失败",
+      "configuration": "配置",
+      "result": "结果",
+      "compressing": "压缩中...",
+      "readyToCompress": "准备压缩",
+      "uploadPrompt": "请上传图片以开始"
     },
     "ImageToBase64": {
       "title": "图片 Base64 转换",
@@ -261,7 +293,12 @@
       "downloadImage": "下载图片",
       "copied": "Base64 已复制到剪贴板",
       "errorUpload": "请先上传图片",
-      "errorInvalid": "无效的 Base64 图片字符串"
+      "errorInvalid": "无效的 Base64 图片字符串",
+      "input": "输入",
+      "clear": "清空",
+      "placeholderBase64": "在此粘贴 Base64 字符串...",
+      "placeholderOutput": "Base64 字符串将显示在这里...",
+      "previewPrompt": "图片预览将显示在这里"
     },
     "TextDiff": {
       "title": "文本差异对比",
@@ -270,7 +307,15 @@
       "modifiedLabel": "修改后文本",
       "diffLabel": "差异对比",
       "noDiff": "未发现差异",
-      "diffFound": "发现差异"
+      "diffFound": "发现差异",
+      "input": "输入",
+      "diffType": "对比类型",
+      "chars": "字符",
+      "words": "单词",
+      "lines": "行",
+      "placeholderOriginal": "原始文本...",
+      "placeholderModified": "修改后的文本...",
+      "enterText": "输入文本以开始对比"
     },
     "WordCounter": {
       "title": "字数统计",
@@ -281,7 +326,9 @@
       "words": "单词数",
       "lines": "行数",
       "paragraphs": "段落数",
-      "noText": "开始输入以查看统计..."
+      "noText": "开始输入以查看统计...",
+      "input": "输入",
+      "clear": "清空"
     }
   }
 }

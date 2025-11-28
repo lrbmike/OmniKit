@@ -40,20 +40,20 @@ export function TextDiff() {
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <FileSearch className="h-5 w-5" />
-                        Input
+                        {t('input')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col space-y-4">
                     <div className="space-y-2">
-                        <Label>Diff Type</Label>
+                        <Label>{t('diffType')}</Label>
                         <Select value={diffType} onValueChange={(v: 'chars' | 'words' | 'lines') => setDiffType(v)}>
                             <SelectTrigger>
                                 <SelectValue />
                             </SelectTrigger>
                             <SelectContent>
-                                <SelectItem value="chars">Chars</SelectItem>
-                                <SelectItem value="words">Words</SelectItem>
-                                <SelectItem value="lines">Lines</SelectItem>
+                                <SelectItem value="chars">{t('chars')}</SelectItem>
+                                <SelectItem value="words">{t('words')}</SelectItem>
+                                <SelectItem value="lines">{t('lines')}</SelectItem>
                             </SelectContent>
                         </Select>
                     </div>
@@ -65,7 +65,7 @@ export function TextDiff() {
                                 className="flex-1 w-full p-4 font-mono text-sm bg-muted/20 border rounded-md resize-none focus:ring-2 focus:ring-primary focus:outline-none"
                                 value={original}
                                 onChange={(e) => setOriginal(e.target.value)}
-                                placeholder="Original text..."
+                                placeholder={t('placeholderOriginal')}
                             />
                         </div>
                         <div className="flex flex-col space-y-2">
@@ -74,7 +74,7 @@ export function TextDiff() {
                                 className="flex-1 w-full p-4 font-mono text-sm bg-muted/20 border rounded-md resize-none focus:ring-2 focus:ring-primary focus:outline-none"
                                 value={modified}
                                 onChange={(e) => setModified(e.target.value)}
-                                placeholder="Modified text..."
+                                placeholder={t('placeholderModified')}
                             />
                         </div>
                     </div>
@@ -103,7 +103,7 @@ export function TextDiff() {
                         </div>
                     ) : (
                         <div className="text-center text-muted-foreground mt-10">
-                            {original || modified ? t('noDiff') : 'Enter text to compare'}
+                            {original || modified ? t('noDiff') : t('enterText')}
                         </div>
                     )}
                 </CardContent>

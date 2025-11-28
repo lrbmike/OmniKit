@@ -50,7 +50,7 @@ export function JwtDecoder() {
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Lock className="h-5 w-5" />
-                        Input
+                        {t('input')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col space-y-2">
@@ -64,7 +64,7 @@ export function JwtDecoder() {
                             className="h-8"
                         >
                             <Trash2 className="h-3 w-3 mr-1" />
-                            Clear
+                            {t('clear')}
                         </Button>
                     </div>
                     <textarea
@@ -80,7 +80,7 @@ export function JwtDecoder() {
             <Card className="flex-1 flex flex-col border-dashed overflow-hidden">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                        Decoded
+                        {t('decoded')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 p-6 overflow-auto space-y-6">

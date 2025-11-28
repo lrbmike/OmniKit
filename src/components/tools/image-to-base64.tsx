@@ -102,7 +102,7 @@ export function ImageToBase64() {
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <ImageIcon className="h-5 w-5" />
-                        Input
+                        {t('input')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col space-y-6">
@@ -165,14 +165,14 @@ export function ImageToBase64() {
                                     className="h-8"
                                 >
                                     <Trash2 className="h-3 w-3 mr-1" />
-                                    Clear
+                                    {t('clear')}
                                 </Button>
                             </div>
                             <textarea
                                 className="flex-1 w-full p-4 font-mono text-xs bg-muted/20 border rounded-md resize-none focus:ring-2 focus:ring-primary focus:outline-none break-all"
                                 value={base64Input}
                                 onChange={(e) => setBase64Input(e.target.value)}
-                                placeholder="Paste Base64 string here..."
+                                placeholder={t('placeholderBase64')}
                             />
                         </div>
                     )}
@@ -222,7 +222,7 @@ export function ImageToBase64() {
                             className="w-full h-full p-6 font-mono text-xs bg-transparent border-0 resize-none focus:ring-0 focus:outline-none break-all"
                             readOnly
                             value={base64Output}
-                            placeholder="Base64 string will appear here..."
+                            placeholder={t('placeholderOutput')}
                         />
                     ) : (
                         <div className="w-full h-full flex items-center justify-center bg-muted/5 p-4">
@@ -235,7 +235,7 @@ export function ImageToBase64() {
                                 />
                             ) : (
                                 <div className="text-muted-foreground text-sm">
-                                    Image preview will appear here
+                                    {t('previewPrompt')}
                                 </div>
                             )}
                         </div>

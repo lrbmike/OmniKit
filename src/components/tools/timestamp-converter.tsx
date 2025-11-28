@@ -86,7 +86,7 @@ export function TimestampConverter() {
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Clock className="h-5 w-5" />
-                        Configuration
+                        {t('configuration')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col space-y-8">
@@ -103,7 +103,7 @@ export function TimestampConverter() {
                             <Input 
                                 value={timestamp} 
                                 onChange={(e) => handleTimestampChange(e.target.value)} 
-                                placeholder="e.g. 1672531200"
+                                placeholder={t('timestampPlaceholder')}
                                 className="font-mono"
                             />
                         </div>
@@ -128,7 +128,7 @@ export function TimestampConverter() {
             <Card className="flex-1 flex flex-col border-dashed overflow-hidden">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">
-                        Result
+                        {t('result')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 p-6 space-y-6">

@@ -25,7 +25,7 @@ export function WordCounter() {
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Type className="h-5 w-5" />
-                        Input
+                        {t('input')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="flex-1 flex flex-col space-y-2">
@@ -39,7 +39,7 @@ export function WordCounter() {
                             className="h-8"
                         >
                             <Trash2 className="h-3 w-3 mr-1" />
-                            Clear
+                            {t('clear')}
                         </Button>
                     </div>
                     <textarea

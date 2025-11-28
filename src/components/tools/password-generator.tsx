@@ -57,7 +57,7 @@ export function PasswordGenerator() {
                 <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                         <Settings2 className="h-5 w-5" />
-                        Configuration
+                        {t('configuration')}
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-8">
@@ -140,7 +140,7 @@ export function PasswordGenerator() {
             <Card className="flex-1 flex flex-col p-6 border-dashed">
                 <div className="flex-1 flex flex-col space-y-4 h-full overflow-hidden">
                     <div className="flex items-center justify-between">
-                        <h3 className="text-lg font-medium text-muted-foreground">Generated Passwords</h3>
+                        <h3 className="text-lg font-medium text-muted-foreground">{t('generatedPasswords')}</h3>
                         {passwords.length > 0 && (
                             <CopyButton
                                 value={passwords.join('\n')}
@@ -154,7 +154,7 @@ export function PasswordGenerator() {
                             className="w-full h-full p-4 font-mono text-lg resize-none focus:outline-none bg-transparent"
                             readOnly
                             value={passwords.join('\n')}
-                            placeholder="Generated passwords will appear here..."
+                            placeholder={t('outputPlaceholder')}
                         />
                     </div>
                 </div>
