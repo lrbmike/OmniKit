@@ -12,7 +12,7 @@ export default async function AiSettingsPage() {
         aiBaseUrl: config?.aiBaseUrl || 'https://api.openai.com/v1',
         aiApiKey: config?.aiApiKey || '',
         aiModel: config?.aiModel || 'gpt-3.5-turbo',
-        aiSystemPrompt: config?.aiSystemPrompt || "You are a professional translator. Translate the text to the target language. Output only the translated text.",
+        aiSystemPrompt: config?.aiSystemPrompt || "You are a professional translator. Translate the following text from {sourceLang} to {targetLang}. Output only the translated text.",
     };
 
     return (
