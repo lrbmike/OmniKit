@@ -100,6 +100,14 @@
           "API_NOT_CONFIGURED": "Weather API is not configured",
           "API_ERROR": "Weather API Error",
           "FETCH_FAILED": "Failed to fetch weather data"
+        },
+        "details": {
+          "wind": "Wind",
+          "humidity": "Humidity",
+          "feelsLike": "Feels Like",
+          "uv": "UV Index",
+          "visibility": "Visibility",
+          "pressure": "Pressure"
         }
       },
       "apiKeys": {

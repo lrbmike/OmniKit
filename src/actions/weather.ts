@@ -15,6 +15,9 @@ interface WeatherData {
         wind_speed: number;
         humidity: number;
         feelslike: number;
+        uv_index: number;
+        visibility: number;
+        pressure: number;
     };
     success?: boolean;
     error?: any;

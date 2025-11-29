@@ -1,9 +1,14 @@
 'use client';
 
-import { CloudSun, Loader2, CloudOff } from 'lucide-react';
+import { CloudSun, Loader2, CloudOff, Wind, Droplets, ThermometerSun, Sun, Eye, Gauge } from 'lucide-react';
 import { useState, useEffect, useCallback } from 'react';
 import { getWeather } from '@/actions/weather';
 import { useTranslations } from 'next-intl';
+import {
+    HoverCard,
+    HoverCardContent,
+    HoverCardTrigger,
+} from "@/components/ui/hover-card";
 
 // Module-level cache to prevent duplicate requests in Strict Mode or navigation
 let weatherPromise: Promise<any> | null = null;
@@ -13,6 +18,7 @@ export function HeaderWeather() {
     const [weather, setWeather] = useState<any>(null);
     const [error, setError] = useState<string | null>(null);
     const t = useTranslations('Settings.pages.weather.errors');
+    const tDetails = useTranslations('Settings.pages.weather.details');
 
     const fetchWeather = useCallback(async (force = false) => {
         try {
@@ -118,24 +124,71 @@ export function HeaderWeather() {
     const { current, location } = weather;
 
     return (
-        <div 
-            onClick={() => {
-                setLoading(true);
-                fetchWeather(true);
-            }}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors cursor-pointer text-sm font-medium hidden md:flex select-none"
-            title={`${location.name}, ${location.country} - ${current.weather_descriptions[0]} (Click to refresh)`}
-        >
-            {current.weather_icons && current.weather_icons[0] ? (
-                <img 
-                    src={current.weather_icons[0]} 
-                    alt="Weather Icon" 
-                    className="h-5 w-5 rounded-full object-cover"
-                />
-            ) : (
-                <CloudSun className="h-4 w-4" />
-            )}
-            <span>{current.temperature}°C</span>
-        </div>
+        <HoverCard openDelay={200}>
+            <HoverCardTrigger asChild>
+                <div 
+                    onClick={() => {
+                        setLoading(true);
+                        fetchWeather(true);
+                    }}
+                    className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 hover:bg-blue-100 dark:hover:bg-blue-900/30 transition-colors cursor-pointer text-sm font-medium hidden md:flex select-none"
+                >
+                    {current.weather_icons && current.weather_icons[0] ? (
+                        <img 
+                            src={current.weather_icons[0]} 
+                            alt="Weather Icon" 
+                            className="h-5 w-5 rounded-full object-cover"
+                        />
+                    ) : (
+                        <CloudSun className="h-4 w-4" />
+                    )}
+                    <span>{current.temperature}°C</span>
+                </div>
+            </HoverCardTrigger>
+            <HoverCardContent className="w-80" align="end">
+                <div className="space-y-4">
+                    <div className="flex justify-between items-start">
+                        <div>
+                            <h4 className="text-sm font-semibold">{location.name}, {location.country}</h4>
+                            <p className="text-xs text-muted-foreground">{current.weather_descriptions[0]}</p>
+                        </div>
+                        <div className="text-right">
+                            <span className="text-2xl font-bold">{current.temperature}°C</span>
+                        </div>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                            <Wind className="h-3 w-3" />
+                            <span>{tDetails('wind')}: {current.wind_speed} km/h {current.wind_dir}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                            <Droplets className="h-3 w-3" />
+                            <span>{tDetails('humidity')}: {current.humidity}%</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                            <ThermometerSun className="h-3 w-3" />
+                            <span>{tDetails('feelsLike')}: {current.feelslike}°C</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                            <Sun className="h-3 w-3" />
+                            <span>{tDetails('uv')}: {current.uv_index}</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                            <Eye className="h-3 w-3" />
+                            <span>{tDetails('visibility')}: {current.visibility} km</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                            <Gauge className="h-3 w-3" />
+                            <span>{tDetails('pressure')}: {current.pressure} hPa</span>
+                        </div>
+                    </div>
+                    
+                    <div className="text-[10px] text-muted-foreground text-right pt-2 border-t">
+                        Updated: {location.localtime}
+                    </div>
+                </div>
+            </HoverCardContent>
+        </HoverCard>
     );
 }

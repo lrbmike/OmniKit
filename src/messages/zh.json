@@ -100,6 +100,14 @@
           "API_NOT_CONFIGURED": "天气 API 未配置",
           "API_ERROR": "天气 API 错误",
           "FETCH_FAILED": "获取天气数据失败"
+        },
+        "details": {
+          "wind": "风速",
+          "humidity": "湿度",
+          "feelsLike": "体感",
+          "uv": "紫外线",
+          "visibility": "能见度",
+          "pressure": "气压"
         }
       },
       "apiKeys": {
