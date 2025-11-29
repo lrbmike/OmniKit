@@ -74,7 +74,7 @@ export async function getWeather() {
 
         const response = await fetch(url, {
             headers,
-            next: { revalidate: 1800 } // Cache for 30 minutes
+            next: { revalidate: 900 } // Cache for 15 minutes
         });
 
         if (!response.ok) {

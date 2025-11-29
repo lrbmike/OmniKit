@@ -28,8 +28,8 @@ export function HeaderWeather() {
 
         fetchWeather();
         
-        // Refresh every 30 minutes
-        const interval = setInterval(fetchWeather, 30 * 60 * 1000);
+        // Refresh every 15 minutes
+        const interval = setInterval(fetchWeather, 15 * 60 * 1000);
         return () => clearInterval(interval);
     }, []);
 
