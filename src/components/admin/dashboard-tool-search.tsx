@@ -21,11 +21,23 @@ interface Tool {
 
 interface DashboardToolSearchProps {
     tools: Tool[];
+    locale: string;
 }
 
-export function DashboardToolSearch({ tools }: DashboardToolSearchProps) {
+export function DashboardToolSearch({ tools, locale }: DashboardToolSearchProps) {
     const [searchQuery, setSearchQuery] = useState('');
     const t = useTranslations('Dashboard');
+    
+    // 根据locale获取工具的显示名称和描述
+    const getToolName = (tool: Tool) => {
+        return locale === 'zh' ? tool.name : tool.nameEn;
+    };
+    
+    const getToolDescription = (tool: Tool) => {
+        return locale === 'zh' 
+            ? (tool.description || tool.descriptionEn || '')
+            : (tool.descriptionEn || tool.description || '');
+    };
 
     // 过滤工具
     const filteredTools = useMemo(() => {
@@ -90,7 +102,7 @@ export function DashboardToolSearch({ tools }: DashboardToolSearchProps) {
                                     </div>
                                     <div className="flex-1 space-y-1">
                                         <CardTitle className="text-base leading-none">
-                                            {tool.name}
+                                            {getToolName(tool)}
                                         </CardTitle>
                                         <p className="text-xs text-muted-foreground">
                                             {tool.category}
@@ -99,7 +111,7 @@ export function DashboardToolSearch({ tools }: DashboardToolSearchProps) {
                                 </CardHeader>
                                 <CardContent>
                                     <CardDescription className="line-clamp-2">
-                                        {tool.description || tool.descriptionEn || ''}
+                                        {getToolDescription(tool)}
                                     </CardDescription>
                                 </CardContent>
                             </Card>

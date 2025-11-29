@@ -3,7 +3,8 @@ import { getTranslations } from "next-intl/server";
 import { getMenuItems } from "@/actions/menu";
 import { DashboardToolSearch } from "@/components/admin/dashboard-tool-search";
 
-export default async function DashboardPage() {
+export default async function DashboardPage({params}: {params: Promise<{locale: string}>}) {
+    const {locale} = await params;
     const t = await getTranslations("Dashboard");
     const menuItems = await getMenuItems();
     
@@ -90,7 +91,7 @@ export default async function DashboardPage() {
                     <CardDescription>{t('toolSearchDescription')}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <DashboardToolSearch tools={allTools} />
+                    <DashboardToolSearch tools={allTools} locale={locale} />
                 </CardContent>
             </Card>
         </div>
