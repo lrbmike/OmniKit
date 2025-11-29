@@ -114,6 +114,17 @@
         "title": "API Keys",
         "description": "Manage API keys for external integrations.",
         "comingSoon": "API Key management features are coming soon."
+      },
+      "ai": {
+        "title": "Translation Settings",
+        "description": "Configure AI Translation API settings.",
+        "provider": "AI Provider",
+        "baseUrl": "Base URL",
+        "apiKey": "API Key",
+        "model": "Model Name",
+        "systemPrompt": "System Prompt",
+        "systemPromptDesc": "Available placeholders: '{sourceLang}' (Source Language), '{targetLang}' (Target Language)",
+        "saveSuccess": "AI settings saved"
       }
     }
   },
@@ -453,6 +464,24 @@
       "noText": "Start typing to see statistics...",
       "input": "Input",
       "clear": "Clear"
+    },
+    "Translator": {
+      "title": "AI Translator",
+      "description": "Intelligent English-Chinese translator",
+      "sourceLabel": "Source Text",
+      "targetLabel": "Translation",
+      "sourceLangLabel": "Source Language",
+      "targetLangLabel": "Target Language",
+      "zh": "Chinese",
+      "en": "English",
+      "sourcePlaceholder": "Enter text to translate...",
+      "targetPlaceholder": "Translation will appear here...",
+      "translate": "Translate",
+      "translating": "Translating...",
+      "copy": "Copy",
+      "copied": "Copied to clipboard",
+      "errorEmpty": "Please enter text to translate",
+      "errorTranslation": "Translation failed"
     }
   }
 }

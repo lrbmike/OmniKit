@@ -31,6 +31,11 @@ export async function updateSystemConfig(data: {
     weatherApiKey?: string;
     weatherKeyMode?: string;
     weatherCity?: string;
+    aiProvider?: string;
+    aiBaseUrl?: string;
+    aiApiKey?: string;
+    aiModel?: string;
+    aiSystemPrompt?: string;
 }) {
     try {
         const config = await db.systemConfig.findFirst();
@@ -39,19 +44,25 @@ export async function updateSystemConfig(data: {
             return { success: false, error: 'System config not found' };
         }
 
-        // Split data into known fields and weather fields (which might not be in generated client yet)
+        // Split data into known fields and raw fields (weather/ai which might not be in generated client yet)
         const knownData: any = {};
-        const weatherData: any = {};
+        const rawData: any = {};
 
         if (data.defaultLocale !== undefined) knownData.defaultLocale = data.defaultLocale;
         if (data.defaultTheme !== undefined) knownData.defaultTheme = data.defaultTheme;
         if (data.dashboardQuickTools !== undefined) knownData.dashboardQuickTools = data.dashboardQuickTools;
 
-        if (data.weatherEnabled !== undefined) weatherData.weatherEnabled = data.weatherEnabled;
-        if (data.weatherUrl !== undefined) weatherData.weatherUrl = data.weatherUrl;
-        if (data.weatherApiKey !== undefined) weatherData.weatherApiKey = data.weatherApiKey;
-        if (data.weatherKeyMode !== undefined) weatherData.weatherKeyMode = data.weatherKeyMode;
-        if (data.weatherCity !== undefined) weatherData.weatherCity = data.weatherCity;
+        if (data.weatherEnabled !== undefined) rawData.weatherEnabled = data.weatherEnabled;
+        if (data.weatherUrl !== undefined) rawData.weatherUrl = data.weatherUrl;
+        if (data.weatherApiKey !== undefined) rawData.weatherApiKey = data.weatherApiKey;
+        if (data.weatherKeyMode !== undefined) rawData.weatherKeyMode = data.weatherKeyMode;
+        if (data.weatherCity !== undefined) rawData.weatherCity = data.weatherCity;
+
+        if (data.aiProvider !== undefined) rawData.aiProvider = data.aiProvider;
+        if (data.aiBaseUrl !== undefined) rawData.aiBaseUrl = data.aiBaseUrl;
+        if (data.aiApiKey !== undefined) rawData.aiApiKey = data.aiApiKey;
+        if (data.aiModel !== undefined) rawData.aiModel = data.aiModel;
+        if (data.aiSystemPrompt !== undefined) rawData.aiSystemPrompt = data.aiSystemPrompt;
 
         // Update known fields using Prisma Client
         if (Object.keys(knownData).length > 0) {
@@ -61,30 +72,51 @@ export async function updateSystemConfig(data: {
             });
         }
 
-        // Update weather fields using Raw SQL to bypass potential client mismatch
-        if (Object.keys(weatherData).length > 0) {
+        // Update raw fields using Raw SQL to bypass potential client mismatch
+        if (Object.keys(rawData).length > 0) {
             const setClauses = [];
             const params = [];
 
-            if (weatherData.weatherEnabled !== undefined) {
+            if (rawData.weatherEnabled !== undefined) {
                 setClauses.push('weatherEnabled = ?');
-                params.push(weatherData.weatherEnabled ? 1 : 0);
+                params.push(rawData.weatherEnabled ? 1 : 0);
             }
-            if (weatherData.weatherUrl !== undefined) {
+            if (rawData.weatherUrl !== undefined) {
                 setClauses.push('weatherUrl = ?');
-                params.push(weatherData.weatherUrl);
+                params.push(rawData.weatherUrl);
             }
-            if (weatherData.weatherApiKey !== undefined) {
+            if (rawData.weatherApiKey !== undefined) {
                 setClauses.push('weatherApiKey = ?');
-                params.push(weatherData.weatherApiKey);
+                params.push(rawData.weatherApiKey);
             }
-            if (weatherData.weatherKeyMode !== undefined) {
+            if (rawData.weatherKeyMode !== undefined) {
                 setClauses.push('weatherKeyMode = ?');
-                params.push(weatherData.weatherKeyMode);
+                params.push(rawData.weatherKeyMode);
             }
-            if (weatherData.weatherCity !== undefined) {
+            if (rawData.weatherCity !== undefined) {
                 setClauses.push('weatherCity = ?');
-                params.push(weatherData.weatherCity);
+                params.push(rawData.weatherCity);
+            }
+
+            if (rawData.aiProvider !== undefined) {
+                setClauses.push('aiProvider = ?');
+                params.push(rawData.aiProvider);
+            }
+            if (rawData.aiBaseUrl !== undefined) {
+                setClauses.push('aiBaseUrl = ?');
+                params.push(rawData.aiBaseUrl);
+            }
+            if (rawData.aiApiKey !== undefined) {
+                setClauses.push('aiApiKey = ?');
+                params.push(rawData.aiApiKey);
+            }
+            if (rawData.aiModel !== undefined) {
+                setClauses.push('aiModel = ?');
+                params.push(rawData.aiModel);
+            }
+            if (rawData.aiSystemPrompt !== undefined) {
+                setClauses.push('aiSystemPrompt = ?');
+                params.push(rawData.aiSystemPrompt);
             }
 
             if (setClauses.length > 0) {

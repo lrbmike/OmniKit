@@ -4,13 +4,14 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useLocale, useTranslations } from 'next-intl';
-import { LayoutGrid, Database, Key, Settings as SettingsIcon, LayoutDashboard, CloudSun } from 'lucide-react';
+import { LayoutGrid, Database, Key, Settings as SettingsIcon, LayoutDashboard, CloudSun, Languages } from 'lucide-react';
 
 export function SettingsNav() {
     const pathname = usePathname();
     const locale = useLocale();
     const t = useTranslations('Settings.nav');
     const tPages = useTranslations('Settings.pages.weather');
+    const tAi = useTranslations('Settings.pages.ai');
 
     const items = [
         {
@@ -32,6 +33,11 @@ export function SettingsNav() {
             title: tPages('title'),
             href: `/${locale}/admin/settings/weather`,
             icon: CloudSun
+        },
+        {
+            title: tAi('title'),
+            href: `/${locale}/admin/settings/ai`,
+            icon: Languages
         },
         {
             title: t('apiKeys'),

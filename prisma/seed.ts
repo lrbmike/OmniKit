@@ -194,6 +194,18 @@ const PRESET_TOOLS = [
         component: 'word-counter',
         order: 2,
     },
+
+    // AI Tools (1)
+    {
+        name: 'AI 翻译',
+        nameEn: 'AI Translator',
+        description: '智能中英互译工具',
+        descriptionEn: 'Intelligent English-Chinese translator',
+        icon: 'Languages',
+        category: 'ai',
+        component: 'translator',
+        order: 1,
+    },
 ];
 
 async function main() {
@@ -289,6 +301,34 @@ async function main() {
         });
     }
 
+    // AI Tools Folder
+    const aiFolder = await prisma.menuItem.create({
+        data: {
+            userId: 'default-admin',
+            label: 'AI 工具',
+            labelEn: 'AI Tools',
+            icon: 'Sparkles',
+            isFolder: true,
+            order: 3,
+        },
+    });
+
+    // Filter specific AI tools: translator
+    const aiTools = createdTools.filter(t => 
+        t.category === 'ai' && ['translator'].includes(t.component)
+    );
+
+    for (let i = 0; i < aiTools.length; i++) {
+        await prisma.menuItem.create({
+            data: {
+                userId: 'default-admin',
+                parentId: aiFolder.id,
+                toolId: aiTools[i].id,
+                order: i + 1,
+                isFolder: false,
+            },
+        });
+    }
 
     console.log('✅ Default menu structure created');
 

@@ -114,6 +114,17 @@
         "title": "API 密钥",
         "description": "管理外部集成 API 密钥。",
         "comingSoon": "API 密钥管理功能即将推出。"
+      },
+      "ai": {
+        "title": "翻译设置",
+        "description": "配置 AI 翻译 API 设置。",
+        "provider": "AI 提供商",
+        "baseUrl": "Base URL",
+        "apiKey": "API 密钥",
+        "model": "模型名称",
+        "systemPrompt": "系统提示词 (System Prompt)",
+        "systemPromptDesc": "可用占位符: '{sourceLang}' (源语言), '{targetLang}' (目标语言)",
+        "saveSuccess": "AI 设置已保存"
       }
     }
   },
@@ -453,6 +464,24 @@
       "noText": "开始输入以查看统计...",
       "input": "输入",
       "clear": "清空"
+    },
+    "Translator": {
+      "title": "AI 翻译",
+      "description": "智能中英互译工具",
+      "sourceLabel": "源文本",
+      "targetLabel": "翻译结果",
+      "sourceLangLabel": "源语言",
+      "targetLangLabel": "目标语言",
+      "zh": "中文",
+      "en": "英文",
+      "sourcePlaceholder": "输入要翻译的文本...",
+      "targetPlaceholder": "翻译结果将显示在这里...",
+      "translate": "翻译",
+      "translating": "翻译中...",
+      "copy": "复制",
+      "copied": "翻译结果已复制到剪贴板",
+      "errorEmpty": "请输入要翻译的文本",
+      "errorTranslation": "翻译失败"
     }
   }
 }
