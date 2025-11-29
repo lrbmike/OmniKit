@@ -53,7 +53,21 @@
       "system": {
         "title": "系统设置",
         "description": "配置全局系统偏好。",
-        "comingSoon": "系统设置功能（默认语言、主题、会话超时）即将推出。"
+        "comingSoon": "系统设置功能（默认语言、主题、会话超时）即将推出。",
+        "general": "常规设置",
+        "language": "默认语言",
+        "theme": "默认主题",
+        "themeLight": "浅色",
+        "themeDark": "深色",
+        "themeSystem": "跟随系统",
+        "security": "安全设置",
+        "resetPassword": "重置密码",
+        "newPassword": "新密码",
+        "confirmPassword": "确认密码",
+        "saveChanges": "保存更改",
+        "passwordUpdated": "密码已重置",
+        "configUpdated": "设置已更新",
+        "passwordMismatch": "两次输入的密码不一致"
       },
       "database": {
         "title": "数据库设置",

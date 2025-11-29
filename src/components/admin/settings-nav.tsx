@@ -23,11 +23,6 @@ export function SettingsNav() {
             icon: SettingsIcon
         },
         {
-            title: t('database'),
-            href: `/${locale}/admin/settings/database`,
-            icon: Database
-        },
-        {
             title: t('apiKeys'),
             href: `/${locale}/admin/settings/api-keys`,
             icon: Key

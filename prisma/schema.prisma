@@ -14,6 +14,7 @@ model SystemConfig {
   id              String   @id @default(cuid())
   isInitialized   Boolean  @default(false)
   defaultLocale   String   @default("zh")
+  defaultTheme    String   @default("system") // light, dark, system
   dbType          String   @default("sqlite") // sqlite, mysql, postgresql
   dbHost          String?
   dbPort          Int?

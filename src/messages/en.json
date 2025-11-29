@@ -53,7 +53,21 @@
       "system": {
         "title": "System Settings",
         "description": "Configure global system preferences.",
-        "comingSoon": "System settings features (Language default, Theme default, Session timeout) are coming soon."
+        "comingSoon": "System settings features (Language default, Theme default, Session timeout) are coming soon.",
+        "general": "General Settings",
+        "language": "Default Language",
+        "theme": "Default Theme",
+        "themeLight": "Light",
+        "themeDark": "Dark",
+        "themeSystem": "System",
+        "security": "Security Settings",
+        "resetPassword": "Reset Password",
+        "newPassword": "New Password",
+        "confirmPassword": "Confirm Password",
+        "saveChanges": "Save Changes",
+        "passwordUpdated": "Password has been reset",
+        "configUpdated": "Settings updated",
+        "passwordMismatch": "Passwords do not match"
       },
       "database": {
         "title": "Database Settings",
