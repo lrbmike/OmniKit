@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
+import { useTheme } from 'next-themes';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -19,21 +20,32 @@ interface SystemSettingsFormProps {
 
 export function SystemSettingsForm({ initialConfig }: SystemSettingsFormProps) {
     const t = useTranslations('Settings.pages.system');
+    const { theme, setTheme } = useTheme();
     const [defaultLocale, setDefaultLocale] = useState(initialConfig.defaultLocale);
-    const [defaultTheme, setDefaultTheme] = useState(initialConfig.defaultTheme);
+    const [currentTheme, setCurrentTheme] = useState<string>('system');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
+    // 同步当前主题状态
+    useEffect(() => {
+        if (theme) {
+            setCurrentTheme(theme);
+        }
+    }, [theme]);
+
     const handleSaveConfig = async () => {
         setIsLoading(true);
         try {
+            // 更新系统配置
             const result = await updateSystemConfig({
                 defaultLocale,
-                defaultTheme,
+                defaultTheme: currentTheme,
             });
 
             if (result.success) {
+                // 同时更新当前用户的主题
+                setTheme(currentTheme);
                 toast.success(t('configUpdated'));
             } else {
                 toast.error(result.error || 'Failed to update settings');
@@ -98,7 +110,7 @@ export function SystemSettingsForm({ initialConfig }: SystemSettingsFormProps) {
 
                     <div className="space-y-2">
                         <Label htmlFor="theme">{t('theme')}</Label>
-                        <Select value={defaultTheme} onValueChange={setDefaultTheme}>
+                        <Select value={currentTheme} onValueChange={setCurrentTheme}>
                             <SelectTrigger id="theme">
                                 <SelectValue />
                             </SelectTrigger>
