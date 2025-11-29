@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useLocale, useTranslations } from 'next-intl';
-import { LayoutGrid, Database, Key, Settings as SettingsIcon } from 'lucide-react';
+import { LayoutGrid, Database, Key, Settings as SettingsIcon, LayoutDashboard } from 'lucide-react';
 
 export function SettingsNav() {
     const pathname = usePathname();
@@ -16,6 +16,11 @@ export function SettingsNav() {
             title: t('menu'),
             href: `/${locale}/admin/settings/menu`,
             icon: LayoutGrid
+        },
+        {
+            title: t('dashboard'),
+            href: `/${locale}/admin/settings/dashboard`,
+            icon: LayoutDashboard
         },
         {
             title: t('system'),

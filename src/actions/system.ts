@@ -9,7 +9,7 @@ export async function getSystemConfig() {
     return await db.systemConfig.findFirst();
 }
 
-export async function updateSystemConfig(data: { defaultLocale?: string; defaultTheme?: string }) {
+export async function updateSystemConfig(data: { defaultLocale?: string; defaultTheme?: string; dashboardQuickTools?: string }) {
     try {
         const config = await db.systemConfig.findFirst();
         if (!config) {
@@ -23,6 +23,7 @@ export async function updateSystemConfig(data: { defaultLocale?: string; default
         });
 
         revalidatePath('/', 'layout');
+        revalidatePath('/[locale]/admin/dashboard', 'page');
         return { success: true };
     } catch (error) {
         console.error('Update system config error:', error);

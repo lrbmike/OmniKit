@@ -18,6 +18,7 @@
     "backToDashboard": "返回仪表盘",
     "nav": {
       "menu": "菜单管理",
+      "dashboard": "快捷工具",
       "system": "系统设置",
       "database": "数据库",
       "apiKeys": "API 密钥"
@@ -67,7 +68,14 @@
         "saveChanges": "保存更改",
         "passwordUpdated": "密码已重置",
         "configUpdated": "设置已更新",
-        "passwordMismatch": "两次输入的密码不一致"
+        "passwordMismatch": "两次输入的密码不一致",
+        "selected": "已选择 {count}/4"
+      },
+      "dashboard": {
+        "title": "快捷工具",
+        "description": "配置仪表盘显示的快捷工具。",
+        "quickToolsTitle": "快捷工具",
+        "quickToolsDescription": "选择最多4个显示在仪表盘的快捷工具"
       },
       "database": {
         "title": "数据库设置",

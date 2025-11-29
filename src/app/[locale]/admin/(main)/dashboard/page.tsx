@@ -1,49 +1,45 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getTranslations } from "next-intl/server";
-import { getMenuItems } from "@/actions/menu";
+import { getMenuItems, getTools } from "@/actions/menu";
+import { getSystemConfig } from "@/actions/system";
 import { IconRenderer } from "@/components/icon-renderer";
 import Link from "next/link";
 import { Activity, Box, Zap } from "lucide-react";
+import { DEFAULT_QUICK_TOOLS } from "@/lib/constants";
 
 export default async function DashboardPage({params}: {params: Promise<{locale: string}>}) {
     const {locale} = await params;
     const t = await getTranslations("Dashboard");
-    const menuItems = await getMenuItems();
+    const [menuItems, allTools, config] = await Promise.all([
+        getMenuItems(),
+        getTools(),
+        getSystemConfig()
+    ]);
     
-    // 扁平化菜单项，提取所有工具
-    const allTools: Array<{
-        id: string;
-        name: string;
-        nameEn: string;
-        description: string | null;
-        descriptionEn: string | null;
-        icon: string;
-        component: string;
-        category: string;
-    }> = [];
-    
+    // 计算已启用的工具数量 (在菜单中的工具)
+    let activeToolsCount = 0;
     menuItems.forEach(item => {
-        if (item.tool) {
-            allTools.push(item.tool);
-        }
+        if (item.tool) activeToolsCount++;
         if (item.children) {
             item.children.forEach(child => {
-                if (child.tool) {
-                    allTools.push(child.tool);
-                }
+                if (child.tool) activeToolsCount++;
             });
         }
     });
 
-    // 快捷工具 IDs (模拟配置)
-    const quickToolIds = ['json-formatter', 'uuid-generator', 'base64-encoder', 'image-compressor', 'qrcode-generator', 'color-picker'];
+    // 快捷工具 IDs (从配置读取，或使用默认值)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const configuredTools = (config as any)?.dashboardQuickTools 
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        ? ((config as any).dashboardQuickTools as string).split(',') 
+        : [];
+        
+    const quickToolIds = configuredTools.length > 0 
+        ? configuredTools 
+        : DEFAULT_QUICK_TOOLS;
+        
     const quickTools = allTools.filter(tool => quickToolIds.includes(tool.component));
-    // 如果没找到对应的工具，则补几个
-    if (quickTools.length < 6 && allTools.length > 0) {
-        const remaining = 6 - quickTools.length;
-        const others = allTools.filter(t => !quickToolIds.includes(t.component)).slice(0, remaining);
-        quickTools.push(...others);
-    }
+    
 
     const getToolName = (tool: typeof allTools[0]) => {
         return locale === 'zh' ? tool.name : tool.nameEn;
@@ -98,7 +94,7 @@ export default async function DashboardPage({params}: {params: Promise<{locale: 
                         <Zap className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">{allTools.length}</div>
+                        <div className="text-2xl font-bold">{activeToolsCount}</div>
                         <p className="text-xs text-muted-foreground">
                             {t('enabledInMenu')}
                         </p>

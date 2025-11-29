@@ -94,32 +94,34 @@ export function SystemSettingsForm({ initialConfig }: SystemSettingsFormProps) {
                     <CardTitle>{t('general')}</CardTitle>
                     <CardDescription>{t('description')}</CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                    <div className="space-y-2">
-                        <Label htmlFor="language">{t('language')}</Label>
-                        <Select value={defaultLocale} onValueChange={setDefaultLocale}>
-                            <SelectTrigger id="language">
-                                <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="zh">中文</SelectItem>
-                                <SelectItem value="en">English</SelectItem>
-                            </SelectContent>
-                        </Select>
-                    </div>
+                <CardContent className="space-y-6">
+                    <div className="grid gap-4 md:grid-cols-2">
+                        <div className="space-y-2">
+                            <Label htmlFor="language">{t('language')}</Label>
+                            <Select value={defaultLocale} onValueChange={setDefaultLocale}>
+                                <SelectTrigger id="language">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="zh">中文</SelectItem>
+                                    <SelectItem value="en">English</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
 
-                    <div className="space-y-2">
-                        <Label htmlFor="theme">{t('theme')}</Label>
-                        <Select value={currentTheme} onValueChange={setCurrentTheme}>
-                            <SelectTrigger id="theme">
-                                <SelectValue />
-                            </SelectTrigger>
-                            <SelectContent>
-                                <SelectItem value="light">{t('themeLight')}</SelectItem>
-                                <SelectItem value="dark">{t('themeDark')}</SelectItem>
-                                <SelectItem value="system">{t('themeSystem')}</SelectItem>
-                            </SelectContent>
-                        </Select>
+                        <div className="space-y-2">
+                            <Label htmlFor="theme">{t('theme')}</Label>
+                            <Select value={currentTheme} onValueChange={setCurrentTheme}>
+                                <SelectTrigger id="theme">
+                                    <SelectValue />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    <SelectItem value="light">{t('themeLight')}</SelectItem>
+                                    <SelectItem value="dark">{t('themeDark')}</SelectItem>
+                                    <SelectItem value="system">{t('themeSystem')}</SelectItem>
+                                </SelectContent>
+                            </Select>
+                        </div>
                     </div>
 
                     <Button onClick={handleSaveConfig} disabled={isLoading}>

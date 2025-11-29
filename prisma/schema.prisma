@@ -22,6 +22,7 @@ model SystemConfig {
   dbUser          String?
   dbPassword      String?
   sessionTimeout  Int      @default(604800) // 7 days in seconds
+  dashboardQuickTools String? // Comma separated tool component names
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
