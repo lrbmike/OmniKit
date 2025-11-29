@@ -23,6 +23,14 @@ model SystemConfig {
   dbPassword      String?
   sessionTimeout  Int      @default(604800) // 7 days in seconds
   dashboardQuickTools String? // Comma separated tool component names
+  
+  // Weather Configuration
+  weatherEnabled  Boolean  @default(false)
+  weatherUrl      String   @default("http://api.weatherstack.com/current")
+  weatherApiKey   String?
+  weatherKeyMode  String   @default("query") // query, header
+  weatherCity     String   @default("Beijing")
+
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }

@@ -82,6 +82,19 @@
         "description": "Configure database connection and migration settings.",
         "comingSoon": "Database configuration features (Switch to MySQL/PostgreSQL, Connection Test) are coming soon."
       },
+      "weather": {
+        "title": "Weather Settings",
+        "description": "Configure Weather API settings.",
+        "enabled": "Enable Weather Forecast",
+        "url": "API URL",
+        "apiKey": "API Key",
+        "getKey": "Get API Key",
+        "keyMode": "Key Mode",
+        "city": "Default City",
+        "query": "Query Parameter",
+        "header": "Header",
+        "saveSuccess": "Weather settings saved"
+      },
       "apiKeys": {
         "title": "API Keys",
         "description": "Manage API keys for external integrations.",

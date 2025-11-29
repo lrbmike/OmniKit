@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { setRequestLocale } from 'next-intl/server';
 import { ThemeProvider } from "@/components/theme-provider";
+import { Toaster } from "@/components/ui/sonner";
 import { cn } from '@/lib/utils';
 import "@/app/globals.css";
 import { Metadata } from 'next';
@@ -45,6 +46,7 @@ export default async function LocaleLayout({
             disableTransitionOnChange
           >
             {children}
+            <Toaster />
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

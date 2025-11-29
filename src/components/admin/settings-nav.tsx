@@ -4,12 +4,13 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useLocale, useTranslations } from 'next-intl';
-import { LayoutGrid, Database, Key, Settings as SettingsIcon, LayoutDashboard } from 'lucide-react';
+import { LayoutGrid, Database, Key, Settings as SettingsIcon, LayoutDashboard, CloudSun } from 'lucide-react';
 
 export function SettingsNav() {
     const pathname = usePathname();
     const locale = useLocale();
     const t = useTranslations('Settings.nav');
+    const tPages = useTranslations('Settings.pages.weather');
 
     const items = [
         {
@@ -26,6 +27,11 @@ export function SettingsNav() {
             title: t('system'),
             href: `/${locale}/admin/settings/system`,
             icon: SettingsIcon
+        },
+        {
+            title: tPages('title'),
+            href: `/${locale}/admin/settings/weather`,
+            icon: CloudSun
         },
         {
             title: t('apiKeys'),

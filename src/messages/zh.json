@@ -82,6 +82,19 @@
         "description": "配置数据库连接和迁移设置。",
         "comingSoon": "数据库配置功能（切换数据库、连接测试）即将推出。"
       },
+      "weather": {
+        "title": "天气设置",
+        "description": "配置天气预报 API 设置。",
+        "enabled": "启用天气预报",
+        "url": "API 地址",
+        "apiKey": "API 密钥",
+        "getKey": "获取 API 密钥",
+        "keyMode": "密钥模式",
+        "city": "默认城市",
+        "query": "Query 参数",
+        "header": "Header 请求头",
+        "saveSuccess": "天气设置已保存"
+      },
       "apiKeys": {
         "title": "API 密钥",
         "description": "管理外部集成 API 密钥。",
