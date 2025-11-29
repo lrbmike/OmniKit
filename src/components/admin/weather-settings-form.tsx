@@ -28,7 +28,7 @@ export function WeatherSettingsForm({ initialConfig }: WeatherSettingsFormProps)
     const [url, setUrl] = useState(initialConfig.weatherUrl || 'http://api.weatherstack.com/current');
     const [apiKey, setApiKey] = useState(initialConfig.weatherApiKey || '');
     const [keyMode, setKeyMode] = useState(initialConfig.weatherKeyMode || 'query');
-    const [city, setCity] = useState(initialConfig.weatherCity || 'Beijing');
+    const [city, setCity] = useState(initialConfig.weatherCity || '北京');
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSave = async () => {
@@ -43,6 +43,10 @@ export function WeatherSettingsForm({ initialConfig }: WeatherSettingsFormProps)
             });
 
             if (result.success) {
+                // Clear cache and notify header to refresh
+                localStorage.removeItem('omnikit_weather');
+                window.dispatchEvent(new Event('weather-config-updated'));
+                
                 toast.success(t('saveSuccess'));
             } else {
                 toast.error(result.error || 'Failed to save settings');
@@ -95,7 +99,7 @@ export function WeatherSettingsForm({ initialConfig }: WeatherSettingsFormProps)
                             id="city"
                             value={city}
                             onChange={(e) => setCity(e.target.value)}
-                            placeholder="Beijing"
+                            placeholder="北京"
                             disabled={!enabled}
                         />
                     </div>

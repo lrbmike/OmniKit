@@ -16,7 +16,7 @@ export default async function WeatherSettingsPage() {
                 weatherUrl: config.weatherUrl || '',
                 weatherApiKey: config.weatherApiKey || '',
                 weatherKeyMode: config.weatherKeyMode || 'query',
-                weatherCity: config.weatherCity || 'Beijing',
+                weatherCity: config.weatherCity || '北京',
             }}
         />
     );

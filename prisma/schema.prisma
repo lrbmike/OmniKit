@@ -29,7 +29,7 @@ model SystemConfig {
   weatherUrl      String   @default("http://api.weatherstack.com/current")
   weatherApiKey   String?
   weatherKeyMode  String   @default("query") // query, header
-  weatherCity     String   @default("Beijing")
+  weatherCity     String   @default("北京")
 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt

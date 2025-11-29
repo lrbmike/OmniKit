@@ -50,7 +50,7 @@ export async function getWeather() {
         }
 
         const baseUrl = config.weatherUrl || 'http://api.weatherstack.com/current';
-        const city = config.weatherCity || 'Beijing';
+        const city = config.weatherCity || '北京';
         const apiKey = config.weatherApiKey;
         const mode = config.weatherKeyMode || 'query';
 
