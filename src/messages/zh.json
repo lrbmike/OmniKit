@@ -97,9 +97,22 @@
   },
   "Dashboard": {
     "title": "仪表盘",
-    "description": "这是一个受保护的页面。只有登录后才能看到。",
+    "description": "欢迎回来！查看系统概览和快速访问工具。",
     "welcome": "欢迎回来！",
-    "logout": "退出登录"
+    "logout": "退出登录",
+    "totalTools": "工具总数",
+    "availableInLibrary": "可用工具库",
+    "activeTools": "已启用工具",
+    "enabledInMenu": "已添加到菜单",
+    "systemStatus": "系统状态",
+    "healthy": "正常",
+    "allSystemsOperational": "所有系统运行正常",
+    "toolSearch": "工具搜索",
+    "toolSearchDescription": "搜索并快速访问您需要的工具",
+    "searchPlaceholder": "搜索工具名称、描述或分类...",
+    "searchResults": "找到 {count} 个工具",
+    "noToolsFound": "未找到工具",
+    "tryDifferentKeywords": "请尝试使用不同的关键词"
   },
   "Init": {
     "welcome": "欢迎使用 OmniKit",

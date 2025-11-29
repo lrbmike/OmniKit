@@ -97,9 +97,22 @@
   },
   "Dashboard": {
     "title": "Dashboard",
-    "description": "This is a protected page. You can only see this if you are logged in.",
+    "description": "Welcome back! View system overview and quick access to tools.",
     "welcome": "Welcome back!",
-    "logout": "Logout"
+    "logout": "Logout",
+    "totalTools": "Total Tools",
+    "availableInLibrary": "Available in library",
+    "activeTools": "Active Tools",
+    "enabledInMenu": "Enabled in menu",
+    "systemStatus": "System Status",
+    "healthy": "Healthy",
+    "allSystemsOperational": "All systems operational",
+    "toolSearch": "Tool Search",
+    "toolSearchDescription": "Search and quickly access the tools you need",
+    "searchPlaceholder": "Search tool name, description or category...",
+    "searchResults": "Found {count} tools",
+    "noToolsFound": "No tools found",
+    "tryDifferentKeywords": "Try using different keywords"
   },
   "Init": {
     "welcome": "Welcome to OmniKit",
@@ -140,7 +153,10 @@
       "generate": "Generate",
       "copy": "Copy",
       "copied": "Copied to clipboard",
-      "errorSelection": "Please select at least one character type"
+      "errorSelection": "Please select at least one character type",
+      "configuration": "Configuration",
+      "generatedPasswords": "Generated Passwords",
+      "outputPlaceholder": "Generated passwords will appear here..."
     },
     "JsonFormatter": {
       "title": "JSON Formatter",
@@ -168,7 +184,8 @@
       "background": "Background Color",
       "download": "Download PNG",
       "downloadSuccess": "QR Code downloaded",
-      "enterText": "Enter text to generate"
+      "enterText": "Enter text to generate",
+      "configuration": "Configuration"
     },
     "ColorPicker": {
       "title": "Color Picker",
@@ -179,7 +196,8 @@
       "rgb": "RGB",
       "hsl": "HSL",
       "copy": "Copy",
-      "copied": "Color copied to clipboard"
+      "copied": "Color copied to clipboard",
+      "configuration": "Configuration"
     },
     "Base64Encoder": {
       "title": "Base64 Encoder/Decoder",
@@ -192,7 +210,10 @@
       "clear": "Clear",
       "copy": "Copy",
       "copied": "Copied to clipboard",
-      "errorDecode": "Invalid Base64 string"
+      "errorDecode": "Invalid Base64 string",
+      "configuration": "Configuration",
+      "placeholderEncode": "Hello World",
+      "placeholderDecode": "SGVsbG8gV29ybGQ="
     },
     "HashCalculator": {
       "title": "Hash Calculator",
@@ -204,7 +225,9 @@
       "autoUpdate": "Auto Update",
       "calculate": "Calculate",
       "copy": "Copy",
-      "copied": "Hash copied to clipboard"
+      "copied": "Hash copied to clipboard",
+      "configuration": "Configuration",
+      "inputPlaceholder": "Enter text to hash..."
     },
     "UrlEncoder": {
       "title": "URL Encoder/Decoder",
@@ -217,7 +240,8 @@
       "clear": "Clear",
       "copy": "Copy",
       "copied": "Copied to clipboard",
-      "errorDecode": "Invalid URL encoding"
+      "errorDecode": "Invalid URL encoding",
+      "configuration": "Configuration"
     },
     "MarkdownPreview": {
       "title": "Markdown Preview",
