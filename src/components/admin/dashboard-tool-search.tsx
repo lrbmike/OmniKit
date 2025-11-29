@@ -22,9 +22,10 @@ interface Tool {
 interface DashboardToolSearchProps {
     tools: Tool[];
     locale: string;
+    showInitialResults?: boolean;
 }
 
-export function DashboardToolSearch({ tools, locale }: DashboardToolSearchProps) {
+export function DashboardToolSearch({ tools, locale, showInitialResults = true }: DashboardToolSearchProps) {
     const [searchQuery, setSearchQuery] = useState('');
     const t = useTranslations('Dashboard');
     
@@ -42,7 +43,7 @@ export function DashboardToolSearch({ tools, locale }: DashboardToolSearchProps)
     // 过滤工具
     const filteredTools = useMemo(() => {
         if (!searchQuery.trim()) {
-            return tools;
+            return showInitialResults ? tools : [];
         }
 
         const query = searchQuery.toLowerCase();
@@ -83,9 +84,9 @@ export function DashboardToolSearch({ tools, locale }: DashboardToolSearchProps)
                 </p>
             )}
 
-            {/* 工具网格 */}
+            {/* 工具网格 - 仅当有结果显示或初始显示开启时渲染 */}
             {filteredTools.length > 0 ? (
-                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 text-left">
                     {filteredTools.map((tool) => (
                         <Link
                             key={tool.id}
@@ -118,7 +119,7 @@ export function DashboardToolSearch({ tools, locale }: DashboardToolSearchProps)
                         </Link>
                     ))}
                 </div>
-            ) : (
+            ) : searchQuery ? (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
                     <Search className="h-12 w-12 text-muted-foreground/50 mb-4" />
                     <p className="text-lg font-medium text-muted-foreground">
@@ -128,7 +129,7 @@ export function DashboardToolSearch({ tools, locale }: DashboardToolSearchProps)
                         {t('tryDifferentKeywords')}
                     </p>
                 </div>
-            )}
+            ) : null}
         </div>
     );
 }

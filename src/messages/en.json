@@ -112,7 +112,12 @@
     "searchPlaceholder": "Search tool name, description or category...",
     "searchResults": "Found {count} tools",
     "noToolsFound": "No tools found",
-    "tryDifferentKeywords": "Try using different keywords"
+    "tryDifferentKeywords": "Try using different keywords",
+    "welcomeTitle": "Welcome to OmniKit",
+    "welcomeDescription": "Your one-stop collection of developer tools designed to boost your productivity.",
+    "quickTools": "Quick Tools",
+    "weatherForecast": "Weather Forecast",
+    "weatherPlaceholder": "Feature Coming Soon..."
   },
   "Init": {
     "welcome": "Welcome to OmniKit",

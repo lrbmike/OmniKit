@@ -112,7 +112,12 @@
     "searchPlaceholder": "搜索工具名称、描述或分类...",
     "searchResults": "找到 {count} 个工具",
     "noToolsFound": "未找到工具",
-    "tryDifferentKeywords": "请尝试使用不同的关键词"
+    "tryDifferentKeywords": "请尝试使用不同的关键词",
+    "welcomeTitle": "欢迎使用 OmniKit",
+    "welcomeDescription": "一站式开发工具集合，旨在提高您的开发效率。",
+    "quickTools": "快捷工具",
+    "weatherForecast": "天气预报",
+    "weatherPlaceholder": "功能开发中..."
   },
   "Init": {
     "welcome": "欢迎使用 OmniKit",
