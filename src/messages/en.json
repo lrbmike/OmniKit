@@ -93,7 +93,14 @@
         "city": "Default City",
         "query": "Query Parameter",
         "header": "Header",
-        "saveSuccess": "Weather settings saved"
+        "saveSuccess": "Weather settings saved",
+        "errors": {
+          "CONFIG_NOT_FOUND": "System config not found",
+          "WEATHER_DISABLED": "Weather forecast is disabled",
+          "API_NOT_CONFIGURED": "Weather API is not configured",
+          "API_ERROR": "Weather API Error",
+          "FETCH_FAILED": "Failed to fetch weather data"
+        }
       },
       "apiKeys": {
         "title": "API Keys",

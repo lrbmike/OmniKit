@@ -38,15 +38,15 @@ export async function getWeather() {
         }
         
         if (!config) {
-            return { error: 'System config not found' };
+            return { error: 'CONFIG_NOT_FOUND' };
         }
 
         if (!config.weatherEnabled) {
-            return { error: 'Weather disabled' };
+            return { error: 'WEATHER_DISABLED' };
         }
         
         if (!config.weatherApiKey) {
-            return { error: 'Weather API not configured' };
+            return { error: 'API_NOT_CONFIGURED' };
         }
 
         const baseUrl = config.weatherUrl || 'http://api.weatherstack.com/current';
@@ -84,13 +84,13 @@ export async function getWeather() {
         const data = await response.json();
 
         if (data.error) {
-            return { error: data.error.info || 'Weather API error' };
+            return { error: 'API_ERROR', details: data.error.info };
         }
 
         return data as WeatherData;
 
     } catch (error) {
         console.error('Get weather error:', error);
-        return { error: 'Failed to fetch weather data' };
+        return { error: 'FETCH_FAILED' };
     }
 }

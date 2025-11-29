@@ -93,7 +93,14 @@
         "city": "默认城市",
         "query": "Query 参数",
         "header": "Header 请求头",
-        "saveSuccess": "天气设置已保存"
+        "saveSuccess": "天气设置已保存",
+        "errors": {
+          "CONFIG_NOT_FOUND": "系统配置未找到",
+          "WEATHER_DISABLED": "天气功能已禁用",
+          "API_NOT_CONFIGURED": "天气 API 未配置",
+          "API_ERROR": "天气 API 错误",
+          "FETCH_FAILED": "获取天气数据失败"
+        }
       },
       "apiKeys": {
         "title": "API 密钥",

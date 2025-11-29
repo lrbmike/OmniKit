@@ -3,6 +3,7 @@
 import { CloudSun, Loader2, CloudOff } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { getWeather } from '@/actions/weather';
+import { useTranslations } from 'next-intl';
 
 // Module-level cache to prevent duplicate requests in Strict Mode or navigation
 let weatherPromise: Promise<any> | null = null;
@@ -11,6 +12,7 @@ export function HeaderWeather() {
     const [loading, setLoading] = useState(true);
     const [weather, setWeather] = useState<any>(null);
     const [error, setError] = useState<string | null>(null);
+    const t = useTranslations('Settings.pages.weather.errors');
 
     useEffect(() => {
         const fetchWeather = async (force = false) => {
@@ -55,7 +57,7 @@ export function HeaderWeather() {
                 }
             } catch (err) {
                 console.error(err);
-                setError('Failed to load weather');
+                setError('FETCH_FAILED');
                 weatherPromise = null; // Reset on error
             } finally {
                 setLoading(false);
@@ -83,17 +85,20 @@ export function HeaderWeather() {
     if (error || !weather) {
         // If error is due to missing config, we might want to hide it or show a config hint
         // For now, showing a subtle error state or just hidden if not critical
-        if (error === 'Weather API not configured') {
+        if (error === 'API_NOT_CONFIGURED' || error === 'WEATHER_DISABLED' || error === 'CONFIG_NOT_FOUND') {
              return null; // Hide if not configured
         }
         
+        // Translate error message
+        const errorMessage = error ? t(error as any) : 'N/A';
+
         return (
              <div 
                 className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-muted/50 text-muted-foreground text-xs font-medium hidden md:flex"
-                title={error || 'Weather unavailable'}
+                title={errorMessage}
             >
                 <CloudOff className="h-4 w-4" />
-                <span className="max-w-[100px] truncate">{error || 'N/A'}</span>
+                <span className="max-w-[100px] truncate">{errorMessage}</span>
             </div>
         );
     }
