@@ -117,7 +117,8 @@
     "welcomeDescription": "Your one-stop collection of developer tools designed to boost your productivity.",
     "quickTools": "Quick Tools",
     "weatherForecast": "Weather Forecast",
-    "weatherPlaceholder": "Feature Coming Soon..."
+    "weatherPlaceholder": "Feature Coming Soon...",
+    "configureMenu": "Configure Menu"
   },
   "Init": {
     "welcome": "Welcome to OmniKit",

@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { IconRenderer } from '@/components/icon-renderer';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { useSidebarStore } from '@/store/sidebar-store';
 
@@ -65,12 +65,33 @@ function SidebarItem({ item, locale, pathname, closeSidebar }: { item: MenuItem,
     const label = locale === 'zh' ? (item.label || item.tool?.name) : (item.labelEn || item.tool?.nameEn);
     const iconName = item.icon || item.tool?.icon || 'Circle';
 
+    // Check if this item or any of its children is active
+    const checkIsActive = (menuItem: MenuItem): boolean => {
+        if (menuItem.isFolder && menuItem.children) {
+            return menuItem.children.some((child: MenuItem) => checkIsActive(child));
+        }
+        const href = `/${locale}/admin/tools/${menuItem.tool?.component}`;
+        return pathname === href;
+    };
+
+    const hasActiveChild = checkIsActive(item);
+
+    // Auto-expand/collapse based on active child state
+    useEffect(() => {
+        setIsExpanded(hasActiveChild);
+    }, [hasActiveChild]);
+
     if (item.isFolder) {
         return (
             <div>
                 <button
                     onClick={() => setIsExpanded(!isExpanded)}
-                    className="flex items-center w-full px-3 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+                    className={cn(
+                        "flex items-center w-full px-3 py-2 text-sm font-medium rounded-md transition-colors",
+                        hasActiveChild 
+                            ? "text-primary bg-primary/5" 
+                            : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                    )}
                 >
                     <IconRenderer name={iconName} className="mr-3 h-5 w-5" />
                     <span className="flex-1 text-left">{label}</span>

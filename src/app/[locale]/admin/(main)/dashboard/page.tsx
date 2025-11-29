@@ -75,9 +75,18 @@ export default async function DashboardPage({params}: {params: Promise<{locale: 
                     </CardHeader>
                     <CardContent>
                         <div className="text-2xl font-bold">18</div>
-                        <p className="text-xs text-muted-foreground">
-                            {t('availableInLibrary')}
-                        </p>
+                        <div className="flex items-center justify-between mt-1">
+                            <p className="text-xs text-muted-foreground">
+                                {t('availableInLibrary')}
+                            </p>
+                            <Link 
+                                href={`/${locale}/admin/settings/menu`} 
+                                className="text-xs font-medium text-primary hover:underline flex items-center gap-1"
+                            >
+                                {t('configureMenu')}
+                                <Box className="h-3 w-3" />
+                            </Link>
+                        </div>
                     </CardContent>
                 </Card>
 
