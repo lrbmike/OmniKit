@@ -197,8 +197,8 @@ const PRESET_TOOLS = [
 
     // AI Tools (1)
     {
-        name: 'AI 翻译',
-        nameEn: 'AI Translator',
+        name: '文本翻译',
+        nameEn: 'Text Translation',
         description: '智能中英互译工具',
         descriptionEn: 'Intelligent English-Chinese translator',
         icon: 'Languages',

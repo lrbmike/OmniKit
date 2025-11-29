@@ -466,7 +466,7 @@
       "clear": "清空"
     },
     "Translator": {
-      "title": "AI 翻译",
+      "title": "文本翻译",
       "description": "智能中英互译工具",
       "sourceLabel": "源文本",
       "targetLabel": "翻译结果",
