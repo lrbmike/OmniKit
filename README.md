@@ -11,6 +11,7 @@ A robust, extensible admin system built with Next.js 15, designed to manage mult
 - **Initialization**: Built-in setup wizard for first-time configuration
 - **Internationalization**: Full i18n support (English & Chinese) via `next-intl`
 - **State Management**: Zustand
+- **Weather Integration**: Real-time weather forecast with configurable API
 
 ## 🧰 Available Tools (18)
 

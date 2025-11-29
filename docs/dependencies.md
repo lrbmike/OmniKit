@@ -6,7 +6,7 @@
 - **框架**: `next`, `react`, `react-dom`
 - **数据库**: `prisma`, `@prisma/client`, `better-sqlite3`
 - **认证**: `iron-session`, `bcryptjs`
-- **UI/样式**: `tailwindcss`, `postcss`, `lucide-react`, `clsx`, `tailwind-merge`, `class-variance-authority`
+- **UI/样式**: `tailwindcss`, `postcss`, `lucide-react`, `clsx`, `tailwind-merge`, `class-variance-authority`, `@radix-ui/react-hover-card`, `@radix-ui/react-switch`
 - **国际化**: `next-intl`
 - **状态管理**: `zustand`
 - **表单校验**: `zod`

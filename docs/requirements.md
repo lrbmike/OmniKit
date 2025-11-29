@@ -223,6 +223,7 @@ OmniKit 是一个基于 Next.js 15 的轻量级多工具集合管理后台系统
 - **菜单管理** (`/admin/settings/menu`) - 编排菜单结构
 - **数据库配置** (`/admin/settings/database`) - 切换数据库、测试连接
 - **系统设置** (`/admin/settings/system`) - 会话超时、语言偏好
+- **天气设置** (`/admin/settings/weather`) - 配置天气 API、城市及启用状态
 - **用户资料** (`/admin/settings/profile`) - 修改管理员信息
 
 #### 6.3 工具页面 (`/admin/tools/[component]`)
@@ -328,6 +329,12 @@ OmniKit 是一个基于 Next.js 15 的轻量级多工具集合管理后台系统
 #### 10.4 高级菜单编辑
 - 拖拽排序（@dnd-kit/core）
 - 可视化菜单树编辑器
+
+#### 10.5 天气预报组件
+- ✅ 基于 Weatherstack API
+- ✅ 支持中英文
+- ✅ 悬浮卡片显示详细信息（风速、湿度等）
+- ✅ 可在设置中启用/禁用
 
 ---
 
