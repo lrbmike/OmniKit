@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  omnikit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: omnikit
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - DATABASE_URL=file:/app/data/omnikit.db
+    volumes:
+      # 使用主机目录挂载（方便直接访问数据库文件）
+      - ./data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+# 注意：此配置使用主机目录挂载，不需要定义 volumes
