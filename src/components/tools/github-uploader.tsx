@@ -10,7 +10,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { uploadToGithub } from '@/actions/github';
 import { getSystemConfig } from '@/actions/system';
 import { toast } from 'sonner';
-import { Upload, Copy, ExternalLink, AlertCircle, Settings } from 'lucide-react';
+import { Upload, ExternalLink, AlertCircle, Settings, Image as ImageIcon } from 'lucide-react';
+import { CopyButton } from '@/components/ui/copy-button';
 
 export function GithubUploader() {
     const t = useTranslations('Tools.GithubUploader');
@@ -27,6 +28,7 @@ export function GithubUploader() {
         cdnUrl: string;
         fileName: string;
     } | null>(null);
+    const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
     // 检查是否配置了 GitHub Token
     useEffect(() => {
@@ -65,6 +67,17 @@ export function GithubUploader() {
         if (selectedFile) {
             setFile(selectedFile);
             setUploadResult(null);
+            
+            // 如果是图片文件，生成预览
+            if (selectedFile.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    setPreviewUrl(e.target?.result as string);
+                };
+                reader.readAsDataURL(selectedFile);
+            } else {
+                setPreviewUrl(null);
+            }
         }
     };
 
@@ -230,6 +243,24 @@ export function GithubUploader() {
                 <CardContent>
                     {uploadResult ? (
                         <div className="space-y-4">
+                            {/* 图片预览 */}
+                            {uploadResult.cdnUrl && (uploadResult.fileName.match(/\.(jpg|jpeg|png|gif|webp|svg)$/i)) && (
+                                <div className="space-y-2">
+                                    <Label>{t('preview')}</Label>
+                                    <div className="relative rounded-lg border bg-muted/50 p-4 flex items-center justify-center min-h-[200px]">
+                                        <img
+                                            src={uploadResult.cdnUrl}
+                                            alt={uploadResult.fileName}
+                                            className="max-w-full max-h-[400px] object-contain rounded"
+                                            onError={(e) => {
+                                                // 如果 CDN 加载失败，尝试使用 raw URL
+                                                (e.target as HTMLImageElement).src = uploadResult.rawUrl;
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                            )}
+
                             <div className="space-y-2">
                                 <Label>{t('fileName')}</Label>
                                 <div className="flex gap-2">
@@ -249,13 +280,10 @@ export function GithubUploader() {
                                         readOnly
                                         className="flex-1"
                                     />
-                                    <Button
-                                        size="icon"
-                                        variant="outline"
-                                        onClick={() => copyToClipboard(uploadResult.cdnUrl, t('cdnUrl'))}
-                                    >
-                                        <Copy className="h-4 w-4" />
-                                    </Button>
+                                    <CopyButton
+                                        value={uploadResult.cdnUrl}
+                                        onCopy={() => toast.success(t('copied'))}
+                                    />
                                     <Button
                                         size="icon"
                                         variant="outline"
@@ -274,13 +302,10 @@ export function GithubUploader() {
                                         readOnly
                                         className="flex-1"
                                     />
-                                    <Button
-                                        size="icon"
-                                        variant="outline"
-                                        onClick={() => copyToClipboard(uploadResult.rawUrl, t('rawUrl'))}
-                                    >
-                                        <Copy className="h-4 w-4" />
-                                    </Button>
+                                    <CopyButton
+                                        value={uploadResult.rawUrl}
+                                        onCopy={() => toast.success(t('copied'))}
+                                    />
                                     <Button
                                         size="icon"
                                         variant="outline"
@@ -292,8 +317,24 @@ export function GithubUploader() {
                             </div>
                         </div>
                     ) : (
-                        <div className="flex items-center justify-center h-48 text-muted-foreground">
-                            <p>{t('noResult')}</p>
+                        <div className="flex flex-col items-center justify-center h-48 text-muted-foreground gap-2">
+                            {previewUrl ? (
+                                <>
+                                    <div className="relative rounded-lg border bg-muted/50 p-4 w-full max-w-md">
+                                        <img
+                                            src={previewUrl}
+                                            alt="Preview"
+                                            className="max-w-full max-h-[300px] object-contain rounded mx-auto"
+                                        />
+                                    </div>
+                                    <p className="text-sm">{t('readyToUpload')}</p>
+                                </>
+                            ) : (
+                                <>
+                                    <ImageIcon className="h-12 w-12 opacity-20" />
+                                    <p>{t('noResult')}</p>
+                                </>
+                            )}
                         </div>
                     )}
                 </CardContent>

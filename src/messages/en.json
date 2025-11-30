@@ -613,7 +613,9 @@
       "fileReadError": "File read failed",
       "tokenNotConfigured": "GitHub Token Not Configured",
       "tokenNotConfiguredDesc": "Please configure your GitHub Personal Access Token in settings before using this tool",
-      "goToSettings": "Go to Settings"
+      "goToSettings": "Go to Settings",
+      "preview": "Preview",
+      "readyToUpload": "Ready to upload"
     },
     "VarNameGenerator": {
       "title": "Variable Name Generator",

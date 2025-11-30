@@ -613,7 +613,9 @@
       "fileReadError": "文件读取失败",
       "tokenNotConfigured": "未配置 GitHub Token",
       "tokenNotConfiguredDesc": "使用此工具前，请先在设置中配置 GitHub Personal Access Token",
-      "goToSettings": "前往设置"
+      "goToSettings": "前往设置",
+      "preview": "预览",
+      "readyToUpload": "准备上传"
     },
     "VarNameGenerator": {
       "title": "变量名生成器",
