@@ -38,6 +38,8 @@
           "createFolder": "创建",
           "folderName": "文件夹名称",
           "folderNamePlaceholder": "例如：开发工具",
+          "folderNameEn": "英文名称（可选）",
+          "folderNameEnPlaceholder": "例如：Developer Tools",
           "folderLocationHintRoot": "将在根目录创建。",
           "folderLocationHintSelected": "将在选中文件夹内创建。",
           "clearSelection": "取消选中",

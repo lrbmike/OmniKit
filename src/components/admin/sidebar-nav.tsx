@@ -62,7 +62,9 @@ export function SidebarNav({ items, locale }: { items: MenuItem[], locale: strin
 function SidebarItem({ item, locale, pathname, closeSidebar }: { item: MenuItem, locale: string, pathname: string, closeSidebar: () => void }) {
     const [isExpanded, setIsExpanded] = useState(false);
 
-    const label = locale === 'zh' ? (item.label || item.tool?.name) : (item.labelEn || item.tool?.nameEn);
+    const label = locale === 'zh' 
+        ? (item.label || item.tool?.name) 
+        : (item.labelEn || item.tool?.nameEn || item.label || item.tool?.name);
     const iconName = item.icon || item.tool?.icon || 'Circle';
 
     // Check if this item or any of its children is active

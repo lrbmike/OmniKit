@@ -38,6 +38,8 @@
           "createFolder": "Create Folder",
           "folderName": "Folder Name",
           "folderNamePlaceholder": "e.g., Development Tools",
+          "folderNameEn": "English Name (Optional)",
+          "folderNameEnPlaceholder": "e.g., Developer Tools",
           "folderLocationHintRoot": "Will be created at root level.",
           "folderLocationHintSelected": "Will be created inside selected folder.",
           "clearSelection": "Clear Selection",

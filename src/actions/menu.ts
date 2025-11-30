@@ -60,7 +60,7 @@ export async function addToolToMenu(toolId: string, parentId: string | null = nu
     }
 }
 
-export async function createFolder(name: string, parentId: string | null = null) {
+export async function createFolder(name: string, nameEn?: string, parentId: string | null = null) {
     try {
         // Get max order
         const maxOrder = await db.menuItem.findFirst({
@@ -77,6 +77,7 @@ export async function createFolder(name: string, parentId: string | null = null)
             data: {
                 userId: 'default-admin',
                 label: name,
+                labelEn: nameEn || null,
                 isFolder: true,
                 parentId,
                 order: newOrder,
@@ -93,7 +94,7 @@ export async function createFolder(name: string, parentId: string | null = null)
     }
 }
 
-export async function updateMenuItem(id: string, data: { label?: string; icon?: string }) {
+export async function updateMenuItem(id: string, data: { label?: string; labelEn?: string; icon?: string }) {
     try {
         await db.menuItem.update({
             where: { id },

@@ -53,8 +53,10 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
     const router = useRouter();
     const [isCreatingFolder, setIsCreatingFolder] = useState(false);
     const [newFolderName, setNewFolderName] = useState('');
+    const [newFolderNameEn, setNewFolderNameEn] = useState('');
     const [editingId, setEditingId] = useState<string | null>(null);
     const [editLabel, setEditLabel] = useState('');
+    const [editLabelEn, setEditLabelEn] = useState('');
     const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
     const [toolSearch, setToolSearch] = useState('');
 
@@ -62,9 +64,10 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
         if (!newFolderName.trim()) return;
 
         setIsCreatingFolder(true);
-        const result = await createFolder(newFolderName, selectedFolderId);
+        const result = await createFolder(newFolderName, newFolderNameEn || undefined, selectedFolderId);
         setIsCreatingFolder(false);
         setNewFolderName('');
+        setNewFolderNameEn('');
 
         if (result.success) {
             toast.success(t('successCreated'));
@@ -109,15 +112,17 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
     const startEdit = (item: MenuItem) => {
         setEditingId(item.id);
         setEditLabel(item.label || item.tool?.name || '');
+        setEditLabelEn(item.labelEn || item.tool?.nameEn || '');
     };
 
     const cancelEdit = () => {
         setEditingId(null);
         setEditLabel('');
+        setEditLabelEn('');
     };
 
     const saveEdit = async (id: string) => {
-        const result = await updateMenuItem(id, { label: editLabel });
+        const result = await updateMenuItem(id, { label: editLabel, labelEn: editLabelEn || undefined });
         if (result.success) {
             toast.success(t('successUpdated'));
             setEditingId(null);
@@ -221,6 +226,15 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
                                             onChange={(e) => setNewFolderName(e.target.value)}
                                             placeholder={t('folderNamePlaceholder')}
                                         />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <Label htmlFor="nameEn">{t('folderNameEn')}</Label>
+                                        <Input
+                                            id="nameEn"
+                                            value={newFolderNameEn}
+                                            onChange={(e) => setNewFolderNameEn(e.target.value)}
+                                            placeholder={t('folderNameEnPlaceholder')}
+                                        />
                                         <p className="text-xs text-muted-foreground">
                                             {selectedFolderId ? t('folderLocationHintSelected') : t('folderLocationHintRoot')}
                                         </p>
@@ -251,7 +265,9 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
                             onEdit={startEdit}
                             isEditing={editingId === item.id}
                             editLabel={editLabel}
+                            editLabelEn={editLabelEn}
                             setEditLabel={setEditLabel}
+                            setEditLabelEn={setEditLabelEn}
                             onSave={() => saveEdit(item.id)}
                             onCancel={cancelEdit}
                             selectedFolderId={selectedFolderId}
@@ -272,7 +288,9 @@ function MenuItemRow({
     onEdit,
     isEditing,
     editLabel,
+    editLabelEn,
     setEditLabel,
+    setEditLabelEn,
     onSave,
     onCancel,
     selectedFolderId,
@@ -285,7 +303,9 @@ function MenuItemRow({
     onEdit: (item: MenuItem) => void,
     isEditing: boolean,
     editLabel: string,
+    editLabelEn: string,
     setEditLabel: (val: string) => void,
+    setEditLabelEn: (val: string) => void,
     onSave: () => void,
     onCancel: () => void,
     selectedFolderId: string | null,
@@ -321,19 +341,30 @@ function MenuItemRow({
 
                 <div className="flex-1 min-w-0">
                     {isEditing ? (
-                        <div className="flex items-center gap-2" onClick={e => e.stopPropagation()}>
-                            <Input
-                                value={editLabel}
-                                onChange={(e) => setEditLabel(e.target.value)}
-                                className="h-8 max-w-xs"
-                                autoFocus
-                            />
-                            <Button size="icon" variant="ghost" onClick={onSave} className="h-8 w-8 text-green-600">
-                                <Save className="h-4 w-4" />
-                            </Button>
-                            <Button size="icon" variant="ghost" onClick={onCancel} className="h-8 w-8 text-red-600">
-                                <X className="h-4 w-4" />
-                            </Button>
+                        <div className="flex flex-col gap-2 flex-1" onClick={e => e.stopPropagation()}>
+                            <div className="flex items-center gap-2">
+                                <Input
+                                    value={editLabel}
+                                    onChange={(e) => setEditLabel(e.target.value)}
+                                    className="h-8 flex-1"
+                                    placeholder="中文名称"
+                                    autoFocus
+                                />
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <Input
+                                    value={editLabelEn}
+                                    onChange={(e) => setEditLabelEn(e.target.value)}
+                                    className="h-8 flex-1"
+                                    placeholder="English Name (Optional)"
+                                />
+                                <Button size="icon" variant="ghost" onClick={onSave} className="h-8 w-8 text-green-600">
+                                    <Save className="h-4 w-4" />
+                                </Button>
+                                <Button size="icon" variant="ghost" onClick={onCancel} className="h-8 w-8 text-red-600">
+                                    <X className="h-4 w-4" />
+                                </Button>
+                            </div>
                         </div>
                     ) : (
                         <div className="font-medium text-sm flex items-center gap-2">
@@ -376,9 +407,11 @@ function MenuItemRow({
                             onDelete={onDelete}
                             onMove={onMove}
                             onEdit={onEdit}
-                            isEditing={isEditing && false} // Only support editing one item at a time globally
+                            isEditing={false}
                             editLabel={editLabel}
+                            editLabelEn={editLabelEn}
                             setEditLabel={setEditLabel}
+                            setEditLabelEn={setEditLabelEn}
                             onSave={onSave}
                             onCancel={onCancel}
                             selectedFolderId={selectedFolderId}
