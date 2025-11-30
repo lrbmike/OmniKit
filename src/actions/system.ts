@@ -205,7 +205,7 @@ export async function exportConfiguration() {
         const systemConfig = await getSystemConfig();
         
         // 获取 AI 提供商配置
-        const aiProviders = await db.aIProvider.findMany({
+        const aiProviders = await db.aiProvider.findMany({
             select: {
                 id: true,
                 name: true,
@@ -284,11 +284,11 @@ export async function importConfiguration(configJson: string) {
         // 导入 AI 提供商配置
         if (config.aiProviders && Array.isArray(config.aiProviders)) {
             // 先删除现有的提供商
-            await db.aIProvider.deleteMany({});
+            await db.aiProvider.deleteMany({});
             
             // 导入新的提供商
             for (const provider of config.aiProviders) {
-                await db.aIProvider.create({
+                await db.aiProvider.create({
                     data: {
                         name: provider.name,
                         baseUrl: provider.baseUrl,
@@ -307,15 +307,38 @@ export async function importConfiguration(configJson: string) {
                 where: { userId: 'default-admin' }
             });
 
-            // 导入新的菜单
-            for (const item of config.menuItems) {
+            // 创建 ID 映射表（旧 ID -> 新 ID）
+            const idMap = new Map<string, string>();
+
+            // 先创建所有根级菜单项（没有 parentId 的）
+            const rootItems = config.menuItems.filter((item: any) => !item.parentId);
+            for (const item of rootItems) {
+                const newItem = await db.menuItem.create({
+                    data: {
+                        userId: 'default-admin',
+                        label: item.label,
+                        icon: item.icon,
+                        toolId: item.toolId,
+                        parentId: null,
+                        order: item.order,
+                        isFolder: item.isFolder ?? false,
+                    }
+                });
+                idMap.set(item.id, newItem.id);
+            }
+
+            // 再创建有 parentId 的菜单项
+            const childItems = config.menuItems.filter((item: any) => item.parentId);
+            for (const item of childItems) {
+                // 使用映射表中的新 parentId
+                const newParentId = idMap.get(item.parentId);
                 await db.menuItem.create({
                     data: {
                         userId: 'default-admin',
                         label: item.label,
                         icon: item.icon,
                         toolId: item.toolId,
-                        parentId: item.parentId,
+                        parentId: newParentId || null,
                         order: item.order,
                         isFolder: item.isFolder ?? false,
                     }
