@@ -50,7 +50,10 @@
           "successDeleted": "Item deleted",
           "successUpdated": "Item updated",
           "successAdded": "Tool added to menu",
-          "folderBadge": "Folder"
+          "folderBadge": "Folder",
+          "editItem": "Edit Item",
+          "cancel": "Cancel",
+          "save": "Save"
         }
       },
       "system": {

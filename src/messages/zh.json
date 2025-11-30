@@ -50,7 +50,10 @@
           "successDeleted": "项目已删除",
           "successUpdated": "项目已更新",
           "successAdded": "工具已添加",
-          "folderBadge": "文件夹"
+          "folderBadge": "文件夹",
+          "editItem": "编辑项目",
+          "cancel": "取消",
+          "save": "保存"
         }
       },
       "system": {
