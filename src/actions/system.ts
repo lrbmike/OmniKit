@@ -36,6 +36,8 @@ export async function updateSystemConfig(data: {
     aiApiKey?: string;
     aiModel?: string;
     aiSystemPrompt?: string;
+    translatorProviderId?: string;
+    translatorSystemPrompt?: string;
 }) {
     try {
         const config = await db.systemConfig.findFirst();
@@ -63,6 +65,9 @@ export async function updateSystemConfig(data: {
         if (data.aiApiKey !== undefined) rawData.aiApiKey = data.aiApiKey;
         if (data.aiModel !== undefined) rawData.aiModel = data.aiModel;
         if (data.aiSystemPrompt !== undefined) rawData.aiSystemPrompt = data.aiSystemPrompt;
+
+        if (data.translatorProviderId !== undefined) rawData.translatorProviderId = data.translatorProviderId;
+        if (data.translatorSystemPrompt !== undefined) rawData.translatorSystemPrompt = data.translatorSystemPrompt;
 
         // Update known fields using Prisma Client
         if (Object.keys(knownData).length > 0) {
@@ -117,6 +122,15 @@ export async function updateSystemConfig(data: {
             if (rawData.aiSystemPrompt !== undefined) {
                 setClauses.push('aiSystemPrompt = ?');
                 params.push(rawData.aiSystemPrompt);
+            }
+
+            if (rawData.translatorProviderId !== undefined) {
+                setClauses.push('translatorProviderId = ?');
+                params.push(rawData.translatorProviderId);
+            }
+            if (rawData.translatorSystemPrompt !== undefined) {
+                setClauses.push('translatorSystemPrompt = ?');
+                params.push(rawData.translatorSystemPrompt);
             }
 
             if (setClauses.length > 0) {

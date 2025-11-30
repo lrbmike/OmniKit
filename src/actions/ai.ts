@@ -1,6 +1,7 @@
 'use server';
 
 import { getSystemConfig } from './system';
+import { getAiProviderById } from './ai-provider';
 
 interface TranslationRequest {
     text: string;
@@ -18,13 +19,26 @@ export async function translateText({ text, sourceLang, targetLang }: Translatio
     try {
         const config = await getSystemConfig();
         
-        if (!config?.aiApiKey) {
-            return { success: false, error: 'AI API Key is not configured' };
+        // 获取翻译器使用的 AI 提供商
+        const providerId = config?.translatorProviderId;
+        if (!providerId) {
+            return { success: false, error: 'Translation provider is not configured. Please configure it in settings.' };
         }
 
-        const baseUrl = config.aiBaseUrl?.replace(/\/$/, '') || 'https://api.openai.com/v1';
-        const model = config.aiModel || 'gpt-3.5-turbo';
-        let systemPrompt = config.aiSystemPrompt || "You are a professional translator. Translate the following text from {sourceLang} to {targetLang}.\n\nText to translate:\n{context}\n\nOutput only the translated text.";
+        const providerResult = await getAiProviderById(providerId);
+        if (!providerResult.success || !providerResult.data) {
+            return { success: false, error: 'Translation provider not found or inactive.' };
+        }
+
+        const provider = providerResult.data;
+        
+        if (!provider.apiKey) {
+            return { success: false, error: 'AI provider API Key is not configured' };
+        }
+
+        const baseUrl = provider.baseUrl.replace(/\/$/, '');
+        const model = provider.model;
+        let systemPrompt = config?.translatorSystemPrompt || "You are a professional translator. Translate the following text from {sourceLang} to {targetLang}.\n\nText to translate:\n{context}\n\nOutput only the translated text.";
         
         // Replace all placeholders
         systemPrompt = systemPrompt
@@ -36,7 +50,7 @@ export async function translateText({ text, sourceLang, targetLang }: Translatio
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${config.aiApiKey}`,
+                'Authorization': `Bearer ${provider.apiKey}`,
             },
             body: JSON.stringify({
                 model: model,

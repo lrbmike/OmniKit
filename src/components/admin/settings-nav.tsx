@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useLocale, useTranslations } from 'next-intl';
-import { LayoutGrid, Database, Key, Settings as SettingsIcon, LayoutDashboard, CloudSun, Languages } from 'lucide-react';
+import { LayoutGrid, Database, Key, Settings as SettingsIcon, LayoutDashboard, CloudSun, Languages, Bot } from 'lucide-react';
 
 export function SettingsNav() {
     const pathname = usePathname();
@@ -12,6 +12,7 @@ export function SettingsNav() {
     const t = useTranslations('Settings.nav');
     const tPages = useTranslations('Settings.pages.weather');
     const tAi = useTranslations('Settings.pages.ai');
+    const tAiProviders = useTranslations('Settings.pages.aiProviders');
 
     const items = [
         {
@@ -33,6 +34,11 @@ export function SettingsNav() {
             title: tPages('title'),
             href: `/${locale}/admin/settings/weather`,
             icon: CloudSun
+        },
+        {
+            title: tAiProviders('title'),
+            href: `/${locale}/admin/settings/ai-providers`,
+            icon: Bot
         },
         {
             title: tAi('title'),

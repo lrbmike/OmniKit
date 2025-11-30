@@ -32,14 +32,27 @@ model SystemConfig {
   weatherCity     String   @default("北京")
 
   // AI/Translation Configuration
-  aiProvider      String   @default("openai") // openai
-  aiBaseUrl       String   @default("https://api.openai.com/v1")
-  aiApiKey        String?
-  aiModel         String   @default("gpt-3.5-turbo")
-  aiSystemPrompt  String   @default("You are a professional translator. Translate the following text from {sourceLang} to {targetLang}.\n\nText to translate:\n{context}\n\nOutput only the translated text.")
+  translatorProviderId String? // Selected AI provider for translator
+  translatorSystemPrompt String @default("You are a professional translator. Translate the following text from {sourceLang} to {targetLang}.\n\nText to translate:\n{context}\n\nOutput only the translated text.")
 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
+}
+
+model AiProvider {
+  id          String   @id @default(cuid())
+  name        String   // Provider name, e.g., "OpenAI", "DeepSeek"
+  type        String   @default("openai") // Provider type: openai (compatible)
+  baseUrl     String   // API base URL
+  apiKey      String?  // API key (encrypted in production)
+  model       String   // Model name
+  isDefault   Boolean  @default(false) // Is default provider
+  isActive    Boolean  @default(true) // Is provider active
+  order       Int      @default(0) // Display order
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([isActive, order])
 }
 
 model User {

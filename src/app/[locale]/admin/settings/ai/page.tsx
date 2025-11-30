@@ -1,18 +1,18 @@
 import { getSystemConfig } from '@/actions/system';
-import { AiSettingsForm } from '@/components/admin/ai-settings-form';
+import { getActiveAiProviders } from '@/actions/ai-provider';
+import { TranslatorSettingsForm } from '@/components/admin/translator-settings-form';
 import { Separator } from '@/components/ui/separator';
 import { getTranslations } from 'next-intl/server';
 
 export default async function AiSettingsPage() {
     const t = await getTranslations('Settings.pages.ai');
     const config = await getSystemConfig();
+    const providersResult = await getActiveAiProviders();
+    const providers = providersResult.success ? providersResult.data : [];
 
     const initialConfig = {
-        aiProvider: config?.aiProvider || 'openai',
-        aiBaseUrl: config?.aiBaseUrl || 'https://api.openai.com/v1',
-        aiApiKey: config?.aiApiKey || '',
-        aiModel: config?.aiModel || 'gpt-3.5-turbo',
-        aiSystemPrompt: config?.aiSystemPrompt || "You are a professional translator. Translate the following text from {sourceLang} to {targetLang}.\n\nText to translate:\n{context}\n\nOutput only the translated text.",
+        translatorProviderId: config?.translatorProviderId || '',
+        translatorSystemPrompt: config?.translatorSystemPrompt || "You are a professional translator. Translate the following text from {sourceLang} to {targetLang}.\n\nText to translate:\n{context}\n\nOutput only the translated text.",
     };
 
     return (
@@ -24,7 +24,10 @@ export default async function AiSettingsPage() {
                 </p>
             </div>
             <Separator />
-            <AiSettingsForm initialConfig={initialConfig} />
+            <TranslatorSettingsForm 
+                initialConfig={initialConfig} 
+                providers={providers}
+            />
         </div>
     );
 }
