@@ -69,7 +69,18 @@
         "passwordUpdated": "密码已重置",
         "configUpdated": "设置已更新",
         "passwordMismatch": "两次输入的密码不一致",
-        "selected": "已选择 {count}/4"
+        "selected": "已选择 {count}/4",
+        "configManagement": "配置管理",
+        "configManagementDescription": "导出和导入系统配置",
+        "exportConfig": "导出配置",
+        "importConfig": "导入配置",
+        "exportSuccess": "配置已导出",
+        "importSuccess": "配置导入成功，页面即将刷新",
+        "configInfo": "配置文件包含以下内容：",
+        "configIncludesSystem": "系统设置（语言、主题、天气等）",
+        "configIncludesAI": "AI 提供商配置",
+        "configIncludesMenu": "菜单结构",
+        "configWarning": "导入配置将覆盖当前所有设置，请谨慎操作！"
       },
       "dashboard": {
         "title": "快捷工具",

@@ -193,3 +193,143 @@ export async function updatePassword(newPassword: string) {
         return { success: false, error: 'Failed to update password' };
     }
 }
+
+export async function exportConfiguration() {
+    try {
+        const session = await getSession();
+        if (!session || !session.isLoggedIn) {
+            return { success: false, error: 'Unauthorized' };
+        }
+
+        // 获取系统配置
+        const systemConfig = await getSystemConfig();
+        
+        // 获取 AI 提供商配置
+        const aiProviders = await db.aIProvider.findMany({
+            select: {
+                id: true,
+                name: true,
+                baseUrl: true,
+                apiKey: true,
+                model: true,
+                isActive: true,
+            }
+        });
+
+        // 获取菜单配置
+        const menuItems = await db.menuItem.findMany({
+            where: { userId: 'default-admin' },
+            select: {
+                id: true,
+                label: true,
+                icon: true,
+                toolId: true,
+                parentId: true,
+                order: true,
+                isFolder: true,
+            },
+            orderBy: { order: 'asc' }
+        });
+
+        const config = {
+            version: '1.0',
+            exportDate: new Date().toISOString(),
+            systemConfig: {
+                defaultLocale: systemConfig?.defaultLocale,
+                defaultTheme: systemConfig?.defaultTheme,
+                dashboardQuickTools: systemConfig?.dashboardQuickTools,
+                weatherEnabled: systemConfig?.weatherEnabled,
+                weatherUrl: systemConfig?.weatherUrl,
+                weatherApiKey: systemConfig?.weatherApiKey,
+                weatherKeyMode: systemConfig?.weatherKeyMode,
+                weatherCity: systemConfig?.weatherCity,
+                translatorProviderId: systemConfig?.translatorProviderId,
+                translatorSystemPrompt: systemConfig?.translatorSystemPrompt,
+                varNameGenProviderId: systemConfig?.varNameGenProviderId,
+                varNameGenSystemPrompt: systemConfig?.varNameGenSystemPrompt,
+            },
+            aiProviders,
+            menuItems,
+        };
+
+        return { 
+            success: true, 
+            data: JSON.stringify(config, null, 2) 
+        };
+    } catch (error) {
+        console.error('Export configuration error:', error);
+        return { success: false, error: 'Failed to export configuration' };
+    }
+}
+
+export async function importConfiguration(configJson: string) {
+    try {
+        const session = await getSession();
+        if (!session || !session.isLoggedIn) {
+            return { success: false, error: 'Unauthorized' };
+        }
+
+        const config = JSON.parse(configJson);
+
+        // 验证配置格式
+        if (!config.version || !config.systemConfig) {
+            return { success: false, error: 'Invalid configuration format' };
+        }
+
+        // 导入系统配置
+        if (config.systemConfig) {
+            await updateSystemConfig(config.systemConfig);
+        }
+
+        // 导入 AI 提供商配置
+        if (config.aiProviders && Array.isArray(config.aiProviders)) {
+            // 先删除现有的提供商
+            await db.aIProvider.deleteMany({});
+            
+            // 导入新的提供商
+            for (const provider of config.aiProviders) {
+                await db.aIProvider.create({
+                    data: {
+                        name: provider.name,
+                        baseUrl: provider.baseUrl,
+                        apiKey: provider.apiKey,
+                        model: provider.model,
+                        isActive: provider.isActive ?? true,
+                    }
+                });
+            }
+        }
+
+        // 导入菜单配置
+        if (config.menuItems && Array.isArray(config.menuItems)) {
+            // 先删除现有的菜单
+            await db.menuItem.deleteMany({
+                where: { userId: 'default-admin' }
+            });
+
+            // 导入新的菜单
+            for (const item of config.menuItems) {
+                await db.menuItem.create({
+                    data: {
+                        userId: 'default-admin',
+                        label: item.label,
+                        icon: item.icon,
+                        toolId: item.toolId,
+                        parentId: item.parentId,
+                        order: item.order,
+                        isFolder: item.isFolder ?? false,
+                    }
+                });
+            }
+        }
+
+        revalidatePath('/', 'layout');
+        return { success: true };
+    } catch (error) {
+        console.error('Import configuration error:', error);
+        return { 
+            success: false, 
+            error: error instanceof Error ? error.message : 'Failed to import configuration' 
+        };
+    }
+}

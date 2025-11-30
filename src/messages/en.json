@@ -69,7 +69,18 @@
         "passwordUpdated": "Password has been reset",
         "configUpdated": "Settings updated",
         "passwordMismatch": "Passwords do not match",
-        "selected": "Selected {count}/4"
+        "selected": "Selected {count}/4",
+        "configManagement": "Configuration Management",
+        "configManagementDescription": "Export and import system configuration",
+        "exportConfig": "Export Configuration",
+        "importConfig": "Import Configuration",
+        "exportSuccess": "Configuration exported successfully",
+        "importSuccess": "Configuration imported successfully, page will reload",
+        "configInfo": "Configuration file includes:",
+        "configIncludesSystem": "System settings (language, theme, weather, etc.)",
+        "configIncludesAI": "AI provider configurations",
+        "configIncludesMenu": "Menu structure",
+        "configWarning": "Importing configuration will overwrite all current settings. Please proceed with caution!"
       },
       "dashboard": {
         "title": "Quick Tools",
