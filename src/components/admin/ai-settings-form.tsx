@@ -21,13 +21,15 @@ interface AiSettingsFormProps {
     };
 }
 
+const DEFAULT_SYSTEM_PROMPT = "You are a professional translator. Translate the following text from {sourceLang} to {targetLang}.\n\nText to translate:\n{context}\n\nOutput only the translated text.";
+
 export function AiSettingsForm({ initialConfig }: AiSettingsFormProps) {
     const t = useTranslations('Settings.pages.ai');
     const [provider, setProvider] = useState(initialConfig.aiProvider || 'openai');
     const [baseUrl, setBaseUrl] = useState(initialConfig.aiBaseUrl || 'https://api.openai.com/v1');
     const [apiKey, setApiKey] = useState(initialConfig.aiApiKey || '');
     const [model, setModel] = useState(initialConfig.aiModel || 'gpt-3.5-turbo');
-    const [systemPrompt, setSystemPrompt] = useState(initialConfig.aiSystemPrompt || "You are a professional translator. Translate the text to the target language. Output only the translated text.");
+    const [systemPrompt, setSystemPrompt] = useState(initialConfig.aiSystemPrompt || DEFAULT_SYSTEM_PROMPT);
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSave = async () => {
@@ -51,6 +53,11 @@ export function AiSettingsForm({ initialConfig }: AiSettingsFormProps) {
         } finally {
             setIsLoading(false);
         }
+    };
+
+    const handleResetPrompt = () => {
+        setSystemPrompt(DEFAULT_SYSTEM_PROMPT);
+        toast.success(t('promptReset'));
     };
 
     return (
@@ -106,7 +113,17 @@ export function AiSettingsForm({ initialConfig }: AiSettingsFormProps) {
                 </div>
 
                 <div className="space-y-2">
-                    <Label htmlFor="systemPrompt">{t('systemPrompt')}</Label>
+                    <div className="flex items-center justify-between">
+                        <Label htmlFor="systemPrompt">{t('systemPrompt')}</Label>
+                        <Button 
+                            variant="ghost" 
+                            size="sm" 
+                            onClick={handleResetPrompt}
+                            type="button"
+                        >
+                            {t('resetPrompt')}
+                        </Button>
+                    </div>
                     <Textarea
                         id="systemPrompt"
                         value={systemPrompt}
@@ -120,7 +137,7 @@ export function AiSettingsForm({ initialConfig }: AiSettingsFormProps) {
                 </div>
 
                 <Button onClick={handleSave} disabled={isLoading}>
-                    {useTranslations('Settings.pages.system')('saveChanges')}
+                    {t('saveChanges')}
                 </Button>
             </CardContent>
         </Card>

@@ -123,8 +123,11 @@
         "apiKey": "API Key",
         "model": "Model Name",
         "systemPrompt": "System Prompt",
-        "systemPromptDesc": "Available placeholders: '{sourceLang}' (Source Language), '{targetLang}' (Target Language)",
-        "saveSuccess": "AI settings saved"
+        "systemPromptDesc": "Available placeholders: '{sourceLang}' (Source Language), '{targetLang}' (Target Language), '{context}' (User Input)",
+        "resetPrompt": "Reset to Default",
+        "promptReset": "Prompt has been reset to default",
+        "saveChanges": "Save Changes",
+        "saveSuccess": "Translation settings saved"
       }
     }
   },

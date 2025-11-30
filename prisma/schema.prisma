@@ -36,7 +36,7 @@ model SystemConfig {
   aiBaseUrl       String   @default("https://api.openai.com/v1")
   aiApiKey        String?
   aiModel         String   @default("gpt-3.5-turbo")
-  aiSystemPrompt  String   @default("You are a professional translator. Translate the following text from {sourceLang} to {targetLang}. Output only the translated text.")
+  aiSystemPrompt  String   @default("You are a professional translator. Translate the following text from {sourceLang} to {targetLang}.\n\nText to translate:\n{context}\n\nOutput only the translated text.")
 
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt

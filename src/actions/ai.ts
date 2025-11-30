@@ -24,10 +24,13 @@ export async function translateText({ text, sourceLang, targetLang }: Translatio
 
         const baseUrl = config.aiBaseUrl?.replace(/\/$/, '') || 'https://api.openai.com/v1';
         const model = config.aiModel || 'gpt-3.5-turbo';
-        let systemPrompt = config.aiSystemPrompt || "You are a professional translator. Translate the following text from {sourceLang} to {targetLang}. Output only the translated text.";
+        let systemPrompt = config.aiSystemPrompt || "You are a professional translator. Translate the following text from {sourceLang} to {targetLang}.\n\nText to translate:\n{context}\n\nOutput only the translated text.";
         
-        // Replace placeholders
-        systemPrompt = systemPrompt.replace('{sourceLang}', sourceLang).replace('{targetLang}', targetLang);
+        // Replace all placeholders
+        systemPrompt = systemPrompt
+            .replace(/{sourceLang}/g, sourceLang)
+            .replace(/{targetLang}/g, targetLang)
+            .replace(/{context}/g, text);
 
         const response = await fetch(`${baseUrl}/chat/completions`, {
             method: 'POST',
@@ -38,8 +41,7 @@ export async function translateText({ text, sourceLang, targetLang }: Translatio
             body: JSON.stringify({
                 model: model,
                 messages: [
-                    { role: 'system', content: systemPrompt },
-                    { role: 'user', content: text }
+                    { role: 'system', content: systemPrompt }
                 ],
                 temperature: 0.3,
             }),

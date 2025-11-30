@@ -123,8 +123,11 @@
         "apiKey": "API 密钥",
         "model": "模型名称",
         "systemPrompt": "系统提示词 (System Prompt)",
-        "systemPromptDesc": "可用占位符: '{sourceLang}' (源语言), '{targetLang}' (目标语言)",
-        "saveSuccess": "AI 设置已保存"
+        "systemPromptDesc": "可用占位符: '{sourceLang}' (源语言), '{targetLang}' (目标语言), '{context}' (用户输入内容)",
+        "resetPrompt": "重置为默认",
+        "promptReset": "提示词已重置为默认值",
+        "saveChanges": "保存更改",
+        "saveSuccess": "翻译设置已保存"
       }
     }
   },
