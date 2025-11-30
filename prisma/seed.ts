@@ -216,6 +216,18 @@ const PRESET_TOOLS = [
         component: 'var-name-generator',
         order: 2,
     },
+
+    // Storage Tools (1)
+    {
+        name: 'GitHub 上传',
+        nameEn: 'GitHub Upload',
+        description: '上传文件到 GitHub 并获取 CDN 链接',
+        descriptionEn: 'Upload files to GitHub and get CDN links',
+        icon: 'Upload',
+        category: 'storage',
+        component: 'github-uploader',
+        order: 1,
+    },
 ];
 
 async function main() {

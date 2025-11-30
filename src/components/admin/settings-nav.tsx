@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useLocale, useTranslations } from 'next-intl';
-import { LayoutGrid, Database, Key, Settings as SettingsIcon, LayoutDashboard, CloudSun, Languages, Bot, Code2, FileJson } from 'lucide-react';
+import { LayoutGrid, Database, Key, Settings as SettingsIcon, LayoutDashboard, CloudSun, Languages, Bot, Code2, FileJson, Upload } from 'lucide-react';
 
 export function SettingsNav() {
     const pathname = usePathname();
@@ -14,6 +14,7 @@ export function SettingsNav() {
     const tAi = useTranslations('Settings.pages.ai');
     const tAiProviders = useTranslations('Settings.pages.aiProviders');
     const tVarNameGen = useTranslations('Settings.pages.varNameGen');
+    const tGithub = useTranslations('Settings.pages.github');
     const tConfig = useTranslations('Settings.pages.config');
 
     const items = [
@@ -51,6 +52,11 @@ export function SettingsNav() {
             title: tVarNameGen('title'),
             href: `/${locale}/admin/settings/var-name-gen`,
             icon: Code2
+        },
+        {
+            title: tGithub('title'),
+            href: `/${locale}/admin/settings/github`,
+            icon: Upload
         },
         {
             title: t('apiKeys'),

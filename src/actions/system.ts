@@ -40,6 +40,7 @@ export async function updateSystemConfig(data: {
     translatorSystemPrompt?: string;
     varNameGenProviderId?: string;
     varNameGenSystemPrompt?: string;
+    githubToken?: string;
 }) {
     try {
         const config = await db.systemConfig.findFirst();
@@ -73,6 +74,8 @@ export async function updateSystemConfig(data: {
 
         if (data.varNameGenProviderId !== undefined) rawData.varNameGenProviderId = data.varNameGenProviderId;
         if (data.varNameGenSystemPrompt !== undefined) rawData.varNameGenSystemPrompt = data.varNameGenSystemPrompt;
+
+        if (data.githubToken !== undefined) rawData.githubToken = data.githubToken;
 
         // Update known fields using Prisma Client
         if (Object.keys(knownData).length > 0) {
@@ -145,6 +148,11 @@ export async function updateSystemConfig(data: {
             if (rawData.varNameGenSystemPrompt !== undefined) {
                 setClauses.push('varNameGenSystemPrompt = ?');
                 params.push(rawData.varNameGenSystemPrompt);
+            }
+
+            if (rawData.githubToken !== undefined) {
+                setClauses.push('githubToken = ?');
+                params.push(rawData.githubToken);
             }
 
             if (setClauses.length > 0) {
