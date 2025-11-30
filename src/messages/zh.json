@@ -165,6 +165,21 @@
         "goToProviders": "前往 AI 提供商管理",
         "errorSelectProvider": "请选择一个 AI 提供商"
       },
+      "config": {
+        "title": "配置管理",
+        "description": "导出和导入系统配置",
+        "cardTitle": "配置导入导出",
+        "cardDescription": "备份和恢复您的系统配置",
+        "exportConfig": "导出配置",
+        "importConfig": "导入配置",
+        "exportSuccess": "配置已导出",
+        "importSuccess": "配置导入成功，页面即将刷新",
+        "configInfo": "配置文件包含以下内容：",
+        "configIncludesSystem": "系统设置（语言、主题、天气等）",
+        "configIncludesAI": "AI 提供商配置",
+        "configIncludesMenu": "菜单结构",
+        "configWarning": "导入配置将覆盖当前所有设置，请谨慎操作！"
+      },
       "aiProviders": {
         "title": "AI 提供商",
         "description": "管理 AI 提供商配置列表。",

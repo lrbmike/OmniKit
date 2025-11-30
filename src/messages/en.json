@@ -165,6 +165,21 @@
         "goToProviders": "Go to AI Provider Management",
         "errorSelectProvider": "Please select an AI provider"
       },
+      "config": {
+        "title": "Configuration Management",
+        "description": "Export and import system configurations",
+        "cardTitle": "Configuration Import/Export",
+        "cardDescription": "Backup and restore your system configurations",
+        "exportConfig": "Export Configuration",
+        "importConfig": "Import Configuration",
+        "exportSuccess": "Configuration exported successfully",
+        "importSuccess": "Configuration imported successfully, page will refresh",
+        "configInfo": "Configuration file includes:",
+        "configIncludesSystem": "System settings (language, theme, weather, etc.)",
+        "configIncludesAI": "AI provider configurations",
+        "configIncludesMenu": "Menu structure",
+        "configWarning": "Importing configuration will overwrite all current settings. Please proceed with caution!"
+      },
       "aiProviders": {
         "title": "AI Providers",
         "description": "Manage AI provider configurations.",
