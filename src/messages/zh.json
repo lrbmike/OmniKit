@@ -135,6 +135,25 @@
         "goToProviders": "前往 AI 提供商管理",
         "errorSelectProvider": "请选择一个 AI 提供商"
       },
+      "varNameGen": {
+        "title": "变量名生成器",
+        "description": "配置变量名生成器 AI 设置。",
+        "providerConfig": "提供商配置",
+        "providerConfigDesc": "选择用于变量名生成的 AI 提供商",
+        "selectProvider": "选择 AI 提供商",
+        "selectProviderPlaceholder": "请选择一个提供商",
+        "providerInfo": "提供商信息",
+        "systemPrompt": "系统提示词",
+        "systemPromptDesc": "可用占位符: '{context}' (用户输入内容)",
+        "resetPrompt": "重置为默认",
+        "promptReset": "提示词已重置为默认值",
+        "saveChanges": "保存更改",
+        "saveSuccess": "变量名生成器设置已保存",
+        "noProvidersTitle": "还没有 AI 提供商",
+        "noProvidersHint": "还没有配置 AI 提供商，请先添加一个提供商。",
+        "goToProviders": "前往 AI 提供商管理",
+        "errorSelectProvider": "请选择一个 AI 提供商"
+      },
       "aiProviders": {
         "title": "AI 提供商",
         "description": "管理 AI 提供商配置列表。",
@@ -522,6 +541,30 @@
       "copied": "翻译结果已复制到剪贴板",
       "errorEmpty": "请输入要翻译的文本",
       "errorTranslation": "翻译失败"
+    },
+    "VarNameGenerator": {
+      "title": "变量名生成器",
+      "description": "AI 智能变量名生成工具",
+      "input": "输入",
+      "inputDescription": "输入中文描述，AI 将生成对应的英文变量名",
+      "inputLabel": "中文描述",
+      "inputPlaceholder": "例如：企业认证",
+      "generate": "生成",
+      "generating": "生成中...",
+      "normalVersion": "标准版本",
+      "normalDescription": "完整的变量名称，适合大多数场景",
+      "shortVersion": "简短版本",
+      "shortDescription": "缩短的变量名称，适合需要精简的场景",
+      "url": "网页 URL",
+      "varName": "变量名",
+      "fileName": "文件名",
+      "route": "路由地址",
+      "copied": "已复制到剪贴板",
+      "copyError": "复制失败",
+      "emptyState": "输入中文描述后点击生成按钮",
+      "errorEmpty": "请输入中文描述",
+      "errorGeneration": "生成失败，请稍后重试",
+      "generateSuccess": "变量名生成成功"
     }
   }
 }

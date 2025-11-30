@@ -35,6 +35,10 @@ model SystemConfig {
   translatorProviderId String? // Selected AI provider for translator
   translatorSystemPrompt String @default("You are a professional translator. Translate the following text from {sourceLang} to {targetLang}.\n\nText to translate:\n{context}\n\nOutput only the translated text.")
 
+  // Variable Name Generator Configuration
+  varNameGenProviderId String? // Selected AI provider for variable name generator
+  varNameGenSystemPrompt String @default("You are an experienced developer. Generate English variable names based on user input.\n\nUser input: {context}\n\nGenerate variable names in different formats:\n- URL: web URL format (lowercase, hyphen-separated)\n- Variable: camelCase variable name\n- File: file name format (lowercase, hyphen-separated)\n- Route: route path format (lowercase, slash-separated)\n\nProvide both normal length and shortened versions.\n\nOutput in JSON format:\n{\n  \"normal\": {\n    \"url\": \"enterprise-certification\",\n    \"var_name\": \"enterpriseCertification\",\n    \"file_name\": \"enterprise-certification\",\n    \"route\": \"/enterprise/certification\"\n  },\n  \"short\": {\n    \"url\": \"ent-cert\",\n    \"var_name\": \"entCert\",\n    \"file_name\": \"ent-cert\",\n    \"route\": \"/ent/cert\"\n  }\n}")
+
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }

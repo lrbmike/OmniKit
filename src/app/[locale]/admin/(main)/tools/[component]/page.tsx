@@ -20,6 +20,7 @@ import { ImageToBase64 } from '@/components/tools/image-to-base64';
 import { TextDiff } from '@/components/tools/text-diff';
 import { WordCounter } from '@/components/tools/word-counter';
 import Translator from '@/components/tools/translator';
+import VarNameGenerator from '@/components/tools/var-name-generator';
 
 // Map component names to actual components
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -43,6 +44,7 @@ const TOOL_COMPONENTS: Record<string, React.ComponentType<any>> = {
     'text-diff': TextDiff,
     'word-counter': WordCounter,
     'translator': Translator,
+    'var-name-generator': VarNameGenerator,
 };
 
 export default async function ToolPage({

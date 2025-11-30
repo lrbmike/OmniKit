@@ -135,6 +135,25 @@
         "goToProviders": "Go to AI Provider Management",
         "errorSelectProvider": "Please select an AI provider"
       },
+      "varNameGen": {
+        "title": "Variable Name Generator",
+        "description": "Configure Variable Name Generator AI settings.",
+        "providerConfig": "Provider Configuration",
+        "providerConfigDesc": "Select the AI provider for variable name generation",
+        "selectProvider": "Select AI Provider",
+        "selectProviderPlaceholder": "Choose a provider",
+        "providerInfo": "Provider Info",
+        "systemPrompt": "System Prompt",
+        "systemPromptDesc": "Available placeholder: '{context}' (User Input)",
+        "resetPrompt": "Reset to Default",
+        "promptReset": "Prompt has been reset to default",
+        "saveChanges": "Save Changes",
+        "saveSuccess": "Variable name generator settings saved",
+        "noProvidersTitle": "No AI Providers",
+        "noProvidersHint": "No AI providers configured yet. Please add a provider first.",
+        "goToProviders": "Go to AI Provider Management",
+        "errorSelectProvider": "Please select an AI provider"
+      },
       "aiProviders": {
         "title": "AI Providers",
         "description": "Manage AI provider configurations.",
@@ -522,6 +541,30 @@
       "copied": "Copied to clipboard",
       "errorEmpty": "Please enter text to translate",
       "errorTranslation": "Translation failed"
+    },
+    "VarNameGenerator": {
+      "title": "Variable Name Generator",
+      "description": "AI-powered variable name generator",
+      "input": "Input",
+      "inputDescription": "Enter Chinese description, AI will generate corresponding English variable names",
+      "inputLabel": "Chinese Description",
+      "inputPlaceholder": "e.g., Enterprise Certification",
+      "generate": "Generate",
+      "generating": "Generating...",
+      "normalVersion": "Normal Version",
+      "normalDescription": "Full variable names, suitable for most scenarios",
+      "shortVersion": "Short Version",
+      "shortDescription": "Shortened variable names, suitable for concise scenarios",
+      "url": "Web URL",
+      "varName": "Variable Name",
+      "fileName": "File Name",
+      "route": "Route Path",
+      "copied": "Copied to clipboard",
+      "copyError": "Copy failed",
+      "emptyState": "Enter a description and click generate",
+      "errorEmpty": "Please enter a description",
+      "errorGeneration": "Generation failed, please try again",
+      "generateSuccess": "Variable names generated successfully"
     }
   }
 }

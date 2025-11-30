@@ -195,7 +195,7 @@ const PRESET_TOOLS = [
         order: 2,
     },
 
-    // AI Tools (1)
+    // AI Tools (2)
     {
         name: '文本翻译',
         nameEn: 'Text Translation',
@@ -205,6 +205,16 @@ const PRESET_TOOLS = [
         category: 'ai',
         component: 'translator',
         order: 1,
+    },
+    {
+        name: '变量名生成器',
+        nameEn: 'Variable Name Generator',
+        description: 'AI 智能变量名生成工具',
+        descriptionEn: 'AI-powered variable name generator',
+        icon: 'Code2',
+        category: 'ai',
+        component: 'var-name-generator',
+        order: 2,
     },
 ];
 
