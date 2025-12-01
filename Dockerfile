@@ -56,8 +56,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 COPY --from=builder --chown=nextjs:nodejs /app/package.json ./package.json
 
-# Install prisma CLI and generate client
-RUN npm install -g prisma && \
+# Install specific version of prisma CLI and generate client
+RUN npm install -g prisma@5.22.0 && \
     npx prisma generate && \
     chown -R nextjs:nodejs /app/node_modules/.prisma
 
