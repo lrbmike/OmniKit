@@ -54,9 +54,14 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 # Copy prisma files and CLI for runtime
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
-COPY --from=builder /app/node_modules/.bin/prisma /usr/local/bin/prisma
-COPY --from=builder /app/node_modules/@prisma /app/node_modules/@prisma
-COPY --from=builder /app/node_modules/.prisma /app/node_modules/.prisma
+
+# Copy Prisma CLI from pnpm store
+COPY --from=builder /app/node_modules/.pnpm/prisma@5.22.0/node_modules/prisma /app/node_modules/.pnpm/prisma@5.22.0/node_modules/prisma
+COPY --from=builder /app/node_modules/.pnpm/@prisma+client@5.22.0_prisma@5.22.0/node_modules/@prisma/client /app/node_modules/.pnpm/@prisma+client@5.22.0_prisma@5.22.0/node_modules/@prisma/client
+
+# Create symlinks for easier access
+RUN ln -s /app/node_modules/.pnpm/prisma@5.22.0/node_modules/prisma/build/index.js /usr/local/bin/prisma && \
+    chmod +x /usr/local/bin/prisma
 
 # Copy and set up entrypoint script
 COPY docker-entrypoint.sh /app/docker-entrypoint.sh
