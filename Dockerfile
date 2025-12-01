@@ -55,12 +55,15 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 # Copy prisma files for runtime
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 
-# Create data directory and database file with proper permissions BEFORE switching user
+# Copy and set up entrypoint script
+COPY docker-entrypoint.sh /app/docker-entrypoint.sh
+RUN chmod +x /app/docker-entrypoint.sh && \
+    chown nextjs:nodejs /app/docker-entrypoint.sh
+
+# Create data directory with proper permissions (will be overridden by volume mount)
 RUN mkdir -p /app/data && \
-    touch /app/data/omnikit.db && \
     chown -R nextjs:nodejs /app && \
-    chmod -R 755 /app/data && \
-    chmod 664 /app/data/omnikit.db
+    chmod -R 755 /app/data
 
 # Set user
 USER nextjs
@@ -71,5 +74,5 @@ EXPOSE 3000
 ENV PORT 3000
 ENV HOSTNAME "0.0.0.0"
 
-# Start the application directly
-CMD ["node", "server.js"]
+# Use entrypoint script to handle volume-mounted directories
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
