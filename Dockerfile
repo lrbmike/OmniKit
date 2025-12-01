@@ -30,6 +30,9 @@ RUN npx prisma generate
 # Build Next.js application
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV IS_DOCKER 1
+# Set a default DATABASE_URL for build time (Next.js static generation needs it)
+ENV DATABASE_URL="file:/app/data/omnikit.db"
+RUN mkdir -p /app/data
 RUN pnpm build
 
 # Stage 3: Runner
