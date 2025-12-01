@@ -57,6 +57,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 
 # Copy Prisma CLI from pnpm store
 COPY --from=builder /app/node_modules/.pnpm/prisma@5.22.0/node_modules/prisma /app/node_modules/.pnpm/prisma@5.22.0/node_modules/prisma
+COPY --from=builder /app/node_modules/.pnpm/prisma@5.22.0/node_modules/@prisma /app/node_modules/.pnpm/prisma@5.22.0/node_modules/@prisma
 COPY --from=builder /app/node_modules/.pnpm/@prisma+client@5.22.0_prisma@5.22.0/node_modules/@prisma/client /app/node_modules/.pnpm/@prisma+client@5.22.0_prisma@5.22.0/node_modules/@prisma/client
 
 # Create symlinks for easier access
