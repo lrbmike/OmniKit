@@ -18,6 +18,16 @@ fi
 chown -R nextjs:nodejs /app/data
 chmod -R 755 /app/data
 
+# 检查数据库表是否存在，如果不存在则初始化
+echo "Checking database schema..."
+if ! prisma db execute --stdin <<< "SELECT name FROM sqlite_master WHERE type='table' AND name='SystemConfig';" 2>/dev/null | grep -q "SystemConfig"; then
+  echo "Initializing database schema..."
+  prisma db push --skip-generate --accept-data-loss
+  echo "Database schema initialized"
+else
+  echo "Database schema already exists"
+fi
+
 echo "Starting application as nextjs user..."
 
 # 切换到 nextjs 用户并启动应用
