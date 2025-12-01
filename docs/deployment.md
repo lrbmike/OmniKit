@@ -67,7 +67,6 @@ docker run -d \
   -p 3000:3000 \
   -v omnikit-data:/app/data \
   -e NODE_ENV=production \
-  -e DATABASE_URL=file:/app/data/omnikit.db \
   --restart unless-stopped \
   omnikit:latest
 
@@ -102,7 +101,7 @@ Render 提供免费的 Docker 应用托管服务。
 3. **添加环境变量**
    ```
    NODE_ENV=production
-   DATABASE_URL=file:/app/data/omnikit.db
+   # DATABASE_URL 可选，默认使用 /app/data/omnikit.db
    ```
 
 4. **配置持久化存储**
@@ -130,7 +129,7 @@ Railway 支持从 GitHub 仓库直接部署。
    - 添加环境变量：
      ```
      NODE_ENV=production
-     DATABASE_URL=file:/app/data/omnikit.db
+     # DATABASE_URL 可选，默认使用 /app/data/omnikit.db
      ```
 
 3. **配置持久化存储**
@@ -150,12 +149,12 @@ Railway 支持从 GitHub 仓库直接部署。
 | 变量名 | 说明 | 默认值 | 示例 |
 |--------|------|--------|------|
 | `NODE_ENV` | 运行环境 | `production` | `production` |
-| `DATABASE_URL` | 数据库连接字符串 | - | `file:/app/data/omnikit.db` |
 
 ### 可选的环境变量
 
 | 变量名 | 说明 | 默认值 | 示例 |
 |--------|------|--------|------|
+| `DATABASE_URL` | 数据库连接字符串 | `file:/app/data/omnikit.db` | `file:/app/data/omnikit.db` |
 | `PORT` | 应用端口 | `3000` | `3000` |
 | `HOSTNAME` | 监听地址 | `0.0.0.0` | `0.0.0.0` |
 
@@ -328,7 +327,6 @@ docker run -d \
   -p 3000:3000 \
   -v omnikit-data:/app/data \
   -e NODE_ENV=production \
-  -e DATABASE_URL=file:/app/data/omnikit.db \
   --restart unless-stopped \
   omnikit:latest
 ```
@@ -476,7 +474,6 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - DATABASE_URL=file:/app/data/omnikit.db
     volumes:
       - omnikit-data:/app/data
     restart: unless-stopped

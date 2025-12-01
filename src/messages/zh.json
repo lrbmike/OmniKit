@@ -245,7 +245,9 @@
     "signUp": "注册",
     "alreadyHaveAccount": "已有账户？",
     "dontHaveAccount": "还没有账户？",
-    "demoCredentials": "演示凭据：admin@example.com / password"
+    "demoCredentials": "演示凭据：admin@example.com / password",
+    "processing": "处理中...",
+    "registerSuccess": "注册成功，请登录"
   },
   "Dashboard": {
     "title": "仪表盘",

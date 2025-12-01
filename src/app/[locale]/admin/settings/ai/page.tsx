@@ -8,7 +8,7 @@ export default async function AiSettingsPage() {
     const t = await getTranslations('Settings.pages.ai');
     const config = await getSystemConfig();
     const providersResult = await getActiveAiProviders();
-    const providers = providersResult.success ? providersResult.data : [];
+    const providers = (providersResult.success && providersResult.data) ? providersResult.data : [];
 
     const initialConfig = {
         translatorProviderId: config?.translatorProviderId || '',

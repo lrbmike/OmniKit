@@ -28,6 +28,7 @@ RUN npx prisma generate
 
 # Build Next.js application
 ENV NEXT_TELEMETRY_DISABLED 1
+ENV IS_DOCKER 1
 RUN pnpm build
 
 # Stage 3: Runner
@@ -36,6 +37,7 @@ WORKDIR /app
 
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
+ENV DATABASE_URL="file:/app/data/omnikit.db"
 
 # Create non-root user
 RUN addgroup --system --gid 1001 nodejs

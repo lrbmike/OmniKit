@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -10,11 +12,32 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { register } from "@/actions/auth"
-import Link from "next/link"
-import { getTranslations } from "next-intl/server"
+import { Link, useRouter } from "@/i18n/navigation"
+import { useTranslations } from "next-intl"
+import { useActionState, useEffect } from "react"
+import { toast } from "sonner"
 
-export default async function RegisterPage() {
-  const t = await getTranslations("Auth");
+const initialState = {
+  success: false,
+  error: '' as string | undefined
+}
+
+export default function RegisterPage() {
+  const t = useTranslations("Auth");
+  const router = useRouter();
+
+  const [state, formAction, isPending] = useActionState(async (prevState: any, formData: FormData) => {
+    return await register(formData);
+  }, initialState);
+
+  useEffect(() => {
+    if (state.success) {
+      toast.success(t('registerSuccess') || 'Registration successful');
+      router.push('/login');
+    } else if (state.error) {
+      toast.error(state.error);
+    }
+  }, [state, router, t]);
 
   return (
     <div className="flex items-center justify-center min-h-screen p-4">
@@ -26,7 +49,7 @@ export default async function RegisterPage() {
           </CardDescription>
         </CardHeader>
         <CardContent className="grid gap-4">
-          <form action={register} className="grid gap-4">
+          <form action={formAction} className="grid gap-4">
             <div className="grid gap-2">
               <Label htmlFor="email">{t('email')}</Label>
               <Input id="email" name="email" type="email" placeholder="m@example.com" required />
@@ -39,7 +62,9 @@ export default async function RegisterPage() {
               <Label htmlFor="confirmPassword">{t('confirmPassword')}</Label>
               <Input id="confirmPassword" name="confirmPassword" type="password" required />
             </div>
-            <Button className="w-full" type="submit">{t('signUp')}</Button>
+            <Button className="w-full" type="submit" disabled={isPending}>
+              {isPending ? t('processing') : t('signUp')}
+            </Button>
           </form>
         </CardContent>
         <CardFooter>

@@ -245,7 +245,9 @@
     "signUp": "Sign Up",
     "alreadyHaveAccount": "Already have an account?",
     "dontHaveAccount": "Don't have an account?",
-    "demoCredentials": "Demo credentials: admin@example.com / password"
+    "demoCredentials": "Demo credentials: admin@example.com / password",
+    "processing": "Processing...",
+    "registerSuccess": "Registration successful, please login"
   },
   "Dashboard": {
     "title": "Dashboard",

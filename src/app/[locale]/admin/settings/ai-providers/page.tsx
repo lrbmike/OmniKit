@@ -6,7 +6,7 @@ import { getTranslations } from 'next-intl/server';
 export default async function AiProvidersPage() {
     const t = await getTranslations('Settings.pages.aiProviders');
     const result = await getAiProviders();
-    const providers = result.success ? result.data : [];
+    const providers = (result.success && result.data) ? result.data : [];
 
     return (
         <div className="space-y-6">
