@@ -18,10 +18,12 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { toast } from "sonner"
 import { Loader2 } from "lucide-react"
+import { useLocale } from "next-intl"
 
 export default function LoginPage() {
   const t = useTranslations("Auth");
   const router = useRouter();
+  const locale = useLocale();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -35,7 +37,7 @@ export default function LoginPage() {
 
     if (result.success) {
       toast.success('Login successful!');
-      router.push('/admin/dashboard');
+      router.push(`/${locale}/admin/dashboard`);
     } else {
       toast.error(result.error || 'Login failed');
     }
@@ -68,7 +70,7 @@ export default function LoginPage() {
         </CardContent>
         <CardFooter className="flex flex-col gap-4">
           <div className="text-sm text-muted-foreground w-full text-center">
-            {t('dontHaveAccount')} <Link href="/register" className="text-primary hover:underline">{t('signUp')}</Link>
+            {t('dontHaveAccount')} <Link href={`/${locale}/register`} className="text-primary hover:underline">{t('signUp')}</Link>
           </div>
         </CardFooter>
       </Card>

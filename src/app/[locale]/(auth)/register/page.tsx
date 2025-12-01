@@ -16,6 +16,7 @@ import { Link, useRouter } from "@/i18n/navigation"
 import { useTranslations } from "next-intl"
 import { useActionState, useEffect } from "react"
 import { toast } from "sonner"
+import { useLocale } from "next-intl"
 
 const initialState = {
   success: false,
@@ -25,6 +26,7 @@ const initialState = {
 export default function RegisterPage() {
   const t = useTranslations("Auth");
   const router = useRouter();
+  const locale = useLocale();
 
   const [state, formAction, isPending] = useActionState(async (prevState: any, formData: FormData) => {
     return await register(formData);
@@ -33,11 +35,11 @@ export default function RegisterPage() {
   useEffect(() => {
     if (state.success) {
       toast.success(t('registerSuccess') || 'Registration successful');
-      router.push('/login');
+      router.push(`/${locale}/login`);
     } else if (state.error) {
       toast.error(state.error);
     }
-  }, [state, router, t]);
+  }, [state, router, t, locale]);
 
   return (
     <div className="flex items-center justify-center min-h-screen p-4">
@@ -69,7 +71,7 @@ export default function RegisterPage() {
         </CardContent>
         <CardFooter>
            <div className="text-sm text-muted-foreground w-full text-center">
-             {t('alreadyHaveAccount')} <Link href="/login" className="text-primary hover:underline">{t('signIn')}</Link>
+             {t('alreadyHaveAccount')} <Link href={`/${locale}/login`} className="text-primary hover:underline">{t('signIn')}</Link>
            </div>
         </CardFooter>
       </Card>
