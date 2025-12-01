@@ -55,12 +55,10 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 # Copy prisma files and CLI for runtime
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 
-# Copy Prisma CLI from pnpm store
-COPY --from=builder /app/node_modules/.pnpm/prisma@5.22.0/node_modules/prisma /app/node_modules/.pnpm/prisma@5.22.0/node_modules/prisma
-COPY --from=builder /app/node_modules/.pnpm/prisma@5.22.0/node_modules/@prisma /app/node_modules/.pnpm/prisma@5.22.0/node_modules/@prisma
-COPY --from=builder /app/node_modules/.pnpm/@prisma+client@5.22.0_prisma@5.22.0/node_modules/@prisma/client /app/node_modules/.pnpm/@prisma+client@5.22.0_prisma@5.22.0/node_modules/@prisma/client
+# Copy Prisma CLI and all dependencies from pnpm store
+COPY --from=builder /app/node_modules/.pnpm /app/node_modules/.pnpm
 
-# Create symlinks for easier access
+# Create symlinks for prisma binary
 RUN ln -s /app/node_modules/.pnpm/prisma@5.22.0/node_modules/prisma/build/index.js /usr/local/bin/prisma && \
     chmod +x /usr/local/bin/prisma
 
