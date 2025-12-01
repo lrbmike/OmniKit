@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(find node_modules -name \"@prisma\" -type l -exec ls -la {} ;)"
+      "Bash(find node_modules -name \"@prisma\" -type l -exec ls -la {} ;)",
+      "Bash(cat package.json)"
     ],
     "deny": [],
     "ask": []

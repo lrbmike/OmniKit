@@ -31,4 +31,5 @@ fi
 echo "Starting application as nextjs user..."
 
 # 切换到 nextjs 用户并启动应用
+# 容器使用 standalone 构建，server.js 在根目录
 exec su-exec nextjs:nodejs node server.js

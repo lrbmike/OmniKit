@@ -28,9 +28,17 @@ export default async function middleware(request: NextRequest) {
   // We only check for the presence of the session cookie here
   // Detailed validation happens in Server Actions/Components
   if (!isPublicRoute) {
-    const session = request.cookies.get('omnikit_session');
-    if (!session) {
+    const sessionCookie = request.cookies.get('omnikit_session');
+    console.log('[Middleware] Checking auth for:', pathname, 'Has session:', !!sessionCookie);
+    if (!sessionCookie) {
       const locale = request.cookies.get('NEXT_LOCALE')?.value || routing.defaultLocale;
+      console.log('[Middleware] No session, redirecting to login');
+      return NextResponse.redirect(new URL(`/${locale}/login`, request.url));
+    }
+    // Additional check: ensure the cookie value is not empty or malformed
+    if (!sessionCookie.value || sessionCookie.value.length < 10) {
+      const locale = request.cookies.get('NEXT_LOCALE')?.value || routing.defaultLocale;
+      console.log('[Middleware] Invalid session value, redirecting to login');
       return NextResponse.redirect(new URL(`/${locale}/login`, request.url));
     }
   }

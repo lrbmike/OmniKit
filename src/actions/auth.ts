@@ -9,7 +9,10 @@ export async function login(formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
 
+  console.log('[Auth] Login attempt for:', email);
+
   if (!email || !password) {
+    console.log('[Auth] Missing email or password');
     return { success: false, error: 'Email and password are required' };
   }
 
@@ -19,14 +22,20 @@ export async function login(formData: FormData) {
       where: { email },
     });
 
+    console.log('[Auth] User found:', !!user);
+
     if (!user) {
+      console.log('[Auth] Invalid email or password - user not found');
       return { success: false, error: 'Invalid email or password' };
     }
 
     // Verify password
     const isValidPassword = await bcrypt.compare(password, user.password);
 
+    console.log('[Auth] Password valid:', isValidPassword);
+
     if (!isValidPassword) {
+      console.log('[Auth] Invalid email or password - password mismatch');
       return { success: false, error: 'Invalid email or password' };
     }
 
@@ -37,9 +46,15 @@ export async function login(formData: FormData) {
     session.isLoggedIn = true;
     await session.save();
 
+    console.log('[Auth] Session saved successfully:', {
+      userId: session.userId,
+      email: session.email,
+      isLoggedIn: session.isLoggedIn,
+    });
+
     return { success: true };
   } catch (error) {
-    console.error('Login error:', error);
+    console.error('[Auth] Login error:', error);
     return { success: false, error: 'Login failed' };
   }
 }
