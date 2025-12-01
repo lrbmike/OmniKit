@@ -36,7 +36,7 @@ RUN pnpm build
 
 # Stage 3: Runner
 FROM node:20-alpine AS runner
-RUN apk add --no-cache openssl
+RUN apk add --no-cache openssl su-exec
 WORKDIR /app
 
 ENV NODE_ENV production
@@ -65,8 +65,8 @@ RUN mkdir -p /app/data && \
     chown -R nextjs:nodejs /app && \
     chmod -R 755 /app/data
 
-# Set user
-USER nextjs
+# Don't switch user yet - entrypoint will handle it
+# USER nextjs
 
 # Expose port
 EXPOSE 3000
