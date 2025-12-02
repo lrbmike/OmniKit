@@ -150,16 +150,6 @@ docker-compose logs -f
   - 自定义生成提示词
 - **GitHub 配置**: 配置 Personal Access Token 用于文件上传
 
-## 📚 文档
-
-- [需求规格说明](docs/requirements.md)
-- [依赖说明](docs/dependencies.md)
-- [设计指南](docs/design_guidelines.md)
-
 ## 📄 许可证
 
 MIT License
-
-## 🤝 贡献
-
-欢迎提交 Issue 和 Pull Request！

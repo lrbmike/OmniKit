@@ -150,8 +150,6 @@ After initialization, you can configure various settings in the admin panel:
   - Customize generation prompts
 - **GitHub**: Configure Personal Access Token for file uploads
 
-## 📚 Documentation
+## 📄 License
 
-- [Requirements Specification](docs/requirements.md)
-- [Dependencies](docs/dependencies.md)
-- [Design Guidelines](docs/design_guidelines.md)
+MIT License
