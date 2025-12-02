@@ -1,7 +1,11 @@
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcryptjs';
+import { v5 as uuidv5 } from 'uuid';
 
 const prisma = new PrismaClient();
+
+// Namespace for deterministic UUIDs (OmniKit Tools)
+const TOOLS_NAMESPACE = 'e2917624-935c-4c0e-a742-573317883216';
 
 // 18 Preset Tools Definition
 const PRESET_TOOLS = [
@@ -256,7 +260,10 @@ async function main() {
     const createdTools = await Promise.all(
         PRESET_TOOLS.map((tool) =>
             prisma.tool.create({
-                data: tool,
+                data: {
+                    ...tool,
+                    id: uuidv5(tool.component, TOOLS_NAMESPACE),
+                },
             })
         )
     );
