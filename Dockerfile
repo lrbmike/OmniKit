@@ -28,7 +28,7 @@ COPY . .
 RUN npx prisma generate
 
 # Build seed script
-RUN npx tsc prisma/seed.ts --module commonjs --target es2020 --moduleResolution node --outDir prisma --skipLibCheck --esModuleInterop
+RUN npx tsc prisma/seed.ts --module esnext --target es2020 --moduleResolution node --outDir prisma --skipLibCheck --esModuleInterop
 
 # Build Next.js application
 ENV NEXT_TELEMETRY_DISABLED 1
