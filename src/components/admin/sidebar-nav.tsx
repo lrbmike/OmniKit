@@ -32,7 +32,7 @@ export function SidebarNav({ items, locale }: { items: MenuItem[], locale: strin
                 isOpen ? "translate-x-0" : "-translate-x-full"
             )}>
                 <div className="flex items-center justify-center h-16 border-b border-gray-200 dark:border-gray-700 shrink-0">
-                    <h1 className="text-2xl font-bold text-primary">OmniKit</h1>
+                    <img src="/assets/logo.png" alt="OmniKit" className="h-10" />
                 </div>
 
                 <nav className="flex-1 overflow-y-auto p-4 space-y-1">
