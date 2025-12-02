@@ -13,7 +13,7 @@ A robust, extensible admin system built with Next.js 15, designed to manage mult
 - **State Management**: Zustand
 - **Weather Integration**: Real-time weather forecast with configurable API
 
-## 🧰 Available Tools (18)
+## 🧰 Available Tools (21)
 
 ### Developer Tools
 - **JSON Formatter**: Format, minify, and validate JSON.
@@ -42,6 +42,13 @@ A robust, extensible admin system built with Next.js 15, designed to manage mult
 ### Text Tools
 - **Text Diff**: Compare two texts and highlight differences.
 - **Word Counter**: Count characters, words, lines, and paragraphs.
+
+### AI Tools
+- **Text Translator**: Intelligent English-Chinese translation powered by AI.
+- **Variable Name Generator**: AI-powered variable name generator for developers.
+
+### Storage Tools
+- **GitHub Upload**: Upload files to GitHub and get CDN links (jsDelivr).
 
 ## 🛠️ Getting Started
 
@@ -106,7 +113,45 @@ Support for multiple languages is built-in.
 - Supported: English (`en`), Chinese (`zh`)
 - Configuration: `src/i18n/routing.ts`
 
+## 🐳 Docker Deployment
+
+OmniKit can be easily deployed using Docker.
+
+```bash
+# Build and start
+docker-compose up -d --build
+
+# Stop
+docker-compose down
+
+# View logs
+docker-compose logs -f
+```
+
+The application will be available at [http://localhost:3000](http://localhost:3000).
+
+## ⚙️ Configuration
+
+After initialization, you can configure various settings in the admin panel:
+
+- **Menu Management**: Customize sidebar menu structure
+- **Quick Tools**: Select up to 4 tools for dashboard shortcuts
+- **System Settings**: Language, theme preferences
+- **Weather**: Configure weather API integration
+- **AI Providers**: Manage AI service providers for translation and code generation
+  - Add OpenAI-compatible API providers
+  - Configure API keys and models
+- **Translation Settings**: Configure AI-powered translation
+  - Select AI provider for translation
+  - Customize system prompts
+  - Support Chinese-English bidirectional translation
+- **Variable Name Generator**: Configure AI for code generation
+  - Select AI provider
+  - Customize generation prompts
+- **GitHub**: Configure Personal Access Token for file uploads
+
 ## 📚 Documentation
 
 - [Requirements Specification](docs/requirements.md)
 - [Dependencies](docs/dependencies.md)
+- [Design Guidelines](docs/design_guidelines.md)
