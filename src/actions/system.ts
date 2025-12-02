@@ -232,6 +232,11 @@ export async function exportConfiguration() {
                 label: true,
                 icon: true,
                 toolId: true,
+                tool: {
+                    select: {
+                        component: true
+                    }
+                },
                 parentId: true,
                 order: true,
                 isFolder: true,
@@ -310,6 +315,13 @@ export async function importConfiguration(configJson: string) {
 
         // 导入菜单配置
         if (config.menuItems && Array.isArray(config.menuItems)) {
+            // 获取现有所有工具的映射表 (Component -> ID)
+            const tools = await db.tool.findMany();
+            const toolMap = new Map<string, string>();
+            tools.forEach((tool: any) => {
+                toolMap.set(tool.component, tool.id);
+            });
+
             // 先删除现有的菜单
             await db.menuItem.deleteMany({
                 where: { userId: 'default-admin' }
@@ -317,40 +329,79 @@ export async function importConfiguration(configJson: string) {
 
             // 创建 ID 映射表（旧 ID -> 新 ID）
             const idMap = new Map<string, string>();
+            
+            // 使用队列处理分层创建，解决父子依赖
+            let remainingItems = [...config.menuItems];
+            let hasProgress = true;
 
-            // 先创建所有根级菜单项（没有 parentId 的）
-            const rootItems = config.menuItems.filter((item: any) => !item.parentId);
-            for (const item of rootItems) {
-                const newItem = await db.menuItem.create({
-                    data: {
-                        userId: 'default-admin',
-                        label: item.label,
-                        icon: item.icon,
-                        toolId: item.toolId,
-                        parentId: null,
-                        order: item.order,
-                        isFolder: item.isFolder ?? false,
-                    }
-                });
-                idMap.set(item.id, newItem.id);
-            }
+            while (remainingItems.length > 0 && hasProgress) {
+                hasProgress = false;
+                const nextBatch = [];
+                const delayed = [];
 
-            // 再创建有 parentId 的菜单项
-            const childItems = config.menuItems.filter((item: any) => item.parentId);
-            for (const item of childItems) {
-                // 使用映射表中的新 parentId
-                const newParentId = idMap.get(item.parentId);
-                await db.menuItem.create({
-                    data: {
-                        userId: 'default-admin',
-                        label: item.label,
-                        icon: item.icon,
-                        toolId: item.toolId,
-                        parentId: newParentId || null,
-                        order: item.order,
-                        isFolder: item.isFolder ?? false,
+                for (const item of remainingItems) {
+                    // 1. 如果是根节点，直接创建
+                    // 2. 如果父节点已创建，可以创建
+                    if (!item.parentId || idMap.has(item.parentId)) {
+                        nextBatch.push(item);
+                    } else {
+                        delayed.push(item);
                     }
-                });
+                }
+
+                // 如果没有可处理的项，说明存在循环依赖或孤立项，强制处理
+                if (nextBatch.length === 0 && delayed.length > 0) {
+                    console.warn('Import menu: Found orphan items or circular dependencies, creating as root items.');
+                    // 将剩余所有项作为根项处理（或者跳过）
+                    // 这里选择作为根项处理，避免数据丢失
+                    nextBatch.push(...delayed);
+                    delayed.length = 0; 
+                }
+
+                for (const item of nextBatch) {
+                    // 解析新的 parentId
+                    const newParentId = item.parentId ? idMap.get(item.parentId) : null;
+                    
+                    // 解析新的 toolId
+                    let newToolId = null;
+                    if (item.tool && item.tool.component) {
+                        // 如果导出包含 component 信息，优先使用 component 匹配
+                        newToolId = toolMap.get(item.tool.component);
+                    } else if (item.toolId) {
+                        // 如果只有 toolId，尝试查找是否有同 ID 的工具（虽然不太可能匹配，但作为兜底）
+                        // 注意：这里的逻辑是假设如果 ID 相同则匹配，但在不同 DB 间通常 ID 不同
+                        // 为了兼容性，如果找不到 Component 匹配，我们置空 toolId 避免外键错误，或者跳过
+                        // 既然不能确定 toolId 是否有效，最好是先验证
+                        const exists = await db.tool.findUnique({ where: { id: item.toolId } });
+                        if (exists) {
+                            newToolId = item.toolId;
+                        } else {
+                            // 尝试通过 ID 在 toolMap 中反向查找? 不，ID 变了。
+                            // 如果没有 component 信息，我们无法可靠地恢复工具关联。
+                            console.warn(`Import menu: Cannot resolve tool for item ${item.label}. Tool association lost.`);
+                        }
+                    }
+
+                    try {
+                        const newItem = await db.menuItem.create({
+                            data: {
+                                userId: 'default-admin',
+                                label: item.label,
+                                icon: item.icon,
+                                toolId: newToolId, // 如果为 null，则变成了文件夹或无链接节点
+                                parentId: newParentId || null,
+                                order: item.order,
+                                isFolder: item.isFolder ?? false,
+                            }
+                        });
+                        idMap.set(item.id, newItem.id);
+                        hasProgress = true;
+                    } catch (e) {
+                        console.error(`Import menu: Failed to create item ${item.label}`, e);
+                    }
+                }
+
+                remainingItems = delayed;
             }
         }
 

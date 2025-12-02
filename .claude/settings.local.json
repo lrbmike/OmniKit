@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(find node_modules -name \"@prisma\" -type l -exec ls -la {} ;)",
-      "Bash(cat package.json)"
+      "Bash(cat package.json)",
+      "Bash(cat src/i18n/routing.ts)",
+      "Bash(cat routing.ts)"
     ],
     "deny": [],
     "ask": []
