@@ -33,12 +33,12 @@ export default function LoginPage() {
     const formData = new FormData(e.currentTarget);
     const result = await login(formData);
 
-    setIsLoading(false);
-
     if (result.success) {
       toast.success('Login successful!');
+      // Don't set isLoading to false here, keep showing spinner while redirecting
       router.push(`/${locale}/admin/dashboard`);
     } else {
+      setIsLoading(false);
       toast.error(result.error || 'Login failed');
     }
   };
@@ -64,7 +64,7 @@ export default function LoginPage() {
             </div>
             <Button className="w-full" type="submit" disabled={isLoading}>
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              {t('signIn')}
+              {isLoading ? t('loggingIn') : t('signIn')}
             </Button>
           </form>
         </CardContent>

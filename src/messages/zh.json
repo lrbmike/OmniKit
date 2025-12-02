@@ -247,6 +247,7 @@
     "dontHaveAccount": "还没有账户？",
     "demoCredentials": "演示凭据：admin@example.com / password",
     "processing": "处理中...",
+    "loggingIn": "登录中...",
     "registerSuccess": "注册成功，请登录",
     "registerClosed": "系统注册已关闭。",
     "registerClosedDesc": "当前系统暂不开放注册功能。如需访问权限，请联系管理员。"
