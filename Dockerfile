@@ -27,6 +27,9 @@ COPY . .
 # Generate Prisma Client
 RUN npx prisma generate
 
+# Build seed script
+RUN npx tsc prisma/seed.ts --module commonjs --target es2020 --moduleResolution node --outDir prisma --skipLibCheck
+
 # Build Next.js application
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV IS_DOCKER 1

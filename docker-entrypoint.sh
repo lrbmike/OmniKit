@@ -24,6 +24,10 @@ if ! echo "SELECT name FROM sqlite_master WHERE type='table' AND name='SystemCon
   echo "Initializing database schema..."
   prisma db push --skip-generate --accept-data-loss
   echo "Database schema initialized"
+  
+  echo "Seeding database..."
+  node prisma/seed.js
+  echo "Database seeded"
 else
   echo "Database schema already exists"
 fi
