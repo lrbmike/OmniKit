@@ -232,6 +232,18 @@ const PRESET_TOOLS = [
         component: 'github-uploader',
         order: 1,
     },
+
+    // Utility Tools (1)
+    {
+        name: '剪贴板笔记',
+        nameEn: 'Clipboard Notes',
+        description: '管理您的笔记和剪贴板内容',
+        descriptionEn: 'Manage your notes and clipboard content',
+        icon: 'NotebookPen',
+        category: 'utility',
+        component: 'clipboard-notes',
+        order: 1,
+    },
 ];
 
 async function main() {

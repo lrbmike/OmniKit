@@ -84,7 +84,57 @@ Use the standard `CopyButton` component for all copy-to-clipboard actions.
 *   **Touch Targets**: Ensure buttons and inputs are large enough for touch interaction (min 44px height recommended).
 *   **Scroll**: Use `overflow-y-auto` for panels that might exceed the viewport height, preventing the entire page from scrolling unnecessarily.
 
-## 6. Tool Configuration States
+## 6. Search Input Design
+
+For search functionality, use enhanced styling to ensure visibility across all themes.
+
+### Search Box Standards
+*   **Background**: Always use `bg-background` to ensure a clear background (white in light mode, dark in dark mode).
+*   **Border**: Use `border-2` for double-width borders that stand out from the page background.
+*   **Interactive States**:
+    *   **Default**: `border-input` (standard border color)
+    *   **Hover**: `hover:border-primary/50` (50% opacity primary color)
+    *   **Focus**: `focus-visible:border-primary` (solid primary color)
+*   **Focus Ring**: `focus-visible:ring-2 focus-visible:ring-primary/20` for a prominent focus indicator.
+*   **Shadow**: `shadow-sm` for subtle depth and separation from background.
+*   **Transition**: `transition-colors` for smooth color changes during interactions.
+*   **Icon Placement**: 
+    *   Use `absolute` positioning with `left-3 top-1/2 transform -translate-y-1/2`
+    *   Add `z-10` to ensure icon stays above the input background
+    *   Use `text-muted-foreground` for icon color
+*   **Padding**: Use `pl-10` (left padding) when including a left-side icon.
+
+### Implementation Example
+```tsx
+<div className="relative flex-1">
+  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground z-10" />
+  <Input
+    placeholder={t('searchPlaceholder')}
+    value={searchInput}
+    onChange={(e) => setSearchInput(e.target.value)}
+    onKeyPress={(e) => {
+      if (e.key === 'Enter') {
+        handleSearch();
+      }
+    }}
+    className="pl-10 bg-background border-2 border-input hover:border-primary/50 focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-primary/20 shadow-sm transition-colors"
+  />
+</div>
+```
+
+### Search Button (Optional)
+*   When providing a dedicated search button alongside the input:
+    *   Use primary variant: `<Button onClick={handleSearch}>`
+    *   Include both icon and text for clarity
+    *   Example: `<Search className="h-4 w-4 mr-2" /> {t('search')}`
+
+### Why These Standards?
+*   **Visibility**: The enhanced borders and backgrounds ensure search boxes don't blend into page backgrounds (especially important in light mode with gray backgrounds).
+*   **Feedback**: Clear visual feedback on hover and focus helps users understand the active input state.
+*   **Accessibility**: Strong focus indicators meet WCAG guidelines and help keyboard navigation.
+*   **Consistency**: Using the same pattern across all search inputs creates a predictable user experience.
+
+## 7. Tool Configuration States
 
 For tools that require external configuration (e.g., API Keys, Tokens) to function, follow these guidelines for the unconfigured state.
 

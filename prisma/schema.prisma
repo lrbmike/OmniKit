@@ -112,3 +112,16 @@ model MenuItem {
   
   @@index([userId, parentId, order])
 }
+
+model ClipboardNote {
+  id          String   @id @default(cuid())
+  userId      String   @default("default-admin") // Reserved for multi-user support
+  content     String   // Note content
+  tags        String?  // Comma-separated tags (max 3)
+  order       Int      @default(0) // Custom sort order
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  @@index([userId, createdAt])
+  @@index([userId, order])
+}
