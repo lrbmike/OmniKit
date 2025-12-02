@@ -31,8 +31,9 @@ export function SidebarNav({ items, locale }: { items: MenuItem[], locale: strin
                 "fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transform transition-transform duration-200 ease-in-out md:translate-x-0 md:static md:h-full flex flex-col",
                 isOpen ? "translate-x-0" : "-translate-x-full"
             )}>
-                <div className="flex items-center justify-center h-16 border-b border-gray-200 dark:border-gray-700 shrink-0">
+                <div className="flex items-center justify-center gap-3 h-16 border-b border-gray-200 dark:border-gray-700 shrink-0 px-4">
                     <img src="/assets/logo.png" alt="OmniKit" className="h-10" />
+                    <h1 className="text-xl font-bold text-primary">OmniKit</h1>
                 </div>
 
                 <nav className="flex-1 overflow-y-auto p-4 space-y-1">
