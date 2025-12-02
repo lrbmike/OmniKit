@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import { Sidebar } from '@/components/admin/sidebar';
 import { Header } from '@/components/admin/header';
+import { Footer } from '@/components/admin/footer';
 import { getMenuItems } from '@/actions/menu';
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
@@ -39,6 +40,7 @@ export default async function AdminLayout({ children }: { children: ReactNode })
                 <main className="flex-1 overflow-y-auto p-4 md:p-6">
                     {children}
                 </main>
+                <Footer />
             </div>
         </div>
     );
