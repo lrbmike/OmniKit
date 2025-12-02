@@ -77,7 +77,7 @@ export default function Translator() {
     };
 
     const handleGoToSettings = () => {
-        router.push('/admin/settings/ai');
+        router.push('/admin/settings/translator');
     };
 
     return (

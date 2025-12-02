@@ -137,7 +137,7 @@ export async function updateAiProvider(input: UpdateAiProviderInput) {
     });
 
     revalidatePath('/admin/settings/ai-providers');
-    revalidatePath('/admin/settings/ai');
+    revalidatePath('/admin/settings/translator');
     return { success: true, data: provider };
   } catch (error) {
     console.error('更新 AI 提供商失败:', error);
