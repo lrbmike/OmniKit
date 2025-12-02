@@ -27,8 +27,8 @@ COPY . .
 # Generate Prisma Client
 RUN npx prisma generate
 
-# Build seed script
-RUN npx tsc prisma/seed.ts --module esnext --target es2020 --moduleResolution node --outDir prisma --skipLibCheck --esModuleInterop
+# Build seed script (bundle dependencies to avoid runtime lookup issues)
+RUN npx esbuild prisma/seed.ts --bundle --platform=node --format=esm --outfile=prisma/seed.js --external:@prisma/client
 
 # Build Next.js application
 ENV NEXT_TELEMETRY_DISABLED 1
