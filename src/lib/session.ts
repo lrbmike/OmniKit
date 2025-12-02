@@ -11,7 +11,9 @@ const sessionOptions: SessionOptions = {
     password: process.env.SESSION_SECRET || 'complex_password_at_least_32_characters_long',
     cookieName: 'omnikit_session',
     cookieOptions: {
-        secure: process.env.NODE_ENV === 'production',
+        // Default to false to support HTTP deployment (e.g. Docker on LAN)
+        // Set ENABLE_SECURE_COOKIE=true in .env if using HTTPS in production
+        secure: process.env.ENABLE_SECURE_COOKIE === 'true',
         httpOnly: true,
         sameSite: 'lax',
         maxAge: 60 * 60 * 24 * 7, // 7 days (will be overridden by DB config)

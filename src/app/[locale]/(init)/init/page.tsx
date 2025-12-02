@@ -66,12 +66,13 @@ export default function InitPage() {
         formData.append('dbType', 'sqlite'); // Always use SQLite
 
         const result = await completeInitialization(formData);
-        setIsLoading(false);
 
         if (result.success) {
             toast.success('Initialization completed successfully!');
+            // Don't set isLoading to false here to show waiting state during redirect
             router.push(`/${selectedLocale}/admin/dashboard`);
         } else {
+            setIsLoading(false);
             toast.error(result.error || 'Initialization failed');
         }
     };
@@ -184,7 +185,7 @@ export default function InitPage() {
                         <Button variant="outline" onClick={handleBack}>{t('back')}</Button>
                         <Button onClick={handleComplete} disabled={isLoading}>
                             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-                            {t('completeSetup')}
+                            {isLoading ? t('processing') : t('completeSetup')}
                         </Button>
                     </div>
                 </div>

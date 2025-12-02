@@ -301,7 +301,8 @@
     "confirmPassword": "Confirm Password",
     "completeSetup": "Complete Setup",
     "connectionSuccess": "Connection successful",
-    "connectionFailed": "Connection failed"
+    "connectionFailed": "Connection failed",
+    "processing": "Processing..."
   },
   "Tools": {
     "PasswordGenerator": {
@@ -591,7 +592,10 @@
       "copy": "Copy",
       "copied": "Copied to clipboard",
       "errorEmpty": "Please enter text to translate",
-      "errorTranslation": "Translation failed"
+      "errorTranslation": "Translation failed",
+      "notConfigured": "Translation service is not configured",
+      "configureHint": "Please configure the AI provider in settings to use this tool.",
+      "goToSettings": "Go to Translation Settings"
     },
     "GithubUploader": {
       "title": "GitHub Upload",

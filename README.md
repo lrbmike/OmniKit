@@ -64,10 +64,12 @@ A robust, extensible admin system built with Next.js 15, designed to manage mult
    ```
 
 3. **Setup Database**
-   Initialize the SQLite database and create tables:
+   Initialize the SQLite database, create tables, and seed default tools:
    ```bash
    npx prisma db push
+   npx prisma db seed
    ```
+   > **Note:** If you manually delete `data/omnikit.db` to reset the system, you **must** run these commands again to initialize the tables and tools before starting the development server.
 
 4. **Run Development Server**
    ```bash

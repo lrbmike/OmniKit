@@ -83,3 +83,54 @@ Use the standard `CopyButton` component for all copy-to-clipboard actions.
 *   **Mobile First**: Design for mobile screens first, then enhance for desktop.
 *   **Touch Targets**: Ensure buttons and inputs are large enough for touch interaction (min 44px height recommended).
 *   **Scroll**: Use `overflow-y-auto` for panels that might exceed the viewport height, preventing the entire page from scrolling unnecessarily.
+
+## 6. Tool Configuration States
+
+For tools that require external configuration (e.g., API Keys, Tokens) to function, follow these guidelines for the unconfigured state.
+
+### Configuration Warning Banner
+*   **Placement**: Display a warning banner at the top of the tool page, above the main Split-Pane layout.
+*   **Style**: Use a `destructive` style to draw attention but keep it within the design system.
+*   **Content**:
+    *   **Icon**: `AlertCircle` (text-destructive)
+    *   **Message**: Clear statement that configuration is missing.
+    *   **Action**: A button linking directly to the relevant settings page.
+*   **Behavior**:
+    *   **Disable Inputs**: The main tool inputs and action buttons must be `disabled`.
+    *   **Do Not Hide**: Do not completely hide the tool UI; let the user see what the tool looks like, but prevent interaction.
+
+### Implementation Example
+```tsx
+// Check configuration state
+const [isConfigured, setIsConfigured] = useState<boolean | null>(null);
+
+return (
+  <div className="space-y-6">
+    {/* Warning Banner */}
+    {isConfigured === false && (
+      <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4">
+        <div className="flex items-start gap-3">
+          <AlertCircle className="h-5 w-5 text-destructive mt-0.5 shrink-0" />
+          <div className="flex-1 space-y-2">
+            <p className="text-sm font-medium text-destructive">
+              {t('notConfigured')}
+            </p>
+            <p className="text-sm text-muted-foreground">
+              {t('configureHint')}
+            </p>
+          </div>
+          <Button variant="outline" size="sm" onClick={goToSettings}>
+            <Settings className="mr-2 h-4 w-4" />
+            {t('goToSettings')}
+          </Button>
+        </div>
+      </div>
+    )}
+
+    {/* Main Tool UI (Disabled) */}
+    <div className="flex ...">
+       {/* ... inputs with disabled={!isConfigured} ... */}
+    </div>
+  </div>
+);
+```

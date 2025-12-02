@@ -45,7 +45,7 @@ export function SettingsNav() {
         },
         {
             title: tAi('title'),
-            href: `/${locale}/admin/settings/ai`,
+            href: `/${locale}/admin/settings/translator`,
             icon: Languages
         },
         {
