@@ -68,11 +68,11 @@ export default function LoginPage() {
             </Button>
           </form>
         </CardContent>
-        <CardFooter className="flex flex-col gap-4">
+        {/* <CardFooter className="flex flex-col gap-4">
           <div className="text-sm text-muted-foreground w-full text-center">
             {t('dontHaveAccount')} <Link href={`/${locale}/register`} className="text-primary hover:underline">{t('signUp')}</Link>
           </div>
-        </CardFooter>
+        </CardFooter> */}
       </Card>
     </div>
   )

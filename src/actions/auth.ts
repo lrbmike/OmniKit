@@ -66,6 +66,10 @@ export async function logout() {
 }
 
 export async function register(formData: FormData) {
+  // Registration is currently closed
+  return { success: false, error: 'Registration is currently closed' };
+
+  /* 
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
   const confirmPassword = formData.get('confirmPassword') as string;
@@ -109,4 +113,5 @@ export async function register(formData: FormData) {
     console.error('Registration error:', error);
     return { success: false, error: 'Registration failed' };
   }
+  */
 }

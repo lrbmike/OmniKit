@@ -247,7 +247,9 @@
     "dontHaveAccount": "Don't have an account?",
     "demoCredentials": "Demo credentials: admin@example.com / password",
     "processing": "Processing...",
-    "registerSuccess": "Registration successful, please login"
+    "registerSuccess": "Registration successful, please login",
+    "registerClosed": "Registration is currently closed.",
+    "registerClosedDesc": "System registration is not available at this time. Please contact the administrator if you need access."
   },
   "Dashboard": {
     "title": "Dashboard",

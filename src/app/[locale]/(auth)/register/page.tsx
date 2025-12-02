@@ -43,37 +43,21 @@ export default function RegisterPage() {
 
   return (
     <div className="flex items-center justify-center min-h-screen p-4">
-      <Card className="w-full max-w-sm">
+      <Card className="w-full max-w-lg">
         <CardHeader>
           <CardTitle className="text-2xl">{t('registerTitle')}</CardTitle>
           <CardDescription>
-            {t('registerDesc')}
+            {t('registerClosed')}
           </CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4">
-          <form action={formAction} className="grid gap-4">
-            <div className="grid gap-2">
-              <Label htmlFor="email">{t('email')}</Label>
-              <Input id="email" name="email" type="email" placeholder="m@example.com" required />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="password">{t('password')}</Label>
-              <Input id="password" name="password" type="password" required />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="confirmPassword">{t('confirmPassword')}</Label>
-              <Input id="confirmPassword" name="confirmPassword" type="password" required />
-            </div>
-            <Button className="w-full" type="submit" disabled={isPending}>
-              {isPending ? t('processing') : t('signUp')}
+        <CardContent className="flex flex-col items-center justify-center gap-4 py-6">
+            <p className="text-center text-muted-foreground">
+               {t('registerClosedDesc')}
+            </p>
+            <Button asChild variant="outline">
+                <Link href={`/${locale}/login`}>{t('signIn')}</Link>
             </Button>
-          </form>
         </CardContent>
-        <CardFooter>
-           <div className="text-sm text-muted-foreground w-full text-center">
-             {t('alreadyHaveAccount')} <Link href={`/${locale}/login`} className="text-primary hover:underline">{t('signIn')}</Link>
-           </div>
-        </CardFooter>
       </Card>
     </div>
   )
