@@ -257,15 +257,15 @@ async function main() {
     // await prisma.systemConfig.deleteMany();
 
     // Create system config
-    // console.log('⚙️  Creating system config...');
-    // await prisma.systemConfig.create({
-    //     data: {
-    //         isInitialized: false,
-    //         defaultLocale: 'zh',
-    //         dbType: 'sqlite',
-    //         sessionTimeout: 604800, // 7 days
-    //     },
-    // });
+    console.log('⚙️  Creating system config...');
+    await prisma.systemConfig.create({
+        data: {
+            isInitialized: false, // Must be false to trigger init wizard if users want to setup admin
+            defaultLocale: 'zh',
+            dbType: 'sqlite',
+            sessionTimeout: 604800, // 7 days
+        },
+    });
 
     // Create tools
     console.log('🛠️  Creating 18 preset tools...');

@@ -3,8 +3,16 @@ import { Sidebar } from '@/components/admin/sidebar';
 import { Header } from '@/components/admin/header';
 import { Footer } from '@/components/admin/footer';
 import { getMenuItems } from '@/actions/menu';
+import { isSystemInitialized } from '@/lib/init';
+import { redirect } from 'next/navigation';
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
+    const initialized = await isSystemInitialized();
+    
+    if (!initialized) {
+        redirect('/init');
+    }
+
     const menuItems = await getMenuItems();
     
     // Flatten tools

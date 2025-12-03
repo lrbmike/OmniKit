@@ -43,10 +43,18 @@ export async function updateSystemConfig(data: {
     githubToken?: string;
 }) {
     try {
-        const config = await db.systemConfig.findFirst();
+        let config = await db.systemConfig.findFirst();
+        
+        // If config doesn't exist, create it (auto-recovery)
         if (!config) {
-            // Should not happen if initialized
-            return { success: false, error: 'System config not found' };
+            config = await db.systemConfig.create({
+                data: {
+                    isInitialized: true,
+                    defaultLocale: 'zh',
+                    defaultTheme: 'system',
+                    dashboardQuickTools: 'json-formatter,uuid-generator,timestamp-converter,password-generator',
+                }
+            });
         }
 
         // Split data into known fields and raw fields (weather/ai which might not be in generated client yet)

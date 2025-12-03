@@ -5,18 +5,23 @@ export default async function WeatherSettingsPage() {
     // Cast to any to bypass type checking until prisma generate is run
     const config = await getSystemConfig() as any;
 
-    if (!config) {
-        return null;
-    }
+    // Use default values if config is missing
+    const defaultConfig = {
+        weatherEnabled: false,
+        weatherUrl: '',
+        weatherApiKey: '',
+        weatherKeyMode: 'query',
+        weatherCity: '北京',
+    };
 
     return (
         <WeatherSettingsForm
             initialConfig={{
-                weatherEnabled: config.weatherEnabled || false,
-                weatherUrl: config.weatherUrl || '',
-                weatherApiKey: config.weatherApiKey || '',
-                weatherKeyMode: config.weatherKeyMode || 'query',
-                weatherCity: config.weatherCity || '北京',
+                weatherEnabled: config?.weatherEnabled ?? defaultConfig.weatherEnabled,
+                weatherUrl: config?.weatherUrl || defaultConfig.weatherUrl,
+                weatherApiKey: config?.weatherApiKey || defaultConfig.weatherApiKey,
+                weatherKeyMode: config?.weatherKeyMode || defaultConfig.weatherKeyMode,
+                weatherCity: config?.weatherCity || defaultConfig.weatherCity,
             }}
         />
     );
