@@ -56,6 +56,7 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
     const [newFolderNameEn, setNewFolderNameEn] = useState('');
     const [selectedFolderId, setSelectedFolderId] = useState<string | null>(null);
     const [toolSearch, setToolSearch] = useState('');
+    const [createFolderDialogOpen, setCreateFolderDialogOpen] = useState(false);
     const [editDialogOpen, setEditDialogOpen] = useState(false);
     const [editingItem, setEditingItem] = useState<MenuItem | null>(null);
     const [editLabel, setEditLabel] = useState('');
@@ -72,6 +73,7 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
 
         if (result.success) {
             toast.success(t('successCreated'));
+            setCreateFolderDialogOpen(false); // Close dialog on success
             router.refresh();
         } else {
             toast.error(result.error);
@@ -252,7 +254,7 @@ export function MenuEditor({ initialItems, tools }: { initialItems: MenuItem[], 
                                 {t('clearSelection')}
                             </Button>
                         )}
-                        <Dialog>
+                        <Dialog open={createFolderDialogOpen} onOpenChange={setCreateFolderDialogOpen}>
                             <DialogTrigger asChild>
                                 <Button size="sm">
                                     <FolderPlus className="mr-2 h-4 w-4" />
