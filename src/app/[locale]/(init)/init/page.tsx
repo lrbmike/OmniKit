@@ -48,12 +48,12 @@ export default function InitPage() {
 
     const handleComplete = async () => {
         if (adminAccount.password !== adminAccount.confirmPassword) {
-            toast.error("Passwords don't match");
+            toast.error(t('passwordMismatch'));
             return;
         }
 
         if (adminAccount.password.length < 6) {
-            toast.error('Password must be at least 6 characters');
+            toast.error(t('passwordLength'));
             return;
         }
 
@@ -68,12 +68,12 @@ export default function InitPage() {
         const result = await completeInitialization(formData);
 
         if (result.success) {
-            toast.success('Initialization completed successfully!');
+            toast.success(t('success'));
             // Don't set isLoading to false here to show waiting state during redirect
             router.push(`/${selectedLocale}/admin/dashboard`);
         } else {
             setIsLoading(false);
-            toast.error(result.error || 'Initialization failed');
+            toast.error(result.error || t('failed'));
         }
     };
 

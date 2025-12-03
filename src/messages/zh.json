@@ -302,7 +302,11 @@
     "completeSetup": "完成设置",
     "connectionSuccess": "连接成功",
     "connectionFailed": "连接失败",
-    "processing": "处理中..."
+    "processing": "处理中...",
+    "passwordMismatch": "密码不匹配",
+    "passwordLength": "密码长度至少为6位",
+    "success": "初始化完成",
+    "failed": "初始化失败"
   },
   "Tools": {
     "PasswordGenerator": {

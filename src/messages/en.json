@@ -302,7 +302,11 @@
     "completeSetup": "Complete Setup",
     "connectionSuccess": "Connection successful",
     "connectionFailed": "Connection failed",
-    "processing": "Processing..."
+    "processing": "Processing...",
+    "passwordMismatch": "Passwords do not match",
+    "passwordLength": "Password must be at least 6 characters",
+    "success": "Initialization completed successfully",
+    "failed": "Initialization failed"
   },
   "Tools": {
     "PasswordGenerator": {
