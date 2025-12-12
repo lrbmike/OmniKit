@@ -32,10 +32,10 @@ export async function getCloudinaryUploadSignature(
     }
 
     // 使用 Cloudinary SDK v2 配置
-    cloudinary.config({
+    (cloudinary.config as any)({
       cloud_name: account.cloudName,
-      api_key: account.apiKey,
-      api_secret: account.apiSecret,
+      api_key: account.apiKey || undefined,
+      api_secret: account.apiSecret || undefined,
     });
 
     // 生成时间戳
