@@ -189,6 +189,8 @@
         "title": "Cloudinary Accounts",
         "description": "Manage Cloudinary cloud storage account configurations.",
         "manageHint": "Manage your Cloudinary account configurations here. You can add multiple accounts and select which one to use in tools.",
+        "getApiKeysInfo": "Get your API Key and API Secret:",
+        "consoleLink": "Cloudinary Console",
         "addAccount": "Add Account",
         "editAccount": "Edit Account",
         "addDescription": "Add a new Cloudinary account configuration",

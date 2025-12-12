@@ -8,7 +8,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { toast } from 'sonner';
-import { Plus, Pencil, Trash2 } from 'lucide-react';
+import { Plus, Pencil, Trash2, ExternalLink } from 'lucide-react';
 import {
   createCloudinaryAccount,
   updateCloudinaryAccount,
@@ -136,6 +136,19 @@ export function CloudinaryAccountsManager({ initialAccounts }: CloudinaryAccount
           <Plus className="mr-2 h-4 w-4" />
           {t('addAccount')}
         </Button>
+      </div>
+
+      <div className="flex items-center gap-2 p-3 bg-muted/50 rounded-lg text-sm">
+        <span className="text-muted-foreground">{t('getApiKeysInfo')}</span>
+        <a
+          href="https://console.cloudinary.com/app/settings/api-keys"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-primary hover:underline flex items-center gap-1"
+        >
+          {t('consoleLink')}
+          <ExternalLink className="h-3 w-3" />
+        </a>
       </div>
 
       <div className="grid gap-4">

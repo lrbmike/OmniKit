@@ -189,6 +189,8 @@
         "title": "Cloudinary 账户",
         "description": "管理 Cloudinary 云存储账户配置列表。",
         "manageHint": "在这里管理您的 Cloudinary 账户配置。可以添加多个账户，并在工具中选择使用。",
+        "getApiKeysInfo": "获取您的 API Key 和 API Secret：",
+        "consoleLink": "Cloudinary 控制台",
         "addAccount": "添加账户",
         "editAccount": "编辑账户",
         "addDescription": "添加一个新的 Cloudinary 账户配置",
