@@ -221,7 +221,7 @@ const PRESET_TOOLS = [
         order: 2,
     },
 
-    // Storage Tools (1)
+    // Storage Tools (2)
     {
         name: 'GitHub 上传',
         nameEn: 'GitHub Upload',
@@ -231,6 +231,16 @@ const PRESET_TOOLS = [
         category: 'storage',
         component: 'github-uploader',
         order: 1,
+    },
+    {
+        name: 'Cloudinary 图片上传',
+        nameEn: 'Cloudinary Uploader',
+        description: '上传图片到 Cloudinary 云存储',
+        descriptionEn: 'Upload images to Cloudinary cloud storage',
+        icon: 'Cloud',
+        category: 'storage',
+        component: 'cloudinary-uploader',
+        order: 2,
     },
 
     // Utility Tools (1)
@@ -355,7 +365,7 @@ async function main() {
     });
 
     // Filter specific AI tools: translator
-    const aiTools = createdTools.filter(t => 
+    const aiTools = createdTools.filter(t =>
         t.category === 'ai' && ['translator'].includes(t.component)
     );
 
@@ -365,6 +375,35 @@ async function main() {
                 userId: 'default-admin',
                 parentId: aiFolder.id,
                 toolId: aiTools[i].id,
+                order: i + 1,
+                isFolder: false,
+            },
+        });
+    }
+
+    // Storage Tools Folder
+    const storageFolder = await prisma.menuItem.create({
+        data: {
+            userId: 'default-admin',
+            label: '存储工具',
+            labelEn: 'Storage Tools',
+            icon: 'HardDrive',
+            isFolder: true,
+            order: 4,
+        },
+    });
+
+    // Filter specific storage tools: github-uploader, cloudinary-uploader
+    const storageTools = createdTools.filter(t =>
+        t.category === 'storage' && ['github-uploader', 'cloudinary-uploader'].includes(t.component)
+    );
+
+    for (let i = 0; i < storageTools.length; i++) {
+        await prisma.menuItem.create({
+            data: {
+                userId: 'default-admin',
+                parentId: storageFolder.id,
+                toolId: storageTools[i].id,
                 order: i + 1,
                 isFolder: false,
             },

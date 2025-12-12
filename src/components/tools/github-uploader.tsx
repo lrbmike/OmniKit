@@ -7,11 +7,11 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { CopyButton } from '@/components/ui/copy-button';
 import { uploadToGithub } from '@/actions/github';
 import { getSystemConfig } from '@/actions/system';
 import { toast } from 'sonner';
-import { Upload, ExternalLink, AlertCircle, Settings, Image as ImageIcon } from 'lucide-react';
-import { CopyButton } from '@/components/ui/copy-button';
+import { Upload, ExternalLink, AlertCircle, Settings, Image as ImageIcon, Copy } from 'lucide-react';
 
 export function GithubUploader() {
     const t = useTranslations('Tools.GithubUploader');
@@ -125,8 +125,9 @@ export function GithubUploader() {
         };
     };
 
-    const copyToClipboard = (text: string, label: string) => {
-        navigator.clipboard.writeText(text);
+    const copyToClipboard = (text: string, label: string, isUrl: boolean = false) => {
+        const content = isUrl ? `![image](${text})` : text;
+        navigator.clipboard.writeText(content);
         toast.success(`${label} ${t('copied')}`);
     };
 
@@ -282,7 +283,7 @@ export function GithubUploader() {
                                     />
                                     <CopyButton
                                         value={uploadResult.cdnUrl}
-                                        onCopy={() => toast.success(t('copied'))}
+                                        variant="outline"
                                     />
                                     <Button
                                         size="icon"
@@ -295,43 +296,44 @@ export function GithubUploader() {
                             </div>
 
                             <div className="space-y-2">
-                                <Label>{t('rawUrl')}</Label>
+                                <Label>{t('markdownLink')}</Label>
                                 <div className="flex gap-2">
                                     <Input
-                                        value={uploadResult.rawUrl}
+                                        value={
+                                            uploadResult.fileName.match(/\.(jpg|jpeg|png|gif|webp|svg)$/i)
+                                                ? `![](${uploadResult.cdnUrl})`
+                                                : `[${uploadResult.fileName}](${uploadResult.cdnUrl})`
+                                        }
                                         readOnly
                                         className="flex-1"
                                     />
                                     <CopyButton
-                                        value={uploadResult.rawUrl}
-                                        onCopy={() => toast.success(t('copied'))}
-                                    />
-                                    <Button
-                                        size="icon"
+                                        value={
+                                            uploadResult.fileName.match(/\.(jpg|jpeg|png|gif|webp|svg)$/i)
+                                                ? `![](${uploadResult.cdnUrl})`
+                                                : `[${uploadResult.fileName}](${uploadResult.cdnUrl})`
+                                        }
                                         variant="outline"
-                                        onClick={() => window.open(uploadResult.rawUrl, '_blank')}
-                                    >
-                                        <ExternalLink className="h-4 w-4" />
-                                    </Button>
+                                    />
                                 </div>
                             </div>
                         </div>
                     ) : (
-                        <div className="flex flex-col items-center justify-center h-48 text-muted-foreground gap-2">
+                        <div className="flex flex-col items-center justify-start pt-8 pb-4 min-h-[300px] text-muted-foreground gap-4">
                             {previewUrl ? (
                                 <>
-                                    <div className="relative rounded-lg border bg-muted/50 p-4 w-full max-w-md">
+                                    <div className="relative rounded-lg border bg-muted/50 p-4 w-full max-w-md mt-2">
                                         <img
                                             src={previewUrl}
                                             alt="Preview"
-                                            className="max-w-full max-h-[300px] object-contain rounded mx-auto"
+                                            className="max-w-full max-h-[250px] object-contain rounded mx-auto block"
                                         />
                                     </div>
                                     <p className="text-sm">{t('readyToUpload')}</p>
                                 </>
                             ) : (
                                 <>
-                                    <ImageIcon className="h-12 w-12 opacity-20" />
+                                    <ImageIcon className="h-12 w-12 opacity-20 mt-8" />
                                     <p>{t('noResult')}</p>
                                 </>
                             )}

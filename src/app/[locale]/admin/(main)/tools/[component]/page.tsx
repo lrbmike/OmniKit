@@ -23,6 +23,7 @@ import Translator from '@/components/tools/translator';
 import VarNameGenerator from '@/components/tools/var-name-generator';
 import { GithubUploader } from '@/components/tools/github-uploader';
 import { ClipboardNotes } from '@/components/tools/clipboard-notes';
+import { CloudinaryUploader } from '@/components/tools/cloudinary-uploader';
 
 // Map component names to actual components
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -49,6 +50,7 @@ const TOOL_COMPONENTS: Record<string, React.ComponentType<any>> = {
     'var-name-generator': VarNameGenerator,
     'github-uploader': GithubUploader,
     'clipboard-notes': ClipboardNotes,
+    'cloudinary-uploader': CloudinaryUploader,
 };
 
 export default async function ToolPage({

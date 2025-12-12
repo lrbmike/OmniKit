@@ -58,7 +58,21 @@ model AiProvider {
   order       Int      @default(0) // Display order
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
-  
+
+  @@index([isActive, order])
+}
+
+model CloudinaryAccount {
+  id          String   @id @default(cuid())
+  name        String   // Account name, e.g., "Main Account", "Dev Account"
+  cloudName   String   // Cloudinary cloud name
+  apiKey      String?  // API key (encrypted in production)
+  apiSecret   String?  // API secret (encrypted in production)
+  isActive    Boolean  @default(true) // Is account active
+  order       Int      @default(0) // Display order
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
   @@index([isActive, order])
 }
 

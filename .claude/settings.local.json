@@ -4,7 +4,9 @@
       "Bash(find node_modules -name \"@prisma\" -type l -exec ls -la {} ;)",
       "Bash(cat package.json)",
       "Bash(cat src/i18n/routing.ts)",
-      "Bash(cat routing.ts)"
+      "Bash(cat routing.ts)",
+      "Bash(cat \"/e/workspaces/mine/github/OmniKit/prisma/schema.prisma\")",
+      "Bash(cat /e/workspaces/mine/github/OmniKit/src/messages/zh.json)"
     ],
     "deny": [],
     "ask": []

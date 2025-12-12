@@ -27,6 +27,7 @@
     "better-sqlite3": "^12.4.6",
     "browser-image-compression": "^2.0.2",
     "class-variance-authority": "^0.7.1",
+    "cloudinary": "^2.5.1",
     "clsx": "^2.1.1",
     "crypto-js": "^4.2.0",
     "date-fns": "^4.1.0",
