@@ -630,7 +630,9 @@
       "resizeMode": "Resize Mode",
       "scale": "Scale",
       "fit": "Fit",
-      "cover": "Cover"
+      "cover": "Cover",
+      "originalDimensions": "Original Dimensions",
+      "keepAspectRatio": "Keep Aspect Ratio"
     },
     "ImageToBase64": {
       "title": "Image Base64 Converter",

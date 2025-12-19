@@ -630,7 +630,9 @@
       "resizeMode": "调整模式",
       "scale": "缩放",
       "fit": "适配",
-      "cover": "覆盖"
+      "cover": "覆盖",
+      "originalDimensions": "原始尺寸",
+      "keepAspectRatio": "保持宽高比"
     },
     "ImageToBase64": {
       "title": "图片 Base64 转换",

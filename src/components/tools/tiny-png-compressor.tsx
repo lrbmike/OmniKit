@@ -19,11 +19,15 @@ export function TinyPngCompressor() {
   const [compressedFile, setCompressedFile] = useState<File | null>(null);
   const [isCompressing, setIsCompressing] = useState(false);
 
+  // 图片尺寸信息
+  const [imageDimensions, setImageDimensions] = useState<{ width: number; height: number } | null>(null);
+
   // 调整大小选项（可选）
   const [enableResize, setEnableResize] = useState(false);
   const [width, setWidth] = useState(1920);
   const [height, setHeight] = useState(1080);
   const [resizeMode, setResizeMode] = useState<'scale' | 'fit' | 'cover'>('scale');
+  const [keepAspectRatio, setKeepAspectRatio] = useState(true);
 
   useEffect(() => {
     loadAccounts();
@@ -46,8 +50,19 @@ export function TinyPngCompressor() {
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      setOriginalFile(event.target.files[0]);
+      const file = event.target.files[0];
+      setOriginalFile(file);
       setCompressedFile(null);
+
+      // 读取图片尺寸
+      const img = new Image();
+      img.onload = () => {
+        setImageDimensions({ width: img.width, height: img.height });
+        // 自动填充调整大小的宽高为原图尺寸
+        setWidth(img.width);
+        setHeight(img.height);
+      };
+      img.src = URL.createObjectURL(file);
     }
   };
 
@@ -208,7 +223,15 @@ export function TinyPngCompressor() {
               <FileImage className="h-8 w-8 text-primary" />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate">{originalFile.name}</p>
-                <p className="text-xs text-muted-foreground">{formatSize(originalFile.size)}</p>
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <span>{formatSize(originalFile.size)}</span>
+                  {imageDimensions && (
+                    <>
+                      <span>•</span>
+                      <span>{imageDimensions.width} × {imageDimensions.height}</span>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           )}
@@ -228,13 +251,37 @@ export function TinyPngCompressor() {
 
             {enableResize && (
               <div className="space-y-4 pl-6 border-l-2 border-primary/20">
+                {imageDimensions && (
+                  <div className="text-xs text-muted-foreground">
+                    {t('originalDimensions')}: {imageDimensions.width} × {imageDimensions.height}
+                  </div>
+                )}
+
+                <div className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    id="keep-aspect-ratio"
+                    checked={keepAspectRatio}
+                    onChange={(e) => setKeepAspectRatio(e.target.checked)}
+                    className="rounded border-input"
+                  />
+                  <Label htmlFor="keep-aspect-ratio" className="text-sm">{t('keepAspectRatio')}</Label>
+                </div>
+
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <Label>{t('width')}</Label>
                     <input
                       type="number"
                       value={width}
-                      onChange={(e) => setWidth(Number(e.target.value))}
+                      onChange={(e) => {
+                        const newWidth = Number(e.target.value);
+                        setWidth(newWidth);
+                        if (keepAspectRatio && imageDimensions) {
+                          const aspectRatio = imageDimensions.width / imageDimensions.height;
+                          setHeight(Math.round(newWidth / aspectRatio));
+                        }
+                      }}
                       className="w-full px-3 py-2 border rounded-md"
                       min={1}
                     />
@@ -244,7 +291,14 @@ export function TinyPngCompressor() {
                     <input
                       type="number"
                       value={height}
-                      onChange={(e) => setHeight(Number(e.target.value))}
+                      onChange={(e) => {
+                        const newHeight = Number(e.target.value);
+                        setHeight(newHeight);
+                        if (keepAspectRatio && imageDimensions) {
+                          const aspectRatio = imageDimensions.width / imageDimensions.height;
+                          setWidth(Math.round(newHeight * aspectRatio));
+                        }
+                      }}
                       className="w-full px-3 py-2 border rounded-md"
                       min={1}
                     />
