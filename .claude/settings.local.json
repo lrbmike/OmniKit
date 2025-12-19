@@ -6,7 +6,8 @@
       "Bash(cat src/i18n/routing.ts)",
       "Bash(cat routing.ts)",
       "Bash(cat \"/e/workspaces/mine/github/OmniKit/prisma/schema.prisma\")",
-      "Bash(cat /e/workspaces/mine/github/OmniKit/src/messages/zh.json)"
+      "Bash(cat /e/workspaces/mine/github/OmniKit/src/messages/zh.json)",
+      "Bash(cat node_modules/.pnpm/cloudinary@2.5.1/node_modules/cloudinary/v2.d.ts)"
     ],
     "deny": [],
     "ask": []

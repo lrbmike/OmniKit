@@ -76,6 +76,18 @@ model CloudinaryAccount {
   @@index([isActive, order])
 }
 
+model TinyPngAccount {
+  id          String   @id @default(cuid())
+  name        String   // Account name, e.g., "Main Account", "Dev Account"
+  apiKey      String   // TinyPNG/TinyJPG API key
+  isActive    Boolean  @default(true) // Is account active
+  order       Int      @default(0) // Display order
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([isActive, order])
+}
+
 model User {
   id        String   @id @default(cuid())
   email     String   @unique

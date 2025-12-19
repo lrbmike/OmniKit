@@ -176,6 +176,16 @@ const PRESET_TOOLS = [
         component: 'image-to-base64',
         order: 3,
     },
+    {
+        name: 'TinyPNG 压缩',
+        nameEn: 'TinyPNG Compressor',
+        description: '使用 TinyPNG API 进行图片压缩',
+        descriptionEn: 'Image compression using TinyPNG API',
+        icon: 'ImageDown',
+        category: 'image',
+        component: 'tiny-png-compressor',
+        order: 4,
+    },
 
     // Text Tools (2)
     {
@@ -278,7 +288,7 @@ async function main() {
     });
 
     // Create tools
-    console.log('🛠️  Creating 18 preset tools...');
+    console.log('🛠️  Creating 19 preset tools...');
     const createdTools = await Promise.all(
         PRESET_TOOLS.map((tool) =>
             prisma.tool.create({
@@ -404,6 +414,35 @@ async function main() {
                 userId: 'default-admin',
                 parentId: storageFolder.id,
                 toolId: storageTools[i].id,
+                order: i + 1,
+                isFolder: false,
+            },
+        });
+    }
+
+    // Image Tools Folder
+    const imageFolder = await prisma.menuItem.create({
+        data: {
+            userId: 'default-admin',
+            label: '图片工具',
+            labelEn: 'Image Tools',
+            icon: 'Image',
+            isFolder: true,
+            order: 5,
+        },
+    });
+
+    // Filter specific image tools: tiny-png-compressor
+    const imageTools = createdTools.filter(t =>
+        t.category === 'image' && ['tiny-png-compressor'].includes(t.component)
+    );
+
+    for (let i = 0; i < imageTools.length; i++) {
+        await prisma.menuItem.create({
+            data: {
+                userId: 'default-admin',
+                parentId: imageFolder.id,
+                toolId: imageTools[i].id,
                 order: i + 1,
                 isFolder: false,
             },
