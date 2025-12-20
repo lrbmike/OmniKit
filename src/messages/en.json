@@ -230,6 +230,9 @@
         "configInfo": "Configuration file includes:",
         "configIncludesSystem": "System settings (language, theme, weather, etc.)",
         "configIncludesAI": "AI provider configurations",
+        "configIncludesTinyPng": "TinyPNG account configurations",
+        "configIncludesCloudinary": "Cloudinary account configurations",
+        "configIncludesGithub": "GitHub upload configuration",
         "configIncludesMenu": "Menu structure",
         "configWarning": "Importing configuration will overwrite all current settings. Please proceed with caution!"
       },

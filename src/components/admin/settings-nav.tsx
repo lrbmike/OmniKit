@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useLocale, useTranslations } from 'next-intl';
-import { LayoutGrid, Database, Key, Settings as SettingsIcon, LayoutDashboard, CloudSun, Languages, Bot, Code2, FileJson, Upload, Cloud, Image } from 'lucide-react';
+import { LayoutGrid, Database, Settings as SettingsIcon, LayoutDashboard, CloudSun, Languages, Bot, Code2, FileJson, Upload, Cloud, Image } from 'lucide-react';
 
 export function SettingsNav() {
     const pathname = usePathname();
@@ -69,11 +69,6 @@ export function SettingsNav() {
             title: tTinyPng('title'),
             href: `/${locale}/admin/settings/tiny-png-accounts`,
             icon: Image
-        },
-        {
-            title: t('apiKeys'),
-            href: `/${locale}/admin/settings/api-keys`,
-            icon: Key
         },
         {
             title: tConfig('title'),

@@ -22,9 +22,9 @@ export async function getSystemConfig() {
     return await db.systemConfig.findFirst();
 }
 
-export async function updateSystemConfig(data: { 
-    defaultLocale?: string; 
-    defaultTheme?: string; 
+export async function updateSystemConfig(data: {
+    defaultLocale?: string;
+    defaultTheme?: string;
     dashboardQuickTools?: string;
     weatherEnabled?: boolean;
     weatherUrl?: string;
@@ -44,7 +44,7 @@ export async function updateSystemConfig(data: {
 }) {
     try {
         let config = await db.systemConfig.findFirst();
-        
+
         // If config doesn't exist, create it (auto-recovery)
         if (!config) {
             config = await db.systemConfig.create({
@@ -219,16 +219,43 @@ export async function exportConfiguration() {
 
         // 获取系统配置
         const systemConfig = await getSystemConfig();
-        
+
         // 获取 AI 提供商配置
         const aiProviders = await db.aiProvider.findMany({
             select: {
                 id: true,
                 name: true,
+                type: true,
                 baseUrl: true,
                 apiKey: true,
                 model: true,
+                isDefault: true,
                 isActive: true,
+                order: true,
+            }
+        });
+
+        // 获取 TinyPNG 账号配置
+        const tinyPngAccounts = await db.tinyPngAccount.findMany({
+            select: {
+                id: true,
+                name: true,
+                apiKey: true,
+                isActive: true,
+                order: true,
+            }
+        });
+
+        // 获取 Cloudinary 账号配置
+        const cloudinaryAccounts = await db.cloudinaryAccount.findMany({
+            select: {
+                id: true,
+                name: true,
+                cloudName: true,
+                apiKey: true,
+                apiSecret: true,
+                isActive: true,
+                order: true,
             }
         });
 
@@ -238,6 +265,7 @@ export async function exportConfiguration() {
             select: {
                 id: true,
                 label: true,
+                labelEn: true,
                 icon: true,
                 toolId: true,
                 tool: {
@@ -268,14 +296,17 @@ export async function exportConfiguration() {
                 translatorSystemPrompt: systemConfig?.translatorSystemPrompt,
                 varNameGenProviderId: systemConfig?.varNameGenProviderId,
                 varNameGenSystemPrompt: systemConfig?.varNameGenSystemPrompt,
+                githubToken: systemConfig?.githubToken,
             },
             aiProviders,
+            tinyPngAccounts,
+            cloudinaryAccounts,
             menuItems,
         };
 
-        return { 
-            success: true, 
-            data: JSON.stringify(config, null, 2) 
+        return {
+            success: true,
+            data: JSON.stringify(config, null, 2)
         };
     } catch (error) {
         console.error('Export configuration error:', error);
@@ -306,20 +337,62 @@ export async function importConfiguration(configJson: string) {
         if (config.aiProviders && Array.isArray(config.aiProviders)) {
             // 先删除现有的提供商
             await db.aiProvider.deleteMany({});
-            
+
             // 导入新的提供商
             for (const provider of config.aiProviders) {
                 await db.aiProvider.create({
                     data: {
                         name: provider.name,
+                        type: provider.type || 'openai',
                         baseUrl: provider.baseUrl,
                         apiKey: provider.apiKey,
                         model: provider.model,
+                        isDefault: provider.isDefault ?? false,
                         isActive: provider.isActive ?? true,
+                        order: provider.order ?? 0,
                     }
                 });
             }
         }
+
+        // 导入 TinyPNG 账号配置
+        if (config.tinyPngAccounts && Array.isArray(config.tinyPngAccounts)) {
+            // 先删除现有的账号
+            await db.tinyPngAccount.deleteMany({});
+
+            // 导入新的账号
+            for (const account of config.tinyPngAccounts) {
+                await db.tinyPngAccount.create({
+                    data: {
+                        name: account.name,
+                        apiKey: account.apiKey,
+                        isActive: account.isActive ?? true,
+                        order: account.order ?? 0,
+                    }
+                });
+            }
+        }
+
+        // 导入 Cloudinary 账号配置
+        if (config.cloudinaryAccounts && Array.isArray(config.cloudinaryAccounts)) {
+            // 先删除现有的账号
+            await db.cloudinaryAccount.deleteMany({});
+
+            // 导入新的账号
+            for (const account of config.cloudinaryAccounts) {
+                await db.cloudinaryAccount.create({
+                    data: {
+                        name: account.name,
+                        cloudName: account.cloudName,
+                        apiKey: account.apiKey,
+                        apiSecret: account.apiSecret,
+                        isActive: account.isActive ?? true,
+                        order: account.order ?? 0,
+                    }
+                });
+            }
+        }
+
 
         // 导入菜单配置
         if (config.menuItems && Array.isArray(config.menuItems)) {
@@ -337,7 +410,7 @@ export async function importConfiguration(configJson: string) {
 
             // 创建 ID 映射表（旧 ID -> 新 ID）
             const idMap = new Map<string, string>();
-            
+
             // 使用队列处理分层创建，解决父子依赖
             let remainingItems = [...config.menuItems];
             let hasProgress = true;
@@ -363,13 +436,13 @@ export async function importConfiguration(configJson: string) {
                     // 将剩余所有项作为根项处理（或者跳过）
                     // 这里选择作为根项处理，避免数据丢失
                     nextBatch.push(...delayed);
-                    delayed.length = 0; 
+                    delayed.length = 0;
                 }
 
                 for (const item of nextBatch) {
                     // 解析新的 parentId
                     const newParentId = item.parentId ? idMap.get(item.parentId) : null;
-                    
+
                     // 解析新的 toolId
                     let newToolId = null;
                     if (item.tool && item.tool.component) {
@@ -395,6 +468,7 @@ export async function importConfiguration(configJson: string) {
                             data: {
                                 userId: 'default-admin',
                                 label: item.label,
+                                labelEn: item.labelEn,
                                 icon: item.icon,
                                 toolId: newToolId, // 如果为 null，则变成了文件夹或无链接节点
                                 parentId: newParentId || null,
@@ -417,9 +491,9 @@ export async function importConfiguration(configJson: string) {
         return { success: true };
     } catch (error) {
         console.error('Import configuration error:', error);
-        return { 
-            success: false, 
-            error: error instanceof Error ? error.message : 'Failed to import configuration' 
+        return {
+            success: false,
+            error: error instanceof Error ? error.message : 'Failed to import configuration'
         };
     }
 }

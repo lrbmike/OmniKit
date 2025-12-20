@@ -230,6 +230,9 @@
         "configInfo": "配置文件包含以下内容：",
         "configIncludesSystem": "系统设置（语言、主题、天气等）",
         "configIncludesAI": "AI 提供商配置",
+        "configIncludesTinyPng": "TinyPNG 账号配置",
+        "configIncludesCloudinary": "Cloudinary 账号配置",
+        "configIncludesGithub": "GitHub 上传配置",
         "configIncludesMenu": "菜单结构",
         "configWarning": "导入配置将覆盖当前所有设置，请谨慎操作！"
       },
