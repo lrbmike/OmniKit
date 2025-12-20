@@ -844,6 +844,31 @@
       "showMore": "Show more ({count})",
       "showLess": "Show less",
       "search": "Search"
+    },
+    "QRScanner": {
+      "title": "QR Code Scanner",
+      "description": "Scan QR codes from images and extract URLs or text",
+      "previewLabel": "QR Code Image Preview",
+      "noImagePlaceholder": "No image selected, please upload or paste from clipboard",
+      "uploadButton": "Upload Image",
+      "uploadFileHint": "Click to select image file (PNG, JPG, etc.)",
+      "pasteButton": "Paste from Clipboard",
+      "pasteFromClipboardHint": "Paste from clipboard (Supported in modern browsers)",
+      "clearButton": "Clear",
+      "resultLabel": "Decoded Text / URL",
+      "resultPlaceholder": "Decoded content will appear here...",
+      "decodedTextPlaceholder": "[QR decoding functionality will be implemented with jsQR library]",
+      "clipboardNotSupported": "Clipboard read API not supported in this browser",
+      "noImageInClipboard": "No image found in clipboard",
+      "clipboardError": "Failed to read from clipboard",
+      "clipboardSuccess": "Image pasted from clipboard",
+      "invalidImageType": "Please select an image file (PNG, JPG, etc.)",
+      "fileTooLarge": "Image file size exceeds 5MB limit",
+      "copied": "Copied to clipboard",
+      "decodeSuccess": "QR code decoded successfully",
+      "decodeError": "Failed to decode QR code",
+      "noQrCodeFound": "No QR code found in the image",
+      "imageLoadError": "Failed to load image"
     }
   }
 }

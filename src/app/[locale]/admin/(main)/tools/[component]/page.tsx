@@ -25,6 +25,7 @@ import { GithubUploader } from '@/components/tools/github-uploader';
 import { ClipboardNotes } from '@/components/tools/clipboard-notes';
 import { CloudinaryUploader } from '@/components/tools/cloudinary-uploader';
 import { TinyPngCompressor } from '@/components/tools/tiny-png-compressor';
+import { QRScanner } from '@/components/tools/qr-scanner';
 
 // Map component names to actual components
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -53,6 +54,7 @@ const TOOL_COMPONENTS: Record<string, React.ComponentType<any>> = {
     'clipboard-notes': ClipboardNotes,
     'cloudinary-uploader': CloudinaryUploader,
     'tiny-png-compressor': TinyPngCompressor,
+    'qr-scanner': QRScanner,
 };
 
 export default async function ToolPage({

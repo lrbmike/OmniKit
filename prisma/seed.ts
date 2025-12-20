@@ -253,7 +253,7 @@ const PRESET_TOOLS = [
         order: 2,
     },
 
-    // Utility Tools (1)
+    // Utility Tools (2)
     {
         name: '剪贴板笔记',
         nameEn: 'Clipboard Notes',
@@ -263,6 +263,16 @@ const PRESET_TOOLS = [
         category: 'utility',
         component: 'clipboard-notes',
         order: 1,
+    },
+    {
+        name: '二维码扫描器',
+        nameEn: 'QR Code Scanner',
+        description: '从图片中扫描二维码，提取URL或文本',
+        descriptionEn: 'Scan QR codes from images and extract URLs or text',
+        icon: 'Camera',
+        category: 'utility',
+        component: 'qr-scanner',
+        order: 2,
     },
 ];
 

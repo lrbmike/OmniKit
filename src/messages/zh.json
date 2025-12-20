@@ -844,6 +844,31 @@
       "showMore": "显示更多 ({count})",
       "showLess": "收起",
       "search": "搜索"
+    },
+    "QRScanner": {
+      "title": "二维码扫描器",
+      "description": "从图片中扫描二维码，提取URL或文本",
+      "previewLabel": "二维码图片预览",
+      "noImagePlaceholder": "未选择图片，请上传或从剪贴板粘贴",
+      "uploadButton": "上传图片",
+      "uploadFileHint": "点击选择图片文件（PNG、JPG等）",
+      "pasteButton": "从剪贴板粘贴",
+      "pasteFromClipboardHint": "从剪贴板粘贴（现代浏览器支持）",
+      "clearButton": "清除",
+      "resultLabel": "解码文本 / URL",
+      "resultPlaceholder": "解码后的内容将显示在这里...",
+      "decodedTextPlaceholder": "[二维码解码功能将通过 jsQR 库实现]",
+      "clipboardNotSupported": "当前浏览器不支持剪贴板读取API",
+      "noImageInClipboard": "剪贴板中未找到图片",
+      "clipboardError": "读取剪贴板失败",
+      "clipboardSuccess": "已从剪贴板粘贴图片",
+      "invalidImageType": "请选择图片文件（PNG、JPG等）",
+      "fileTooLarge": "图片文件大小超过5MB限制",
+      "copied": "已复制到剪贴板",
+      "decodeSuccess": "二维码解码成功",
+      "decodeError": "二维码解码失败",
+      "noQrCodeFound": "未在图片中找到二维码",
+      "imageLoadError": "图片加载失败"
     }
   }
 }
