@@ -2,55 +2,59 @@
 
 A robust, extensible admin system built with Next.js 15, designed to manage multiple tools with a unified interface.
 
-## 🚀 Features
+## 🚀 Core Technologies
 
-- **Core Framework**: Next.js 15 (App Router) + React 19
-- **Database**: SQLite (Default) with Prisma ORM
-- **UI/UX**: Tailwind CSS + ShadcnUI + Lucide Icons
-- **Authentication**: Secure session management via `iron-session`
-- **Initialization**: Built-in setup wizard for first-time configuration
-- **Internationalization**: Full i18n support (English & Chinese) via `next-intl`
+- **Framework**: Next.js 15 (App Router) + React 19
+- **Database**: SQLite + Prisma ORM
+- **UI**: Tailwind CSS + ShadcnUI + Lucide Icons
+- **Authentication**: `iron-session` for secure session management
+- **Internationalization**: `next-intl` (English & Chinese)
 - **State Management**: Zustand
-- **Weather Integration**: Real-time weather forecast with configurable API
 
-## 🧰 Available Tools (21)
+## 🧰 Available Tools (23)
 
-### Developer Tools
-- **JSON Formatter**: Format, minify, and validate JSON.
-- **Base64 Encoder**: Encode and decode Base64 text.
-- **URL Encoder**: Encode and decode URL parameters.
-- **Markdown Preview**: Real-time Markdown editor and preview.
-- **Regex Tester**: Test regular expressions against text.
-- **Timestamp Converter**: Convert between Unix timestamp and date.
-- **UUID Generator**: Generate random UUIDs (v4).
+### Developer Tools (7)
+- **JSON Formatter**: Format, minify, and validate JSON data
+- **Base64 Encoder**: Encode and decode Base64 text
+- **URL Encoder**: Encode and decode URL parameters
+- **Markdown Preview**: Real-time Markdown editor and preview
+- **Regex Tester**: Test regular expressions against text
+- **Timestamp Converter**: Convert between Unix timestamp and date
+- **UUID Generator**: Generate random UUIDs (v4)
 
-### Security Tools
-- **Password Generator**: Generate secure random passwords.
-- **Hash Calculator**: Calculate MD5, SHA1, SHA256 hashes.
-- **JWT Decoder**: Decode and inspect JSON Web Tokens.
+### Security Tools (3)
+- **Password Generator**: Generate secure random passwords with customizable options
+- **Hash Calculator**: Calculate MD5, SHA1, SHA256 hashes
+- **JWT Decoder**: Decode and inspect JSON Web Tokens
 
-### Color Tools
-- **Color Picker**: Select and convert colors (HEX, RGB, HSL).
-- **Gradient Generator**: Create CSS linear and radial gradients.
-- **Contrast Checker**: Check WCAG color contrast accessibility.
+### Color Tools (3)
+- **Color Picker**: Select and convert colors between HEX, RGB, HSL formats
+- **Gradient Generator**: Create CSS linear and radial gradients
+- **Contrast Checker**: Check WCAG color contrast accessibility standards
 
-### Image Tools
-- **QR Code Generator**: Generate and download QR codes.
-- **Image Compressor**: Compress and optimize images.
-- **Image to Base64**: Convert images to Base64 strings (and vice-versa).
+### Image Tools (4)
+- **QR Code Generator**: Generate and download QR codes
+- **Image Compressor**: Compress and optimize images
+- **Image to Base64**: Convert images to Base64 strings and vice-versa
+- **TinyPNG Compressor**: High-quality image compression using TinyPNG API
 
-### Text Tools
-- **Text Diff**: Compare two texts and highlight differences.
-- **Word Counter**: Count characters, words, lines, and paragraphs.
+### Text Tools (2)
+- **Text Diff**: Compare two texts and highlight differences
+- **Word Counter**: Count characters, words, lines, and paragraphs
 
-### AI Tools
-- **Text Translator**: Intelligent English-Chinese translation powered by AI.
-- **Variable Name Generator**: AI-powered variable name generator for developers.
+### AI Tools (2)
+- **Text Translator**: Intelligent English-Chinese bidirectional translation
+- **Variable Name Generator**: AI-powered variable naming suggestions for developers
 
-### Storage Tools
-- **GitHub Upload**: Upload files to GitHub and get CDN links (jsDelivr).
+### Storage Tools (2)
+- **GitHub Upload**: Upload files to GitHub and get CDN links via jsDelivr
+- **Cloudinary Uploader**: Upload images to Cloudinary cloud storage
 
-## 🛠️ Getting Started
+### Utility Tools (2)
+- **Clipboard Notes**: Manage your notes and clipboard content
+- **QR Code Scanner**: Scan QR codes from images and extract URLs or text
+
+## 🛠️ Quick Start
 
 ### Prerequisites
 
@@ -70,85 +74,22 @@ A robust, extensible admin system built with Next.js 15, designed to manage mult
    pnpm install
    ```
 
-3. **Setup Database**
-   Initialize the SQLite database, create tables, and seed default tools:
+3. **Initialize database**
    ```bash
    npx prisma db push
    npx prisma db seed
    ```
-   > **Note:** If you manually delete `data/omnikit.db` to reset the system, you **must** run these commands again to initialize the tables and tools before starting the development server.
 
-4. **Run Development Server**
+4. **Start development server**
    ```bash
    pnpm dev
    ```
 
-5. **Access the System**
-   Open [http://localhost:3000](http://localhost:3000) in your browser.
-   - You will be redirected to the **Initialization Wizard** (`/init`) on first run.
-   - Follow the steps to set up the admin account.
+5. **Access the application**
+   
+   Open [http://localhost:3000](http://localhost:3000) and complete the initialization wizard to set up your admin account.
 
-## 📂 Project Structure
 
-- `src/app`: App Router pages & layouts
-  - `(auth)`: Login/Register routes
-  - `(init)`: Initialization wizard
-  - `(admin)`: Main dashboard (Coming soon)
-- `src/actions`: Server Actions (Auth, Init)
-- `src/lib`: Core utilities (DB, Session, Init check)
-- `src/components`: Reusable UI components
-- `src/messages`: i18n translation files
-- `prisma`: Database schema & seed data
-
-## 🔐 Authentication
-
-The system uses a secure, database-backed authentication system.
-- **Admin Account**: Created during the initialization process.
-- **Session**: Encrypted HTTP-only cookies.
-
-## 🌍 Internationalization
-
-Support for multiple languages is built-in.
-- Default: Auto-detects browser language
-- Supported: English (`en`), Chinese (`zh`)
-- Configuration: `src/i18n/routing.ts`
-
-## 🐳 Docker Deployment
-
-OmniKit can be easily deployed using Docker.
-
-```bash
-# Build and start
-docker-compose up -d --build
-
-# Stop
-docker-compose down
-
-# View logs
-docker-compose logs -f
-```
-
-The application will be available at [http://localhost:3000](http://localhost:3000).
-
-## ⚙️ Configuration
-
-After initialization, you can configure various settings in the admin panel:
-
-- **Menu Management**: Customize sidebar menu structure
-- **Quick Tools**: Select up to 4 tools for dashboard shortcuts
-- **System Settings**: Language, theme preferences
-- **Weather**: Configure weather API integration
-- **AI Providers**: Manage AI service providers for translation and code generation
-  - Add OpenAI-compatible API providers
-  - Configure API keys and models
-- **Translation Settings**: Configure AI-powered translation
-  - Select AI provider for translation
-  - Customize system prompts
-  - Support Chinese-English bidirectional translation
-- **Variable Name Generator**: Configure AI for code generation
-  - Select AI provider
-  - Customize generation prompts
-- **GitHub**: Configure Personal Access Token for file uploads
 
 ## 📄 License
 
