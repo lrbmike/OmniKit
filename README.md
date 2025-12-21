@@ -11,9 +11,9 @@ A robust, extensible admin system built with Next.js 15, designed to manage mult
 - **Internationalization**: `next-intl` (English & Chinese)
 - **State Management**: Zustand
 
-## 🧰 Available Tools (23)
+## 🧰 Available Tools (24)
 
-### Developer Tools (7)
+### Developer Tools (8)
 - **JSON Formatter**: Format, minify, and validate JSON data
 - **Base64 Encoder**: Encode and decode Base64 text
 - **URL Encoder**: Encode and decode URL parameters
@@ -21,6 +21,7 @@ A robust, extensible admin system built with Next.js 15, designed to manage mult
 - **Regex Tester**: Test regular expressions against text
 - **Timestamp Converter**: Convert between Unix timestamp and date
 - **UUID Generator**: Generate random UUIDs (v4)
+- **Path Converter**: Convert between Windows and Unix/Linux file paths
 
 ### Security Tools (3)
 - **Password Generator**: Generate secure random passwords with customizable options
