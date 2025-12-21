@@ -872,6 +872,19 @@
       "decodeError": "二维码解码失败",
       "noQrCodeFound": "未在图片中找到二维码",
       "imageLoadError": "图片加载失败"
+    },
+    "PathConverter": {
+      "title": "路径格式转换器",
+      "description": "在 Windows 和 Unix/Linux 格式之间转换文件路径",
+      "configuration": "配置",
+      "conversionDirection": "转换方向",
+      "swapDirection": "切换方向",
+      "inputPath": "输入路径",
+      "pathPlaceholder": "例如：C:\\Projects\\MyApp 或 /home/user/projects",
+      "result": "结果",
+      "convertedPathPlaceholder": "",
+      "enterPathHint": "输入要转换的路径",
+      "copied": "已复制到剪贴板"
     }
   }
 }

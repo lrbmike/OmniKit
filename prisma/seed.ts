@@ -7,9 +7,9 @@ const prisma = new PrismaClient();
 // Namespace for deterministic UUIDs (OmniKit Tools)
 const TOOLS_NAMESPACE = 'e2917624-935c-4c0e-a742-573317883216';
 
-// 18 Preset Tools Definition
+// 19 Preset Tools Definition
 const PRESET_TOOLS = [
-    // Developer Tools (7)
+    // Developer Tools (8)
     {
         name: 'JSON 格式化',
         nameEn: 'JSON Formatter',
@@ -79,6 +79,16 @@ const PRESET_TOOLS = [
         category: 'developer',
         component: 'uuid-generator',
         order: 7,
+    },
+    {
+        name: '路径转换器',
+        nameEn: 'Path Converter',
+        description: 'Windows 和 Unix 路径格式转换工具',
+        descriptionEn: 'Windows and Unix path format converter tool',
+        icon: 'ArrowRightLeft',
+        category: 'developer',
+        component: 'path-converter',
+        order: 8,
     },
 
     // Security Tools (3)
@@ -298,7 +308,7 @@ async function main() {
     });
 
     // Create tools
-    console.log('🛠️  Creating 19 preset tools...');
+    console.log('🛠️  Creating 20 preset tools...');
     const createdTools = await Promise.all(
         PRESET_TOOLS.map((tool) =>
             prisma.tool.create({
@@ -327,7 +337,7 @@ async function main() {
     });
 
     // Filter specific developer tools: json-formatter, url-encoder
-    const devTools = createdTools.filter(t => 
+    const devTools = createdTools.filter(t =>
         t.category === 'developer' && ['json-formatter', 'url-encoder'].includes(t.component)
     );
     

@@ -872,6 +872,19 @@
       "decodeError": "Failed to decode QR code",
       "noQrCodeFound": "No QR code found in the image",
       "imageLoadError": "Failed to load image"
+    },
+    "PathConverter": {
+      "title": "Path Format Converter",
+      "description": "Convert file paths between Windows and Unix/Linux formats",
+      "configuration": "Configuration",
+      "conversionDirection": "Conversion Direction",
+      "swapDirection": "Swap Direction",
+      "inputPath": "Input Path",
+      "pathPlaceholder": "e.g., C:\\Projects\\MyApp or /home/user/projects",
+      "result": "Result",
+      "convertedPathPlaceholder": "",
+      "enterPathHint": "Enter a path to convert",
+      "copied": "Copied to clipboard"
     }
   }
 }
