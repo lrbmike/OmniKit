@@ -109,6 +109,10 @@
         "city": "Default City",
         "query": "Query Parameter",
         "header": "Header",
+        "queryKeyName": "Query Parameter Name",
+        "queryKeyNameHint": "Parameter name for API key in URL",
+        "headerName": "Header Name",
+        "headerNameHint": "Header field name for API key",
         "saveSuccess": "Weather settings saved",
         "errors": {
           "CONFIG_NOT_FOUND": "System config not found",

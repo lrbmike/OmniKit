@@ -56,6 +56,8 @@ export async function getWeather() {
         const city = config.weatherCity || '北京';
         const apiKey = config.weatherApiKey;
         const mode = config.weatherKeyMode || 'query';
+        const queryKeyName = config.weatherQueryKeyName || 'access_key';
+        const headerName = config.weatherHeaderName || 'X-Proxy-Key';
 
         let url = `${baseUrl}`;
         const headers: Record<string, string> = {};
@@ -63,21 +65,21 @@ export async function getWeather() {
         // Construct URL based on key mode
         if (mode === 'query') {
             const separator = url.includes('?') ? '&' : '?';
-            url = `${url}${separator}access_key=${apiKey}&query=${encodeURIComponent(city)}`;
+            url = `${url}${separator}${queryKeyName}=${apiKey}&query=${encodeURIComponent(city)}`;
         } else if (mode === 'header') {
             // For header mode, we assume the URL expects query param for city but key in header
             // However, the prompt says: "4) header方式调用是，将填入的api_key填入到X-Proxy-Key中"
-            // And typically weatherstack requires access_key in query. 
+            // And typically weatherstack requires access_key in query.
             // If using a proxy that expects X-Proxy-Key, the proxy likely forwards it or handles auth.
             // So we just add the city query param.
             const separator = url.includes('?') ? '&' : '?';
             url = `${url}${separator}query=${encodeURIComponent(city)}`;
-            headers['X-Proxy-Key'] = apiKey;
+            headers[headerName] = apiKey;
         }
 
         const response = await fetch(url, {
             headers,
-            next: { revalidate: 900 } // Cache for 15 minutes
+            next: { revalidate: 4500 } // Cache for 30 minutes
         });
 
         if (!response.ok) {

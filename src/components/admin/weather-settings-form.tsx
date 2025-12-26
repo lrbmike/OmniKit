@@ -19,6 +19,8 @@ interface WeatherSettingsFormProps {
         weatherApiKey: string | null;
         weatherKeyMode: string;
         weatherCity: string;
+        weatherQueryKeyName?: string;
+        weatherHeaderName?: string;
     };
 }
 
@@ -29,6 +31,8 @@ export function WeatherSettingsForm({ initialConfig }: WeatherSettingsFormProps)
     const [apiKey, setApiKey] = useState(initialConfig.weatherApiKey || '');
     const [keyMode, setKeyMode] = useState(initialConfig.weatherKeyMode || 'query');
     const [city, setCity] = useState(initialConfig.weatherCity || '北京');
+    const [queryKeyName, setQueryKeyName] = useState(initialConfig.weatherQueryKeyName || 'access_key');
+    const [headerName, setHeaderName] = useState(initialConfig.weatherHeaderName || 'X-Proxy-Key');
     const [isLoading, setIsLoading] = useState(false);
 
     const handleSave = async () => {
@@ -40,6 +44,8 @@ export function WeatherSettingsForm({ initialConfig }: WeatherSettingsFormProps)
                 weatherApiKey: apiKey,
                 weatherKeyMode: keyMode,
                 weatherCity: city,
+                weatherQueryKeyName: queryKeyName,
+                weatherHeaderName: headerName,
             });
 
             if (result.success) {
@@ -107,9 +113,9 @@ export function WeatherSettingsForm({ initialConfig }: WeatherSettingsFormProps)
                     <div className="space-y-2">
                         <div className="flex justify-between items-center">
                             <Label htmlFor="apiKey">{t('apiKey')}</Label>
-                            <a 
-                                href="https://docs.apilayer.com/weatherstack/docs/quickstart-guide" 
-                                target="_blank" 
+                            <a
+                                href="https://docs.apilayer.com/weatherstack/docs/quickstart-guide"
+                                target="_blank"
                                 rel="noopener noreferrer"
                                 className="text-xs text-blue-500 hover:underline flex items-center gap-1"
                             >
@@ -138,6 +144,32 @@ export function WeatherSettingsForm({ initialConfig }: WeatherSettingsFormProps)
                                 <SelectItem value="header">{t('header')}</SelectItem>
                             </SelectContent>
                         </Select>
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="queryKeyName">
+                            {t('queryKeyName')} <span className="text-xs text-muted-foreground">({t('queryKeyNameHint')})</span>
+                        </Label>
+                        <Input
+                            id="queryKeyName"
+                            value={queryKeyName}
+                            onChange={(e) => setQueryKeyName(e.target.value)}
+                            placeholder="access_key"
+                            disabled={!enabled || keyMode !== 'query'}
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="headerName">
+                            {t('headerName')} <span className="text-xs text-muted-foreground">({t('headerNameHint')})</span>
+                        </Label>
+                        <Input
+                            id="headerName"
+                            value={headerName}
+                            onChange={(e) => setHeaderName(e.target.value)}
+                            placeholder="X-Proxy-Key"
+                            disabled={!enabled || keyMode !== 'header'}
+                        />
                     </div>
                 </div>
 

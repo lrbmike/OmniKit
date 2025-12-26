@@ -12,6 +12,8 @@ export default async function WeatherSettingsPage() {
         weatherApiKey: '',
         weatherKeyMode: 'query',
         weatherCity: '北京',
+        weatherQueryKeyName: 'access_key',
+        weatherHeaderName: 'X-Proxy-Key',
     };
 
     return (
@@ -22,6 +24,8 @@ export default async function WeatherSettingsPage() {
                 weatherApiKey: config?.weatherApiKey || defaultConfig.weatherApiKey,
                 weatherKeyMode: config?.weatherKeyMode || defaultConfig.weatherKeyMode,
                 weatherCity: config?.weatherCity || defaultConfig.weatherCity,
+                weatherQueryKeyName: config?.weatherQueryKeyName || defaultConfig.weatherQueryKeyName,
+                weatherHeaderName: config?.weatherHeaderName || defaultConfig.weatherHeaderName,
             }}
         />
     );

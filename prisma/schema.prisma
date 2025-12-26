@@ -25,11 +25,13 @@ model SystemConfig {
   dashboardQuickTools String? // Comma separated tool component names
   
   // Weather Configuration
-  weatherEnabled  Boolean  @default(false)
-  weatherUrl      String   @default("http://api.weatherstack.com/current")
-  weatherApiKey   String?
-  weatherKeyMode  String   @default("query") // query, header
-  weatherCity     String   @default("北京")
+  weatherEnabled      Boolean  @default(false)
+  weatherUrl          String   @default("http://api.weatherstack.com/current")
+  weatherApiKey       String?
+  weatherKeyMode      String   @default("query") // query, header
+  weatherCity         String   @default("北京")
+  weatherQueryKeyName String   @default("access_key") // Parameter name for API key in query mode
+  weatherHeaderName   String   @default("X-Proxy-Key") // Header name for API key in header mode
 
   // AI/Translation Configuration
   translatorProviderId String? // Selected AI provider for translator

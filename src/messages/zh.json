@@ -109,6 +109,10 @@
         "city": "默认城市",
         "query": "Query 参数",
         "header": "Header 请求头",
+        "queryKeyName": "Query 参数名",
+        "queryKeyNameHint": "API密钥在URL中的参数名",
+        "headerName": "Header 请求头名称",
+        "headerNameHint": "API密钥在请求头中的字段名",
         "saveSuccess": "天气设置已保存",
         "errors": {
           "CONFIG_NOT_FOUND": "系统配置未找到",

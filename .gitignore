@@ -5,6 +5,7 @@
 /.pnpm-store
 .npm
 .yarn/
+.vscode
 
 # testing
 /coverage
