@@ -3,10 +3,13 @@
 import { getSystemConfig } from './system';
 import { getAiProviderById } from './ai-provider';
 
+type TranslationMode = 'word' | 'paragraph';
+
 interface TranslationRequest {
     text: string;
     sourceLang: string;
     targetLang: string;
+    mode?: TranslationMode;
 }
 
 interface TranslationResponse {
@@ -15,7 +18,7 @@ interface TranslationResponse {
     error?: string;
 }
 
-export async function translateText({ text, sourceLang, targetLang }: TranslationRequest): Promise<TranslationResponse> {
+export async function translateText({ text, sourceLang, targetLang, mode = 'word' }: TranslationRequest): Promise<TranslationResponse> {
     try {
         const config = await getSystemConfig();
         
@@ -46,6 +49,22 @@ export async function translateText({ text, sourceLang, targetLang }: Translatio
             .replace(/{targetLang}/g, targetLang)
             .replace(/{context}/g, text);
 
+        const translationMode = mode === 'paragraph' ? 'paragraph' : 'word';
+
+        const modeInstruction = translationMode === 'word'
+            ? `Translation mode: WORD.
+Provide at least three distinct ${targetLang} translations for the ${sourceLang} term above.
+Each candidate must use the following format:
+<${targetLang} candidate>
+<comma-separated ${sourceLang} synonyms or related phrases>.
+Separate candidates with one blank line, avoid numbering, and only include translated content.
+If fewer than three accurate options exist, return as many as possible using the same format.`
+            : `Translation mode: PARAGRAPH.
+Translate the entire text naturally into ${targetLang}, keeping the tone, intent, and context accurate.
+Return only the translated content without additional commentary.`;
+
+        const promptWithMode = `${systemPrompt}\n\n${modeInstruction}`;
+
         const response = await fetch(`${baseUrl}/chat/completions`, {
             method: 'POST',
             headers: {
@@ -55,7 +74,7 @@ export async function translateText({ text, sourceLang, targetLang }: Translatio
             body: JSON.stringify({
                 model: model,
                 messages: [
-                    { role: 'system', content: systemPrompt }
+                    { role: 'system', content: promptWithMode }
                 ],
                 temperature: 0.3,
             }),
@@ -68,7 +87,7 @@ export async function translateText({ text, sourceLang, targetLang }: Translatio
         }
 
         const data = await response.json();
-        const translatedText = data.choices?.[0]?.message?.content;
+        const translatedText = data.choices?.[0]?.message?.content?.trim();
 
         if (!translatedText) {
             return { success: false, error: 'No translation returned from AI provider' };

@@ -14,6 +14,8 @@ import { toast } from 'sonner';
 import { Loader2, ArrowRightLeft, AlertCircle, Settings } from 'lucide-react';
 import { Link, useRouter, usePathname } from '@/i18n/navigation';
 
+type TranslationMode = 'word' | 'paragraph';
+
 export default function Translator() {
     const t = useTranslations('Tools.Translator');
     const router = useRouter();
@@ -24,6 +26,7 @@ export default function Translator() {
     const [targetLang, setTargetLang] = useState('en');
     const [isLoading, setIsLoading] = useState(false);
     const [isConfigured, setIsConfigured] = useState<boolean | null>(null); // null = loading, true = configured, false = not configured
+    const [translationMode, setTranslationMode] = useState<TranslationMode>('word');
 
     useEffect(() => {
         const checkConfig = async () => {
@@ -32,6 +35,15 @@ export default function Translator() {
         };
         checkConfig();
     }, []);
+
+    useEffect(() => {
+        setTargetText('');
+    }, [translationMode]);
+
+    const translationOptions: { value: TranslationMode; label: string; description: string }[] = [
+        { value: 'word', label: t('wordMode'), description: t('wordModeHint') },
+        { value: 'paragraph', label: t('paragraphMode'), description: t('paragraphModeHint') }
+    ];
 
     const handleTranslate = async () => {
         if (!isConfigured) return;
@@ -49,7 +61,8 @@ export default function Translator() {
             const result = await translateText({ 
                 text: sourceText, 
                 sourceLang: sourceLangName,
-                targetLang: targetLangName
+                targetLang: targetLangName,
+                mode: translationMode
             });
 
             if (result.success && result.data) {
@@ -144,6 +157,39 @@ export default function Translator() {
                                         <SelectItem value="en">{t('en')}</SelectItem>
                                     </SelectContent>
                                 </Select>
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <Label>{t('modeLabel')}</Label>
+                            <div className="grid gap-3 sm:grid-cols-2">
+                                {translationOptions.map((option) => (
+                                    <label
+                                        key={option.value}
+                                        className={`flex cursor-pointer gap-3 rounded-lg border p-3 text-left transition ${translationMode === option.value ? 'border-primary bg-primary/5 shadow-sm' : 'border-border hover:bg-muted'}`}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name="translation-mode"
+                                            value={option.value}
+                                            className="sr-only"
+                                            checked={translationMode === option.value}
+                                            onChange={() => setTranslationMode(option.value)}
+                                        />
+                                        <span
+                                            aria-hidden="true"
+                                            className={`mt-1 flex h-4 w-4 items-center justify-center rounded-full border ${translationMode === option.value ? 'border-primary bg-primary text-primary-foreground' : 'border-muted-foreground/40 bg-background'}`}
+                                        >
+                                            {translationMode === option.value && (
+                                                <span className="h-1.5 w-1.5 rounded-full bg-background" />
+                                            )}
+                                        </span>
+                                        <div>
+                                            <p className="text-sm font-medium">{option.label}</p>
+                                            <p className="text-xs text-muted-foreground">{option.description}</p>
+                                        </div>
+                                    </label>
+                                ))}
                             </div>
                         </div>
 
