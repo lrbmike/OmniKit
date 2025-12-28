@@ -31,6 +31,8 @@ export async function updateSystemConfig(data: {
     weatherApiKey?: string;
     weatherKeyMode?: string;
     weatherCity?: string;
+    weatherQueryKeyName?: string;
+    weatherHeaderName?: string;
     aiProvider?: string;
     aiBaseUrl?: string;
     aiApiKey?: string;
@@ -70,6 +72,8 @@ export async function updateSystemConfig(data: {
         if (data.weatherApiKey !== undefined) rawData.weatherApiKey = data.weatherApiKey;
         if (data.weatherKeyMode !== undefined) rawData.weatherKeyMode = data.weatherKeyMode;
         if (data.weatherCity !== undefined) rawData.weatherCity = data.weatherCity;
+        if (data.weatherQueryKeyName !== undefined) rawData.weatherQueryKeyName = data.weatherQueryKeyName;
+        if (data.weatherHeaderName !== undefined) rawData.weatherHeaderName = data.weatherHeaderName;
 
         if (data.aiProvider !== undefined) rawData.aiProvider = data.aiProvider;
         if (data.aiBaseUrl !== undefined) rawData.aiBaseUrl = data.aiBaseUrl;
@@ -117,6 +121,14 @@ export async function updateSystemConfig(data: {
             if (rawData.weatherCity !== undefined) {
                 setClauses.push('weatherCity = ?');
                 params.push(rawData.weatherCity);
+            }
+            if (rawData.weatherQueryKeyName !== undefined) {
+                setClauses.push('weatherQueryKeyName = ?');
+                params.push(rawData.weatherQueryKeyName);
+            }
+            if (rawData.weatherHeaderName !== undefined) {
+                setClauses.push('weatherHeaderName = ?');
+                params.push(rawData.weatherHeaderName);
             }
 
             if (rawData.aiProvider !== undefined) {
