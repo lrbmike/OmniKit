@@ -3,7 +3,11 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 const nextConfig: NextConfig = {
   output: process.env.IS_DOCKER ? 'standalone' : undefined,
-  /* config options here */
+  experimental: {
+    serverActions: {
+      bodySizeLimit: '64mb',
+    },
+  },
 };
 
 const withNextIntl = createNextIntlPlugin();
