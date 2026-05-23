@@ -25,10 +25,10 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Generate Prisma Client
-RUN npx prisma generate
+RUN pnpm exec prisma generate
 
 # Build seed script (bundle dependencies to avoid runtime lookup issues)
-RUN npx esbuild prisma/seed.ts --bundle --platform=node --format=esm --outfile=prisma/seed.js --external:@prisma/client
+RUN pnpm exec esbuild prisma/seed.ts --bundle --platform=node --format=esm --outfile=prisma/seed.js --external:@prisma/client
 
 # Build Next.js application
 ENV NEXT_TELEMETRY_DISABLED 1
@@ -62,7 +62,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.pnpm /app/node_modules/.pnpm
 
 # Create symlinks for prisma binary
-RUN ln -s /app/node_modules/.pnpm/prisma@5.22.0/node_modules/prisma/build/index.js /usr/local/bin/prisma && \
+RUN PRISMA_CLI="$(find /app/node_modules/.pnpm -path '*/node_modules/prisma/build/index.js' -type f | head -n 1)" && \
+    test -n "$PRISMA_CLI" && \
+    ln -s "$PRISMA_CLI" /usr/local/bin/prisma && \
     chmod +x /usr/local/bin/prisma
 
 # Copy and set up entrypoint script

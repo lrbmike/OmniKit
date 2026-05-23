@@ -11,6 +11,8 @@ services:
     environment:
       - NODE_ENV=production
       - DATABASE_URL=file:/app/data/omnikit.db
+      - SESSION_SECRET=${SESSION_SECRET:?SESSION_SECRET must be set to a random string of at least 32 characters}
+      - ENABLE_SECURE_COOKIE=${ENABLE_SECURE_COOKIE:-false}
     volumes:
       # 使用主机目录挂载（方便直接访问数据库文件）
       - ./data:/app/data

@@ -77,9 +77,11 @@ A robust, extensible admin system built with Next.js 15, designed to manage mult
 
 3. **Initialize database**
    ```bash
-   npx prisma db push
-   npx prisma db seed
+   pnpm prisma migrate deploy
+   pnpm prisma db seed
    ```
+
+   Use `DATABASE_URL="file:../data/omnikit.db"` for local SQLite development.
 
 4. **Start development server**
    ```bash

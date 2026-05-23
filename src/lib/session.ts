@@ -20,7 +20,16 @@ const sessionOptions: SessionOptions = {
     },
 };
 
+export function validateSessionSecret() {
+    const password = sessionOptions.password;
+
+    if (typeof password !== 'string' || password.length < 32) {
+        throw new Error('SESSION_SECRET must be at least 32 characters long.');
+    }
+}
+
 export async function getSession(): Promise<IronSession<SessionData>> {
+    validateSessionSecret();
     const cookieStore = await cookies();
     return getIronSession<SessionData>(cookieStore, sessionOptions);
 }

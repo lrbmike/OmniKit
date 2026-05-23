@@ -10,26 +10,41 @@ mkdir -p /app/data
 if [ ! -f /app/data/omnikit.db ]; then
   echo "Creating database file..."
   touch /app/data/omnikit.db
-  chmod 666 /app/data/omnikit.db
   echo "Database file created"
 fi
 
 # 设置数据目录权限，确保 nextjs 用户可以访问
 chown -R nextjs:nodejs /app/data
-chmod -R 755 /app/data
+find /app/data -type d -exec chmod 755 {} \;
+find /app/data -type f -exec chmod 664 {} \;
 
-# 检查数据库表是否存在，如果不存在则初始化
-echo "Checking database schema..."
-if ! echo "SELECT name FROM sqlite_master WHERE type='table' AND name='SystemConfig';" | prisma db execute --stdin 2>/dev/null | grep -q "SystemConfig"; then
-  echo "Initializing database schema..."
-  prisma db push --skip-generate --accept-data-loss
-  echo "Database schema initialized"
-  
+# 每次启动都应用迁移；只在空库时写入预置数据，避免重启覆盖用户菜单。
+echo "Applying database migrations..."
+prisma migrate deploy
+echo "Database migrations applied"
+
+TOOL_COUNT=$(node --input-type=module <<'NODE'
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+try {
+  const count = await prisma.tool.count();
+  console.log(count);
+} catch {
+  console.log(0);
+} finally {
+  await prisma.$disconnect();
+}
+NODE
+)
+
+if [ "$TOOL_COUNT" = "0" ]; then
   echo "Seeding database..."
   node prisma/seed.js
   echo "Database seeded"
 else
-  echo "Database schema already exists"
+  echo "Database already contains preset data, skipping seed"
 fi
 
 echo "Starting application as nextjs user..."

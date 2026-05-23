@@ -96,11 +96,12 @@ Render 提供免费的 Docker 应用托管服务。
    - **Region:** 选择最近的区域
    - **Branch:** `main`
    - **Dockerfile Path:** `Dockerfile`
-   - **Docker Command:** `node server.js`
+   - **Docker Command:** 留空，使用镜像内置入口脚本
 
 3. **添加环境变量**
    ```
    NODE_ENV=production
+   SESSION_SECRET=请替换为至少 32 位的随机字符串
    # DATABASE_URL 可选，默认使用 /app/data/omnikit.db
    ```
 
@@ -129,6 +130,7 @@ Railway 支持从 GitHub 仓库直接部署。
    - 添加环境变量：
      ```
      NODE_ENV=production
+     SESSION_SECRET=请替换为至少 32 位的随机字符串
      # DATABASE_URL 可选，默认使用 /app/data/omnikit.db
      ```
 
@@ -149,6 +151,7 @@ Railway 支持从 GitHub 仓库直接部署。
 | 变量名 | 说明 | 默认值 | 示例 |
 |--------|------|--------|------|
 | `NODE_ENV` | 运行环境 | `production` | `production` |
+| `SESSION_SECRET` | 会话加密密钥，至少 32 位随机字符串 | 无 | `openssl rand -base64 32` |
 
 ### 可选的环境变量
 
@@ -157,6 +160,7 @@ Railway 支持从 GitHub 仓库直接部署。
 | `DATABASE_URL` | 数据库连接字符串 | `file:/app/data/omnikit.db` | `file:/app/data/omnikit.db` |
 | `PORT` | 应用端口 | `3000` | `3000` |
 | `HOSTNAME` | 监听地址 | `0.0.0.0` | `0.0.0.0` |
+| `ENABLE_SECURE_COOKIE` | HTTPS 部署时开启安全 Cookie | `false` | `true` |
 
 ---
 

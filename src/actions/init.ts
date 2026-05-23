@@ -1,10 +1,8 @@
 'use server';
 
 import { db } from '@/lib/db';
-import { markSystemInitialized, updateSystemConfig } from '@/lib/init';
-import { getSession } from '@/lib/session';
+import { getSession, validateSessionSecret } from '@/lib/session';
 import bcrypt from 'bcryptjs';
-import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
 // Validation schemas
@@ -52,26 +50,57 @@ export async function completeInitialization(formData: FormData) {
             };
         }
 
+        validateSessionSecret();
+
         // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        // Create admin user
-        const user = await db.user.create({
-            data: {
-                email,
-                password: hashedPassword,
-                role: 'admin',
-            },
-        });
+        const user = await db.$transaction(async (tx) => {
+            const config = await tx.systemConfig.findFirst();
+            const existingUser = await tx.user.findUnique({
+                where: { email },
+            });
 
-        // Update system config
-        await updateSystemConfig({
-            defaultLocale: locale,
-            dbType,
-        });
+            if (config?.isInitialized && existingUser) {
+                throw new Error('This email is already in use.');
+            }
 
-        // Mark system as initialized
-        await markSystemInitialized();
+            const user = existingUser
+                ? await tx.user.update({
+                    where: { email },
+                    data: {
+                        password: hashedPassword,
+                        role: 'admin',
+                    },
+                })
+                : await tx.user.create({
+                    data: {
+                        email,
+                        password: hashedPassword,
+                        role: 'admin',
+                    },
+                });
+
+            if (config) {
+                await tx.systemConfig.update({
+                    where: { id: config.id },
+                    data: {
+                        defaultLocale: locale,
+                        dbType,
+                    },
+                });
+            } else {
+                await tx.systemConfig.create({
+                    data: {
+                        defaultLocale: locale,
+                        dbType,
+                        isInitialized: false,
+                    },
+                });
+            }
+
+            return user;
+        });
 
         // Create session
         const session = await getSession();
@@ -79,6 +108,10 @@ export async function completeInitialization(formData: FormData) {
         session.email = user.email;
         session.isLoggedIn = true;
         await session.save();
+
+        await db.systemConfig.updateMany({
+            data: { isInitialized: true },
+        });
 
         return { success: true };
     } catch (error) {

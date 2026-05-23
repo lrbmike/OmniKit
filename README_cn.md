@@ -77,9 +77,11 @@
 
 3. **初始化数据库**
    ```bash
-   npx prisma db push
-   npx prisma db seed
+   pnpm prisma migrate deploy
+   pnpm prisma db seed
    ```
+
+   本地使用 SQLite 时，建议配置 `DATABASE_URL="file:../data/omnikit.db"`。
 
 4. **启动开发服务器**
    ```bash
