@@ -51,7 +51,7 @@ if [ "$DATABASE_PROVIDER" = "sqlite" ]; then
   echo "SQLite migrations applied"
 else
   echo "Syncing PostgreSQL schema..."
-  node /app/node_modules/prisma/build/index.js db push --skip-generate --schema "$PRISMA_SCHEMA" --accept-data-loss
+  timeout 60 node /app/node_modules/prisma/build/index.js db push --skip-generate --schema "$PRISMA_SCHEMA" --accept-data-loss
   echo "PostgreSQL schema synced"
 fi
 
