@@ -51,11 +51,14 @@ if [ "$DATABASE_PROVIDER" = "sqlite" ]; then
   echo "SQLite migrations applied"
 else
   echo "Syncing PostgreSQL schema..."
-  node /app/node_modules/prisma/build/index.js db push --skip-generate --schema "$PRISMA_SCHEMA"
+  node /app/node_modules/prisma/build/index.js db push --skip-generate --schema "$PRISMA_SCHEMA" --accept-data-loss
   echo "PostgreSQL schema synced"
 fi
 
-TOOL_COUNT=$(node --input-type=module <<'NODE'
+# Seed check with timeout to avoid hanging on slow database connections
+TOOL_COUNT=0
+echo "Checking if database needs seeding..."
+TOOL_COUNT=$(timeout 30 node --input-type=module <<'NODE'
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
@@ -63,21 +66,26 @@ const prisma = new PrismaClient();
 try {
   const count = await prisma.tool.count();
   console.log(count);
-} catch {
+} catch (e) {
+  console.error("Seed check failed:", e.message);
   console.log(0);
 } finally {
   await prisma.$disconnect();
 }
 NODE
-)
+) || TOOL_COUNT=0
 
 if [ "$TOOL_COUNT" = "0" ]; then
   echo "Seeding database..."
-  node prisma/seed.js
-  echo "Database seeded"
+  timeout 60 node prisma/seed.js || echo "Warning: Seeding failed, continuing anyway"
 else
   echo "Database already contains preset data, skipping seed"
 fi
+
+# Ensure HOSTNAME is set so Next.js binds to all interfaces
+# This is required for Render and other PaaS platforms
+export HOSTNAME="${HOSTNAME:-0.0.0.0}"
+echo "PORT=${PORT:-3000} HOSTNAME=$HOSTNAME"
 
 echo "Starting application as nextjs user..."
 

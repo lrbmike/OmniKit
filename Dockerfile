@@ -76,11 +76,13 @@ RUN mkdir -p /app/data && \
 # Don't switch user yet - entrypoint will handle it
 # USER nextjs
 
-# Expose port
+# Expose port (Render may override PORT via environment)
 EXPOSE 3000
 
-ENV PORT 3000
-ENV HOSTNAME "0.0.0.0"
+# Default port, but Render will override this
+ENV PORT=3000
+# Must bind to 0.0.0.0 for Render to detect the port
+ENV HOSTNAME=0.0.0.0
 
 # Use entrypoint script to handle volume-mounted directories
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
