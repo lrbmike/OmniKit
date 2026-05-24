@@ -99,6 +99,8 @@ Render 提供免费的 Docker 应用托管服务。
    - **Docker Command:** 留空，使用镜像内置入口脚本
 
 3. **添加环境变量**
+
+   使用 SQLite（默认）：
    ```
    NODE_ENV=production
    SESSION_SECRET=请替换为至少 32 位的随机字符串
@@ -106,6 +108,18 @@ Render 提供免费的 Docker 应用托管服务。
    DATABASE_PROVIDER=sqlite
    # DATABASE_URL 可选，默认使用 /app/data/omnikit.db
    ```
+
+   使用 Supabase PostgreSQL：
+   ```
+   NODE_ENV=production
+   SESSION_SECRET=请替换为至少 32 位的随机字符串
+   ENABLE_SECURE_COOKIE=true
+   DATABASE_PROVIDER=postgresql
+   DATABASE_URL=postgresql://postgres.[project-ref]:[password]@aws-1-[region].pooler.supabase.com:6543/postgres?pgbouncer=true&connect_timeout=15
+   DIRECT_URL=postgresql://postgres.[project-ref]:[password]@db.[project-ref].supabase.co:5432/postgres
+   ```
+
+   > **注意：** 使用 Supabase 时，`DIRECT_URL` 是必填项。它指向直连地址（5432 端口），用于 Prisma 的 schema 同步操作；而 `DATABASE_URL` 指向 Pooler 地址（6543 端口），用于应用查询。缺少 `DIRECT_URL` 会导致 `prisma db push` 在 PgBouncer 上挂起，容器无法启动。
 
 4. **配置持久化存储**
    - 添加 Disk:
@@ -163,6 +177,7 @@ Railway 支持从 GitHub 仓库直接部署。
 |--------|------|--------|------|
 | `DATABASE_URL` | 数据库连接字符串 | `file:/app/data/omnikit.db` | `file:/app/data/omnikit.db` |
 | `DATABASE_PROVIDER` | 数据库类型，支持 `sqlite` 或 `postgresql` | `sqlite` | `postgresql` |
+| `DIRECT_URL` | Prisma 直连 URL，用于 DDL 操作（使用 Supabase Pooler 时必填） | 无 | `postgresql://postgres.xxx:pass@db.xxx.supabase.co:5432/postgres` |
 | `PORT` | 应用端口 | `3000` | `3000` |
 | `HOSTNAME` | 监听地址 | `0.0.0.0` | `0.0.0.0` |
 | `ENABLE_SECURE_COOKIE` | HTTPS 部署时开启安全 Cookie | `false` | `true` |
@@ -193,7 +208,39 @@ DATABASE_URL=postgresql://app_user:your_password@db.example.com:5432/omnikit?sch
 - 容器启动时会自动执行 Prisma Client 生成和 `db push`
 - 首次启动后仍会自动执行 seed 和初始化流程
 
-Render 上建议配置为：
+### 使用 Supabase 作为数据库
+
+Supabase 提供两种连接方式：
+
+- **事务模式（Transaction Mode）**：端口 `6543`，通过 PgBouncer 连接池，适合应用查询
+- **会话模式（Session Mode）**：端口 `5432`，直连数据库，适合 DDL 操作（如 `prisma db push`、`prisma migrate`）
+
+由于 Prisma 的 schema 同步操作（`db push`、`migrate`）需要直连数据库，**必须配置 `DIRECT_URL` 环境变量**指向直连地址，而 `DATABASE_URL` 使用 pooler 地址用于应用查询。
+
+```env
+DATABASE_PROVIDER=postgresql
+# 应用查询走 Pooler（事务模式，端口 6543）
+DATABASE_URL=postgresql://postgres.[project-ref]:[password]@aws-1-[region].pooler.supabase.com:6543/postgres?pgbouncer=true&connect_timeout=15
+# Prisma DDL 操作走直连（会话模式，端口 5432）
+DIRECT_URL=postgresql://postgres.[project-ref]:[password]@db.[project-ref].supabase.co:5432/postgres
+```
+
+> **注意：** 如果不设置 `DIRECT_URL`，`prisma db push` 会在 PgBouncer 连接上无限挂起，导致容器启动失败（端口无法绑定）。
+
+你可以在 Supabase 控制台 → Settings → Database → Connection string 中找到这两种连接字符串。
+
+Render 上使用 Supabase 的完整环境变量配置：
+
+```env
+NODE_ENV=production
+SESSION_SECRET=请替换为至少 32 位的随机字符串
+ENABLE_SECURE_COOKIE=true
+DATABASE_PROVIDER=postgresql
+DATABASE_URL=postgresql://postgres.[project-ref]:[password]@aws-1-[region].pooler.supabase.com:6543/postgres?pgbouncer=true&connect_timeout=15
+DIRECT_URL=postgresql://postgres.[project-ref]:[password]@db.[project-ref].supabase.co:5432/postgres
+```
+
+Render 上使用普通 PostgreSQL 的环境变量配置：
 
 ```env
 NODE_ENV=production
@@ -449,6 +496,13 @@ docker exec -it omnikit sh
 - 使用 SQLite 时，确认 `/app/data` 目录有写入权限
 - 使用 PostgreSQL 时，确认 `DATABASE_PROVIDER=postgresql` 且连接串格式正确
 - 使用 SQLite 时，可尝试删除数据库文件并重新初始化
+
+**4. 使用 Supabase 时容器启动卡住（端口无法绑定）**
+
+- 确认已设置 `DIRECT_URL` 环境变量，指向 Supabase 直连地址（5432 端口）
+- `DATABASE_URL` 应使用 Pooler 地址（6543 端口），`DIRECT_URL` 应使用直连地址（5432 端口）
+- 如果 `DIRECT_URL` 未设置，`prisma db push` 会在 PgBouncer 连接上无限挂起
+- 在 Supabase 控制台 → Settings → Database → Connection string 中获取两种连接字符串
 
 **4. 构建失败**
 
