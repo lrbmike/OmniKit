@@ -24,6 +24,10 @@ const dbConfigSchema = z.object({
     dbPassword: z.string().optional(),
 });
 
+function getConfiguredDbType() {
+    return process.env.DATABASE_PROVIDER === 'postgresql' ? 'postgresql' : 'sqlite';
+}
+
 /**
  * Complete initialization wizard
  */
@@ -34,7 +38,7 @@ export async function completeInitialization(formData: FormData) {
         const password = formData.get('password') as string;
         const confirmPassword = formData.get('confirmPassword') as string;
         const locale = formData.get('locale') as string || 'zh';
-        const dbType = formData.get('dbType') as string || 'sqlite';
+        const dbType = getConfiguredDbType();
 
         // Validate admin account
         const accountValidation = adminAccountSchema.safeParse({

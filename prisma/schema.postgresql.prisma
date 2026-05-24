@@ -1,0 +1,194 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SystemConfig {
+  id                     String   @id @default(cuid())
+  isInitialized          Boolean  @default(false)
+  defaultLocale          String   @default("zh")
+  defaultTheme           String   @default("system") // light, dark, system
+  dbType                 String   @default("postgresql") // sqlite, mysql, postgresql
+  dbHost                 String?
+  dbPort                 Int?
+  dbName                 String?
+  dbUser                 String?
+  dbPassword             String?
+  sessionTimeout         Int      @default(604800) // 7 days in seconds
+  dashboardQuickTools    String? // Comma separated tool component names
+
+  // Weather Configuration
+  weatherEnabled         Boolean  @default(false)
+  weatherUrl             String   @default("http://api.weatherstack.com/current")
+  weatherApiKey          String?
+  weatherKeyMode         String   @default("query") // query, header
+  weatherCity            String   @default("北京")
+  weatherQueryKeyName    String   @default("access_key") // Parameter name for API key in query mode
+  weatherHeaderName      String   @default("X-Proxy-Key") // Header name for API key in header mode
+
+  // AI/Translation Configuration
+  translatorProviderId   String? // Selected AI provider for translator
+  translatorSystemPrompt String   @default("You are a professional translator. Translate the following text from {sourceLang} to {targetLang}.\n\nText to translate:\n{context}\n\nOutput only the translated text.")
+
+  // Variable Name Generator Configuration
+  varNameGenProviderId   String? // Selected AI provider for variable name generator
+  varNameGenSystemPrompt String   @default("You are an experienced developer. Generate English variable names based on user input.\n\nUser input: {context}\n\nGenerate variable names in different formats:\n- URL: web URL format (lowercase, hyphen-separated)\n- Variable: camelCase variable name\n- File: file name format (lowercase, hyphen-separated)\n- Route: route path format (lowercase, slash-separated)\n\nProvide both normal length and shortened versions.\n\nOutput in JSON format:\n{\n  \"normal\": {\n    \"url\": \"enterprise-certification\",\n    \"var_name\": \"enterpriseCertification\",\n    \"file_name\": \"enterprise-certification\",\n    \"route\": \"/enterprise/certification\"\n  },\n  \"short\": {\n    \"url\": \"ent-cert\",\n    \"var_name\": \"entCert\",\n    \"file_name\": \"ent-cert\",\n    \"route\": \"/ent/cert\"\n  }\n}")
+
+  // GitHub Upload Configuration
+  githubToken            String? // GitHub Personal Access Token
+
+  // Proxy Gateway Configuration
+  proxyGatewayApiKeyHash String?
+  proxyGatewayApiKeyHint String?
+
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+}
+
+model AiProvider {
+  id        String   @id @default(cuid())
+  name      String   // Provider name, e.g., "OpenAI", "DeepSeek"
+  type      String   @default("openai") // Provider type: openai (compatible)
+  baseUrl   String   // API base URL
+  apiKey    String? // API key (encrypted in production)
+  model     String   // Model name
+  isDefault Boolean  @default(false) // Is default provider
+  isActive  Boolean  @default(true) // Is provider active
+  order     Int      @default(0) // Display order
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isActive, order])
+}
+
+model CloudinaryAccount {
+  id         String   @id @default(cuid())
+  name       String   // Account name, e.g., "Main Account", "Dev Account"
+  cloudName  String   // Cloudinary cloud name
+  apiKey     String? // API key (encrypted in production)
+  apiSecret  String? // API secret (encrypted in production)
+  isActive   Boolean  @default(true) // Is account active
+  order      Int      @default(0) // Display order
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([isActive, order])
+}
+
+model TinyPngAccount {
+  id         String   @id @default(cuid())
+  name       String   // Account name, e.g., "Main Account", "Dev Account"
+  apiKey     String   // TinyPNG/TinyJPG API key
+  isActive   Boolean  @default(true) // Is account active
+  order      Int      @default(0) // Display order
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([isActive, order])
+}
+
+model ProxyService {
+  id           String             @id @default(cuid())
+  code         String             @unique // Stable service code, e.g. brave-search
+  name         String
+  providerType String   // brave-search
+  baseUrl      String
+  timeoutMs    Int                @default(15000)
+  retryCount   Int                @default(2)
+  isActive     Boolean            @default(true)
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+
+  upstreamKeys ProxyUpstreamKey[]
+}
+
+model ProxyUpstreamKey {
+  id             String       @id @default(cuid())
+  proxyServiceId String
+  name           String
+  apiKey         String
+  isActive       Boolean      @default(true)
+  order          Int          @default(0)
+  lastUsedAt     DateTime?
+  failCount      Int          @default(0)
+  cooldownUntil  DateTime?
+  lastError      String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  proxyService   ProxyService @relation(fields: [proxyServiceId], references: [id], onDelete: Cascade)
+
+  @@index([proxyServiceId, isActive, order])
+  @@index([proxyServiceId, cooldownUntil])
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String   // bcrypt hashed
+  name      String?
+  role      String   @default("admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Tool {
+  id            String    @id @default(cuid())
+  name          String    // Chinese name
+  nameEn        String    // English name
+  description   String? // Chinese description
+  descriptionEn String? // English description
+  icon          String    // Lucide icon name
+  category      String    // developer, security, color, image, text
+  component     String    // Component path, e.g., "password-generator"
+  isPreset      Boolean   @default(true) // System preset or user custom
+  isActive      Boolean   @default(true) // Is tool enabled
+  order         Int       @default(0) // Order within category
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  menuItems     MenuItem[]
+
+  @@index([category, order])
+}
+
+model MenuItem {
+  id        String     @id @default(cuid())
+  userId    String     @default("default-admin") // Reserved for multi-user support
+  parentId  String? // Parent menu ID (null = top level)
+  toolId    String? // Associated tool ID (only for leaf nodes)
+  label     String? // Custom label (null = use tool name)
+  labelEn   String? // Custom English label
+  icon      String? // Custom icon (null = use tool icon)
+  order     Int        @default(0) // Sort order
+  isFolder  Boolean    @default(false) // Is this a folder/group
+
+  tool      Tool?      @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  parent    MenuItem?  @relation("MenuHierarchy", fields: [parentId], references: [id], onDelete: Cascade)
+  children  MenuItem[] @relation("MenuHierarchy")
+
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@index([userId, parentId, order])
+}
+
+model ClipboardNote {
+  id        String   @id @default(cuid())
+  userId    String   @default("default-admin") // Reserved for multi-user support
+  content   String   // Note content
+  tags      String? // Comma-separated tags (max 3)
+  order     Int      @default(0) // Custom sort order
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, createdAt])
+  @@index([userId, order])
+}

@@ -10,6 +10,8 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
+      - DATABASE_PROVIDER=${DATABASE_PROVIDER:-sqlite}
+      - DATABASE_URL=${DATABASE_URL:-file:/app/data/omnikit.db}
       - SESSION_SECRET=${SESSION_SECRET:?SESSION_SECRET must be set to a random string of at least 32 characters}
       - ENABLE_SECURE_COOKIE=${ENABLE_SECURE_COOKIE:-false}
     volumes:

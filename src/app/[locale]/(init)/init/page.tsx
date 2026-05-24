@@ -63,8 +63,6 @@ export default function InitPage() {
         formData.append('password', adminAccount.password);
         formData.append('confirmPassword', adminAccount.confirmPassword);
         formData.append('locale', selectedLocale);
-        formData.append('dbType', 'sqlite'); // Always use SQLite
-
         const result = await completeInitialization(formData);
 
         if (result.success) {

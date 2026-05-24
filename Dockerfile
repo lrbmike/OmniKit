@@ -45,6 +45,7 @@ WORKDIR /app
 
 ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
+ENV DATABASE_PROVIDER="sqlite"
 ENV DATABASE_URL="file:/app/data/omnikit.db"
 
 # Create non-root user
@@ -59,14 +60,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 # Copy prisma files and CLI for runtime
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 
-# Copy Prisma CLI and all dependencies from pnpm store
-COPY --from=builder /app/node_modules/.pnpm /app/node_modules/.pnpm
-
-# Create symlinks for prisma binary
-RUN PRISMA_CLI="$(find /app/node_modules/.pnpm -path '*/node_modules/prisma/build/index.js' -type f | head -n 1)" && \
-    test -n "$PRISMA_CLI" && \
-    ln -s "$PRISMA_CLI" /usr/local/bin/prisma && \
-    chmod +x /usr/local/bin/prisma
+# Copy runtime dependencies so Prisma CLI is available during container startup
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules ./node_modules
 
 # Copy and set up entrypoint script
 COPY docker-entrypoint.sh /app/docker-entrypoint.sh

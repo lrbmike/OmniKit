@@ -102,6 +102,8 @@ Render 提供免费的 Docker 应用托管服务。
    ```
    NODE_ENV=production
    SESSION_SECRET=请替换为至少 32 位的随机字符串
+   # 默认 SQLite
+   DATABASE_PROVIDER=sqlite
    # DATABASE_URL 可选，默认使用 /app/data/omnikit.db
    ```
 
@@ -131,6 +133,8 @@ Railway 支持从 GitHub 仓库直接部署。
      ```
      NODE_ENV=production
      SESSION_SECRET=请替换为至少 32 位的随机字符串
+     # 默认 SQLite
+     DATABASE_PROVIDER=sqlite
      # DATABASE_URL 可选，默认使用 /app/data/omnikit.db
      ```
 
@@ -158,9 +162,46 @@ Railway 支持从 GitHub 仓库直接部署。
 | 变量名 | 说明 | 默认值 | 示例 |
 |--------|------|--------|------|
 | `DATABASE_URL` | 数据库连接字符串 | `file:/app/data/omnikit.db` | `file:/app/data/omnikit.db` |
+| `DATABASE_PROVIDER` | 数据库类型，支持 `sqlite` 或 `postgresql` | `sqlite` | `postgresql` |
 | `PORT` | 应用端口 | `3000` | `3000` |
 | `HOSTNAME` | 监听地址 | `0.0.0.0` | `0.0.0.0` |
 | `ENABLE_SECURE_COOKIE` | HTTPS 部署时开启安全 Cookie | `false` | `true` |
+
+---
+
+## 🐘 使用外部 PostgreSQL
+
+OmniKit 默认使用 SQLite；如果你希望接入外部 PostgreSQL，需要显式设置以下环境变量：
+
+```env
+DATABASE_PROVIDER=postgresql
+DATABASE_URL=postgresql://用户名:密码@主机:5432/数据库名?schema=public
+```
+
+示例占位符：
+
+```env
+DATABASE_PROVIDER=postgresql
+DATABASE_URL=postgresql://app_user:your_password@db.example.com:5432/omnikit?schema=public
+```
+
+请替换为真实值。如果用户名或密码里包含特殊字符（例如 `@`、`:`、`/`、`#`），需要先做 URL 编码。
+
+使用 PostgreSQL 时：
+
+- 不需要挂载 `/app/data` 持久化磁盘
+- 容器启动时会自动执行 Prisma Client 生成和 `db push`
+- 首次启动后仍会自动执行 seed 和初始化流程
+
+Render 上建议配置为：
+
+```env
+NODE_ENV=production
+SESSION_SECRET=请替换为至少 32 位的随机字符串
+ENABLE_SECURE_COOKIE=true
+DATABASE_PROVIDER=postgresql
+DATABASE_URL=postgresql://app_user:your_password@db.example.com:5432/omnikit?schema=public
+```
 
 ---
 
@@ -168,7 +209,7 @@ Railway 支持从 GitHub 仓库直接部署。
 
 ### 重要说明
 
-OmniKit 使用 SQLite 数据库存储所有数据（用户、工具、菜单等）。为了防止数据丢失，**必须**配置持久化存储。
+当 `DATABASE_PROVIDER=sqlite` 时，OmniKit 使用 SQLite 数据库存储所有数据（用户、工具、菜单等）。为了防止数据丢失，**必须**配置持久化存储。
 
 容器内的数据库路径：`/app/data/omnikit.db`
 
@@ -405,8 +446,9 @@ docker exec -it omnikit sh
 **3. 数据库错误**
 
 - 检查 `DATABASE_URL` 环境变量
-- 确认 `/app/data` 目录有写入权限
-- 尝试删除数据库文件并重新初始化
+- 使用 SQLite 时，确认 `/app/data` 目录有写入权限
+- 使用 PostgreSQL 时，确认 `DATABASE_PROVIDER=postgresql` 且连接串格式正确
+- 使用 SQLite 时，可尝试删除数据库文件并重新初始化
 
 **4. 构建失败**
 
@@ -430,7 +472,7 @@ docker exec -it omnikit sh
 
 ### 数据库性能
 
-SQLite 适合轻量级应用（< 1000 用户）。如需更高性能，可在应用设置中切换到 MySQL 或 PostgreSQL。
+SQLite 适合轻量级应用（< 1000 用户）。如需更高性能，建议通过环境变量切换到外部 PostgreSQL。
 
 ---
 

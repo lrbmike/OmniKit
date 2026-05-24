@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { v5 as uuidv5 } from 'uuid';
 
 const prisma = new PrismaClient();
+const databaseProvider = process.env.DATABASE_PROVIDER === 'postgresql' ? 'postgresql' : 'sqlite';
 
 // Namespace for deterministic UUIDs (OmniKit Tools)
 const TOOLS_NAMESPACE = 'e2917624-935c-4c0e-a742-573317883216';
@@ -302,7 +303,7 @@ async function main() {
         data: {
             isInitialized: false, // Must be false to trigger init wizard if users want to setup admin
             defaultLocale: 'zh',
-            dbType: 'sqlite',
+            dbType: databaseProvider,
             sessionTimeout: 604800, // 7 days
         },
     });
