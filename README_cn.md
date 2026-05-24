@@ -55,6 +55,35 @@
 - **剪贴板笔记**: 管理您的笔记和剪贴板内容
 - **二维码扫描器**: 从图片中扫描二维码,提取 URL 或文本
 
+## 🔌 代理服务
+
+当前已支持第一版外部反向代理能力,用于把第三方 API 统一收敛到 OmniKit 后台管理。
+
+- **已实现 Provider**: Brave Search
+- **统一入口**: `/api/proxy/[serviceCode]/[...path]`
+- **后台能力**:
+  - 配置服务开关、Base URL、超时、失败切换次数
+  - 配置对外 API Key,用于校验外部系统调用
+  - 配置多个上游 API Key,支持失败切换和冷却
+- **设计方式**:
+  - 统一路由负责鉴权、轮询、转发、失败处理
+  - Provider 注册表负责路径白名单、上游 URL 拼装、鉴权头构造
+
+### Brave Search 调用示例
+
+1. 在后台 `设置 -> 代理服务` 中配置:
+   - 对外 API Key
+   - 一个或多个 Brave Search 上游 API Key
+2. 调用统一代理接口:
+
+```bash
+curl -X GET \
+  'http://localhost:3000/api/proxy/brave-search/web/search?q=nextjs' \
+  -H 'Authorization: Bearer your_proxy_api_key'
+```
+
+后续如果增加新的代理 Provider,只需要补充一个新的 provider 模块并注册到系统中,无需重写统一转发逻辑。
+
 ## 🛠️ 快速开始
 
 ### 环境要求

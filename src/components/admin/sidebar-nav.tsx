@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { useState, useEffect } from 'react';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { useSidebarStore } from '@/store/sidebar-store';
+import { useTranslations } from 'next-intl';
 
 // Define types locally matching the Prisma return type structure
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -15,6 +16,7 @@ type MenuItem = any;
 export function SidebarNav({ items, locale }: { items: MenuItem[], locale: string }) {
     const pathname = usePathname();
     const { isOpen, close } = useSidebarStore();
+    const t = useTranslations('AdminSidebar');
 
     return (
         <>
@@ -48,7 +50,7 @@ export function SidebarNav({ items, locale }: { items: MenuItem[], locale: strin
                         onClick={() => window.innerWidth < 768 && close()}
                     >
                         <IconRenderer name="LayoutDashboard" className="mr-3 h-5 w-5" />
-                        Dashboard
+                        {t('dashboard')}
                     </Link>
 
                     {items.map((item) => (
@@ -73,7 +75,7 @@ function SidebarItem({ item, locale, pathname, closeSidebar }: { item: MenuItem,
         if (menuItem.isFolder && menuItem.children) {
             return menuItem.children.some((child: MenuItem) => checkIsActive(child));
         }
-        const href = `/${locale}/admin/tools/${menuItem.tool?.component}`;
+        const href = getItemHref(menuItem, locale);
         return pathname === href;
     };
 
@@ -112,7 +114,7 @@ function SidebarItem({ item, locale, pathname, closeSidebar }: { item: MenuItem,
         );
     }
 
-    const href = `/${locale}/admin/tools/${item.tool?.component}`;
+    const href = getItemHref(item, locale);
     const isActive = pathname === href;
 
     return (
@@ -130,4 +132,12 @@ function SidebarItem({ item, locale, pathname, closeSidebar }: { item: MenuItem,
             {label}
         </Link>
     );
+}
+
+function getItemHref(item: MenuItem, locale: string) {
+    if (item.href) {
+        return item.href;
+    }
+
+    return `/${locale}/admin/tools/${item.tool?.component}`;
 }

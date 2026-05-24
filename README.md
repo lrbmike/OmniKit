@@ -55,6 +55,35 @@ A robust, extensible admin system built with Next.js 15, designed to manage mult
 - **Clipboard Notes**: Manage your notes and clipboard content
 - **QR Code Scanner**: Scan QR codes from images and extract URLs or text
 
+## Proxy Services
+
+OmniKit now includes a first-pass reverse proxy layer for managing third-party APIs from the admin backend.
+
+- **Implemented provider**: Brave Search
+- **Unified endpoint**: `/api/proxy/[serviceCode]/[...path]`
+- **Admin capabilities**:
+  - Configure service status, base URL, timeout, and failover retries
+  - Configure an external API key used to authorize callers
+  - Configure multiple upstream API keys with failover and cooldown support
+- **Architecture**:
+  - The shared route handles auth, key rotation, forwarding, and failure handling
+  - A provider registry defines allowed paths, upstream URL construction, and auth headers
+
+### Brave Search Example
+
+1. Configure the following in `Settings -> Proxy Services`:
+   - External API key
+   - One or more Brave Search upstream API keys
+2. Call the unified proxy endpoint:
+
+```bash
+curl -X GET \
+  'http://localhost:3000/api/proxy/brave-search/web/search?q=nextjs' \
+  -H 'Authorization: Bearer your_proxy_api_key'
+```
+
+When you add more proxy providers later, you only need to register a new provider module instead of rewriting the core forwarding flow.
+
 ## 🛠️ Quick Start
 
 ### Prerequisites

@@ -126,6 +126,7 @@ export function ConfigManagementForm() {
                             <li>{t('configIncludesTinyPng')}</li>
                             <li>{t('configIncludesCloudinary')}</li>
                             <li>{t('configIncludesGithub')}</li>
+                            <li>{t('configIncludesProxy')}</li>
                             <li>{t('configIncludesMenu')}</li>
                         </ul>
                         <p className="text-amber-600 dark:text-amber-500 font-medium">

@@ -271,6 +271,31 @@ export async function exportConfiguration() {
             }
         });
 
+        // 获取代理服务配置（敏感密钥不导出）
+        const proxyServices = await db.proxyService.findMany({
+            select: {
+                code: true,
+                name: true,
+                providerType: true,
+                baseUrl: true,
+                timeoutMs: true,
+                retryCount: true,
+                isActive: true,
+                upstreamKeys: {
+                    select: {
+                        name: true,
+                        isActive: true,
+                        order: true,
+                    },
+                    orderBy: [
+                        { order: 'asc' },
+                        { createdAt: 'asc' },
+                    ],
+                },
+            },
+            orderBy: { createdAt: 'asc' },
+        });
+
         // 获取菜单配置
         const menuItems = await db.menuItem.findMany({
             where: { userId: 'default-admin' },
@@ -309,10 +334,12 @@ export async function exportConfiguration() {
                 varNameGenProviderId: systemConfig?.varNameGenProviderId,
                 varNameGenSystemPrompt: systemConfig?.varNameGenSystemPrompt,
                 githubToken: systemConfig?.githubToken,
+                proxyGatewayApiKeyHint: systemConfig?.proxyGatewayApiKeyHint,
             },
             aiProviders,
             tinyPngAccounts,
             cloudinaryAccounts,
+            proxyServices,
             menuItems,
         };
 
@@ -402,6 +429,41 @@ export async function importConfiguration(configJson: string) {
                         order: account.order ?? 0,
                     }
                 });
+            }
+        }
+
+        // 导入代理服务基础配置（不覆盖真实密钥）
+        if (config.proxyServices && Array.isArray(config.proxyServices)) {
+            for (const service of config.proxyServices) {
+                const existing = await db.proxyService.findUnique({
+                    where: { code: service.code },
+                });
+
+                if (existing) {
+                    await db.proxyService.update({
+                        where: { id: existing.id },
+                        data: {
+                            name: service.name,
+                            providerType: service.providerType,
+                            baseUrl: service.baseUrl,
+                            timeoutMs: service.timeoutMs ?? 15000,
+                            retryCount: service.retryCount ?? 2,
+                            isActive: service.isActive ?? true,
+                        },
+                    });
+                } else {
+                    await db.proxyService.create({
+                        data: {
+                            code: service.code,
+                            name: service.name,
+                            providerType: service.providerType,
+                            baseUrl: service.baseUrl,
+                            timeoutMs: service.timeoutMs ?? 15000,
+                            retryCount: service.retryCount ?? 2,
+                            isActive: service.isActive ?? true,
+                        },
+                    });
+                }
             }
         }
 

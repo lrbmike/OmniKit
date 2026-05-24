@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 import { useLocale, useTranslations } from 'next-intl';
-import { LayoutGrid, Database, Settings as SettingsIcon, LayoutDashboard, CloudSun, Languages, Bot, Code2, FileJson, Upload, Cloud, Image } from 'lucide-react';
+import { LayoutGrid, Database, Settings as SettingsIcon, LayoutDashboard, CloudSun, Languages, Bot, Code2, FileJson, Upload, Cloud, Image, Waypoints } from 'lucide-react';
 
 export function SettingsNav() {
     const pathname = usePathname();
@@ -17,6 +17,7 @@ export function SettingsNav() {
     const tGithub = useTranslations('Settings.pages.github');
     const tCloudinary = useTranslations('Settings.pages.cloudinaryAccounts');
     const tTinyPng = useTranslations('Settings.pages.tinyPngAccounts');
+    const tProxyServices = useTranslations('Settings.pages.proxyServices');
     const tConfig = useTranslations('Settings.pages.config');
 
     const items = [
@@ -69,6 +70,11 @@ export function SettingsNav() {
             title: tTinyPng('title'),
             href: `/${locale}/admin/settings/tiny-png-accounts`,
             icon: Image
+        },
+        {
+            title: tProxyServices('title'),
+            href: `/${locale}/admin/settings/proxy-services`,
+            icon: Waypoints
         },
         {
             title: tConfig('title'),

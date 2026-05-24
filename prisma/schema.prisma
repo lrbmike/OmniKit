@@ -44,6 +44,10 @@ model SystemConfig {
   // GitHub Upload Configuration
   githubToken     String? // GitHub Personal Access Token
 
+  // Proxy Gateway Configuration
+  proxyGatewayApiKeyHash String?
+  proxyGatewayApiKeyHint String?
+
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
@@ -88,6 +92,41 @@ model TinyPngAccount {
   updatedAt   DateTime @updatedAt
 
   @@index([isActive, order])
+}
+
+model ProxyService {
+  id                    String   @id @default(cuid())
+  code                  String   @unique // Stable service code, e.g. brave-search
+  name                  String
+  providerType          String   // brave-search
+  baseUrl               String
+  timeoutMs             Int      @default(15000)
+  retryCount            Int      @default(2)
+  isActive              Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  upstreamKeys          ProxyUpstreamKey[]
+}
+
+model ProxyUpstreamKey {
+  id              String   @id @default(cuid())
+  proxyServiceId  String
+  name            String
+  apiKey          String
+  isActive        Boolean  @default(true)
+  order           Int      @default(0)
+  lastUsedAt      DateTime?
+  failCount       Int      @default(0)
+  cooldownUntil   DateTime?
+  lastError       String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  proxyService    ProxyService @relation(fields: [proxyServiceId], references: [id], onDelete: Cascade)
+
+  @@index([proxyServiceId, isActive, order])
+  @@index([proxyServiceId, cooldownUntil])
 }
 
 model User {
