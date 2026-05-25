@@ -59,127 +59,29 @@ export async function updateSystemConfig(data: {
             });
         }
 
-        // Split data into known fields and raw fields (weather/ai which might not be in generated client yet)
-        const knownData: any = {};
-        const rawData: any = {};
+        const updateData: any = {};
 
-        if (data.defaultLocale !== undefined) knownData.defaultLocale = data.defaultLocale;
-        if (data.defaultTheme !== undefined) knownData.defaultTheme = data.defaultTheme;
-        if (data.dashboardQuickTools !== undefined) knownData.dashboardQuickTools = data.dashboardQuickTools;
+        if (data.defaultLocale !== undefined) updateData.defaultLocale = data.defaultLocale;
+        if (data.defaultTheme !== undefined) updateData.defaultTheme = data.defaultTheme;
+        if (data.dashboardQuickTools !== undefined) updateData.dashboardQuickTools = data.dashboardQuickTools;
+        if (data.weatherEnabled !== undefined) updateData.weatherEnabled = data.weatherEnabled;
+        if (data.weatherUrl !== undefined) updateData.weatherUrl = data.weatherUrl;
+        if (data.weatherApiKey !== undefined) updateData.weatherApiKey = data.weatherApiKey;
+        if (data.weatherKeyMode !== undefined) updateData.weatherKeyMode = data.weatherKeyMode;
+        if (data.weatherCity !== undefined) updateData.weatherCity = data.weatherCity;
+        if (data.weatherQueryKeyName !== undefined) updateData.weatherQueryKeyName = data.weatherQueryKeyName;
+        if (data.weatherHeaderName !== undefined) updateData.weatherHeaderName = data.weatherHeaderName;
+        if (data.translatorProviderId !== undefined) updateData.translatorProviderId = data.translatorProviderId;
+        if (data.translatorSystemPrompt !== undefined) updateData.translatorSystemPrompt = data.translatorSystemPrompt;
+        if (data.varNameGenProviderId !== undefined) updateData.varNameGenProviderId = data.varNameGenProviderId;
+        if (data.varNameGenSystemPrompt !== undefined) updateData.varNameGenSystemPrompt = data.varNameGenSystemPrompt;
+        if (data.githubToken !== undefined) updateData.githubToken = data.githubToken;
 
-        if (data.weatherEnabled !== undefined) rawData.weatherEnabled = data.weatherEnabled;
-        if (data.weatherUrl !== undefined) rawData.weatherUrl = data.weatherUrl;
-        if (data.weatherApiKey !== undefined) rawData.weatherApiKey = data.weatherApiKey;
-        if (data.weatherKeyMode !== undefined) rawData.weatherKeyMode = data.weatherKeyMode;
-        if (data.weatherCity !== undefined) rawData.weatherCity = data.weatherCity;
-        if (data.weatherQueryKeyName !== undefined) rawData.weatherQueryKeyName = data.weatherQueryKeyName;
-        if (data.weatherHeaderName !== undefined) rawData.weatherHeaderName = data.weatherHeaderName;
-
-        if (data.aiProvider !== undefined) rawData.aiProvider = data.aiProvider;
-        if (data.aiBaseUrl !== undefined) rawData.aiBaseUrl = data.aiBaseUrl;
-        if (data.aiApiKey !== undefined) rawData.aiApiKey = data.aiApiKey;
-        if (data.aiModel !== undefined) rawData.aiModel = data.aiModel;
-        if (data.aiSystemPrompt !== undefined) rawData.aiSystemPrompt = data.aiSystemPrompt;
-
-        if (data.translatorProviderId !== undefined) rawData.translatorProviderId = data.translatorProviderId;
-        if (data.translatorSystemPrompt !== undefined) rawData.translatorSystemPrompt = data.translatorSystemPrompt;
-
-        if (data.varNameGenProviderId !== undefined) rawData.varNameGenProviderId = data.varNameGenProviderId;
-        if (data.varNameGenSystemPrompt !== undefined) rawData.varNameGenSystemPrompt = data.varNameGenSystemPrompt;
-
-        if (data.githubToken !== undefined) rawData.githubToken = data.githubToken;
-
-        // Update known fields using Prisma Client
-        if (Object.keys(knownData).length > 0) {
+        if (Object.keys(updateData).length > 0) {
             await db.systemConfig.update({
                 where: { id: config.id },
-                data: knownData,
+                data: updateData,
             });
-        }
-
-        // Update raw fields using Raw SQL to bypass potential client mismatch
-        if (Object.keys(rawData).length > 0) {
-            const setClauses = [];
-            const params = [];
-
-            if (rawData.weatherEnabled !== undefined) {
-                setClauses.push('weatherEnabled = ?');
-                params.push(rawData.weatherEnabled ? 1 : 0);
-            }
-            if (rawData.weatherUrl !== undefined) {
-                setClauses.push('weatherUrl = ?');
-                params.push(rawData.weatherUrl);
-            }
-            if (rawData.weatherApiKey !== undefined) {
-                setClauses.push('weatherApiKey = ?');
-                params.push(rawData.weatherApiKey);
-            }
-            if (rawData.weatherKeyMode !== undefined) {
-                setClauses.push('weatherKeyMode = ?');
-                params.push(rawData.weatherKeyMode);
-            }
-            if (rawData.weatherCity !== undefined) {
-                setClauses.push('weatherCity = ?');
-                params.push(rawData.weatherCity);
-            }
-            if (rawData.weatherQueryKeyName !== undefined) {
-                setClauses.push('weatherQueryKeyName = ?');
-                params.push(rawData.weatherQueryKeyName);
-            }
-            if (rawData.weatherHeaderName !== undefined) {
-                setClauses.push('weatherHeaderName = ?');
-                params.push(rawData.weatherHeaderName);
-            }
-
-            if (rawData.aiProvider !== undefined) {
-                setClauses.push('aiProvider = ?');
-                params.push(rawData.aiProvider);
-            }
-            if (rawData.aiBaseUrl !== undefined) {
-                setClauses.push('aiBaseUrl = ?');
-                params.push(rawData.aiBaseUrl);
-            }
-            if (rawData.aiApiKey !== undefined) {
-                setClauses.push('aiApiKey = ?');
-                params.push(rawData.aiApiKey);
-            }
-            if (rawData.aiModel !== undefined) {
-                setClauses.push('aiModel = ?');
-                params.push(rawData.aiModel);
-            }
-            if (rawData.aiSystemPrompt !== undefined) {
-                setClauses.push('aiSystemPrompt = ?');
-                params.push(rawData.aiSystemPrompt);
-            }
-
-            if (rawData.translatorProviderId !== undefined) {
-                setClauses.push('translatorProviderId = ?');
-                params.push(rawData.translatorProviderId);
-            }
-            if (rawData.translatorSystemPrompt !== undefined) {
-                setClauses.push('translatorSystemPrompt = ?');
-                params.push(rawData.translatorSystemPrompt);
-            }
-
-            if (rawData.varNameGenProviderId !== undefined) {
-                setClauses.push('varNameGenProviderId = ?');
-                params.push(rawData.varNameGenProviderId);
-            }
-            if (rawData.varNameGenSystemPrompt !== undefined) {
-                setClauses.push('varNameGenSystemPrompt = ?');
-                params.push(rawData.varNameGenSystemPrompt);
-            }
-
-            if (rawData.githubToken !== undefined) {
-                setClauses.push('githubToken = ?');
-                params.push(rawData.githubToken);
-            }
-
-            if (setClauses.length > 0) {
-                params.push(config.id);
-                const sql = `UPDATE SystemConfig SET ${setClauses.join(', ')} WHERE id = ?`;
-                await db.$executeRawUnsafe(sql, ...params);
-            }
         }
 
         revalidatePath('/', 'layout');
